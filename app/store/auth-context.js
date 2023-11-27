@@ -71,7 +71,7 @@ export const AuthContextProvider = ({ children }) => {
         throw new Error("Invalid Login, Please check your email and password");
       } else if (data["validationIndicator"] === "Valid") {
         console.log("SUCCESS");
-        if (data["role"] === "faculty") {
+        if (data["role"] === "student") {
           islog = false;
           throw new Error(
             "Faculties need permission to access the student portals."

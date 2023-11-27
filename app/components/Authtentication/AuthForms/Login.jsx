@@ -90,7 +90,7 @@ export const Login = ({ handleState }) => {
           if (res) {
             authCtx.onSetLogin();
             console.log(authCtx.isLoggedIn);
-            // router.push("/SelectionScreen");
+            router.push("/Dashboard");
           } else {
             console.log("SOME ISSUE");
           }

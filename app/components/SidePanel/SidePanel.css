@@ -1,0 +1,28 @@
+.portalTitle {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.1vw;
+  line-height: 1.5vw;
+  letter-spacing: 0.065em;
+  color: #f8f8f8;
+}
+
+.userTitle {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 2vw;
+  line-height: 1.5vw;
+  letter-spacing: 0.065em;
+  color: #f8f8f8;
+}
+
+.portalBtn {
+  text-align: start;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.4vw;
+  letter-spacing: 0.065em;
+}

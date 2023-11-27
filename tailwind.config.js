@@ -10,6 +10,7 @@ module.exports = {
       colors: {
         "binghamton-green": "#005941",
         "auth-grey": "#818181",
+        "side-panel-grey": "#373737",
       },
       backgroundImage: {
         endScreen: "url('./Quiz/EndScreen/DSCN5677.jpg')",
