@@ -1,0 +1,9 @@
+export const AUTHSTATE = {
+  LOGIN: "LOGIN",
+  SIGNUP: "SIGNUP",
+  TOKENSIGNUP: "TOKENSIGNUP",
+  FORGOT: "FORGOT",
+  NEWPASS: "NEWPASS",
+};
+
+Object.freeze(AUTHSTATE);
