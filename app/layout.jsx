@@ -2,6 +2,10 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "./components/Navbar/Navbar";
 import { AuthContextProvider } from "./store/auth-context";
+import {
+  DashboardContext,
+  DashboardContextProvider,
+} from "./store/dashboard-context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,10 +21,7 @@ export default function RootLayout({ children }) {
         <AuthContextProvider>
           <div className="flex flex-col">
             <Navbar />
-            {children}
-
-            {/* <Navbar />
-            <QuestionContextProvider></QuestionContextProvider> */}
+            <DashboardContextProvider>{children}</DashboardContextProvider>
           </div>
         </AuthContextProvider>
       </body>
