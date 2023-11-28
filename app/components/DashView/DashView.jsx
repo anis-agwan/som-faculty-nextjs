@@ -8,6 +8,7 @@ import { ReportPB } from "./SectionReports/ReportPB";
 import { ReportCT } from "./SectionReports/ReportCT";
 import { ReportDD } from "./SectionReports/ReportDD";
 import { BIForm } from "../BI/BIForm/BIForm";
+import { ReportBI } from "./SectionReports/ReportBI";
 
 export const DashView = ({ validBnum }) => {
   const dashCtx = useContext(DashboardContext);
@@ -71,9 +72,25 @@ export const DashView = ({ validBnum }) => {
         </>
       ) : (
         <>
-          <div className="flex justify-center items-center">
-            <BIForm />
-          </div>
+          {validBnum && isStudentDetails !== null ? (
+            <>
+              <div className="bg-white h-full  w-3/4">
+                <ReportBI
+                  bingNumber={
+                    isStudentDetails !== null
+                      ? dashCtx.studentDetails.bingNumber
+                      : ""
+                  }
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex justify-center items-center">
+                <BIForm />
+              </div>
+            </>
+          )}
         </>
       )}
       {/* <div

@@ -9,6 +9,7 @@ export const ReportContext = createContext({
   getPBGraphData: () => {},
   getCTGraphData: () => {},
   getDDGraphData: () => {},
+  getBIGraphData: () => {},
 });
 
 export const ReportContextProvider = ({ children }) => {
@@ -96,6 +97,24 @@ export const ReportContextProvider = ({ children }) => {
     }
   };
 
+  const gettingBIGrapgData = async (bingNumber) => {
+    try {
+      const url = `${baseDDBI}:8448/bbim/bi/getScores/${bingNumber}`;
+      const res = await fetch(url);
+
+      // console.log(res);
+      let data = {};
+      await res.json().then((r) => {
+        // console.log(r);
+        data = r;
+      });
+
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <ReportContext.Provider
       value={{
@@ -104,6 +123,7 @@ export const ReportContextProvider = ({ children }) => {
         getPBGraphData: gettingPBGraphData,
         getCTGraphData: gettingCTGraphData,
         getDDGraphData: gettingDDGraphData,
+        getBIGraphData: gettingBIGrapgData,
       }}
     >
       {children}
