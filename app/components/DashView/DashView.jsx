@@ -7,6 +7,7 @@ import { SECTION } from "@/app/enums/section_enums";
 import { ReportPB } from "./SectionReports/ReportPB";
 import { ReportCT } from "./SectionReports/ReportCT";
 import { ReportDD } from "./SectionReports/ReportDD";
+import { BIForm } from "../BI/BIForm/BIForm";
 
 export const DashView = ({ validBnum }) => {
   const dashCtx = useContext(DashboardContext);
@@ -22,7 +23,60 @@ export const DashView = ({ validBnum }) => {
 
   return (
     <div className="flex h-full w-full justify-center px-4 pb-4 gap-2">
-      <div
+      {viewState !== SECTION.BI ? (
+        <>
+          <div
+            className={`bg-white h-full ${
+              validBnum
+                ? isStudentDetails !== null
+                  ? "w-3/4"
+                  : "w-full"
+                : "w-full"
+            } `}
+          >
+            <div className="h-full">
+              {validBnum && isStudentDetails !== null && (
+                <>
+                  {viewState === SECTION.PB && (
+                    <ReportPB
+                      bingNumber={
+                        isStudentDetails !== null
+                          ? dashCtx.studentDetails.bingNumber
+                          : ""
+                      }
+                    />
+                  )}
+                  {viewState === SECTION.CT && (
+                    <ReportCT
+                      bingNumber={
+                        isStudentDetails !== null
+                          ? dashCtx.studentDetails.bingNumber
+                          : ""
+                      }
+                    />
+                  )}
+                  {viewState === SECTION.DD && (
+                    <ReportDD
+                      bingNumber={
+                        isStudentDetails !== null
+                          ? dashCtx.studentDetails.bingNumber
+                          : ""
+                      }
+                    />
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="flex justify-center items-center">
+            <BIForm />
+          </div>
+        </>
+      )}
+      {/* <div
         className={`bg-white h-full ${
           validBnum
             ? isStudentDetails !== null
@@ -34,7 +88,7 @@ export const DashView = ({ validBnum }) => {
         <div className="h-full">
           {validBnum && isStudentDetails !== null && (
             <>
-              {viewState === SECTION.PB ? (
+              {viewState === SECTION.PB && (
                 <ReportPB
                   bingNumber={
                     isStudentDetails !== null
@@ -42,10 +96,6 @@ export const DashView = ({ validBnum }) => {
                       : ""
                   }
                 />
-              ) : (
-                <>
-                  <div>Report PB</div>
-                </>
               )}
               {viewState === SECTION.CT && (
                 <ReportCT
@@ -68,7 +118,7 @@ export const DashView = ({ validBnum }) => {
             </>
           )}
         </div>
-      </div>
+      </div> */}
       {validBnum && isStudentDetails !== null ? (
         <>
           <div className="h-full w-1/4 bg-white">
@@ -88,26 +138,6 @@ export const DashView = ({ validBnum }) => {
       ) : (
         <></>
       )}
-
-      {/* {!(isStudentDetails === null) && validBnum ? (
-        <>
-          <div className="h-full w-1/4 bg-white">
-            <div className="flex flex-col px-4 pt-4">
-              <div>
-                <h1>Student details</h1>
-              </div>
-              <div>
-                <p>student.firstName</p>
-                <p>student.lastName</p>
-                <p>{isStudentDetails.email}</p>
-                <p>student.bingNumber</p>
-              </div>
-            </div>
-          </div>
-        </>
-      ) : (
-        <></>
-      )} */}
     </div>
   );
 };
