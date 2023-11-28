@@ -31,10 +31,42 @@ export const DashView = ({ validBnum }) => {
             : "w-full"
         } `}
       >
-        <div>
-          {viewState === SECTION.PB && <ReportPB />}
-          {viewState === SECTION.CT && <ReportCT />}
-          {viewState === SECTION.DD && <ReportDD />}
+        <div className="h-full">
+          {validBnum && isStudentDetails !== null && (
+            <>
+              {viewState === SECTION.PB ? (
+                <ReportPB
+                  bingNumber={
+                    isStudentDetails !== null
+                      ? dashCtx.studentDetails.bingNumber
+                      : ""
+                  }
+                />
+              ) : (
+                <>
+                  <div>Report PB</div>
+                </>
+              )}
+              {viewState === SECTION.CT && (
+                <ReportCT
+                  bingNumber={
+                    isStudentDetails !== null
+                      ? dashCtx.studentDetails.bingNumber
+                      : ""
+                  }
+                />
+              )}
+              {viewState === SECTION.DD && (
+                <ReportDD
+                  bingNumber={
+                    isStudentDetails !== null
+                      ? dashCtx.studentDetails.bingNumber
+                      : ""
+                  }
+                />
+              )}
+            </>
+          )}
         </div>
       </div>
       {validBnum && isStudentDetails !== null ? (

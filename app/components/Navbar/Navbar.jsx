@@ -54,7 +54,7 @@ export const Navbar = () => {
   // });
 
   useEffect(() => {
-    console.log(authCtx.user);
+    // console.log(authCtx.user);
     if (authCtx.isLoggedIn && authCtx.user) {
       setUser(authCtx.user);
       setIsLoggedIn(true);
