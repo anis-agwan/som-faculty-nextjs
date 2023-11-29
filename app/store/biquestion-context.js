@@ -6,6 +6,9 @@ export const BIQuestionContext = createContext({
   biState: null,
   s1Data: [],
   getS1Options: () => {},
+  s1Answers: {},
+  updateS1Answers: () => {},
+  updateSim1Observations: () => {},
   s2Data: [],
 });
 
@@ -458,6 +461,7 @@ export const BIQuestionContextProvider = ({ children }) => {
       Observation: "Observations",
     },
   ];
+  const [sim1Answers, setSim1Answers] = useState({});
 
   const gettingS1Options = async () => {
     const url = `${baseBI}getQuestions`;
@@ -481,11 +485,58 @@ export const BIQuestionContextProvider = ({ children }) => {
     return data;
   };
 
+  const updatingSim1Answers = (qidx, idx, value) => {
+    let prevSim1 = sim1Answers;
+    if (qidx === 0) {
+      prevSim1[`idealizedInfluence1Score${idx}`] = value;
+      console.log(prevSim1);
+    } else if (qidx === 1) {
+      prevSim1[`inspirationalMotivation1Score${idx}`] = value;
+      console.log(prevSim1);
+    } else if (qidx === 2) {
+      prevSim1[`intellectualStimulation1Score${idx}`] = value;
+      console.log(prevSim1);
+    } else if (qidx === 3) {
+      prevSim1[`individualizedConsideration1Score${idx}`] = value;
+      console.log(prevSim1);
+    } else if (qidx === 4) {
+      prevSim1[`contingentReward1Score${idx}`] = value;
+      console.log(prevSim1);
+    }
+
+    setSim1Answers(prevSim1);
+  };
+
+  const updatingSim1Observations = (idx, value) => {
+    let prevSim1 = sim1Answers;
+    if (idx === 0) {
+      prevSim1["idealizedInfluence1observation"] = value;
+      console.log(prevSim1);
+    } else if (idx === 1) {
+      prevSim1[`inspirationalMotivation1Observation`] = value;
+      console.log(prevSim1);
+    } else if (idx === 2) {
+      prevSim1[`intellectualStimulation1Observation`] = value;
+      console.log(prevSim1);
+    } else if (idx === 3) {
+      prevSim1[`individualizedConsideration1Observation`] = value;
+      console.log(prevSim1);
+    } else if (idx === 4) {
+      prevSim1[`contingentReward1Observation`] = value;
+      console.log(prevSim1);
+    }
+
+    setSim1Answers(prevSim1);
+  };
+
   return (
     <BIQuestionContext.Provider
       value={{
         s1Data: Simulation1Data,
         getS1Options: gettingS1Options,
+        s1Answers: sim1Answers,
+        updateS1Answers: updatingSim1Answers,
+        updateSim1Observations: updatingSim1Observations,
       }}
     >
       {children}
