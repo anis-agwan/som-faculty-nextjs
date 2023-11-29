@@ -7,6 +7,7 @@ import {
   DashboardContextProvider,
 } from "./store/dashboard-context";
 import { ReportContextProvider } from "./store/reports-context";
+import { BIQuestionContextProvider } from "./store/biquestion-context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +24,11 @@ export default function RootLayout({ children }) {
           <div className="flex flex-col">
             <Navbar />
             <DashboardContextProvider>
-              <ReportContextProvider>{children}</ReportContextProvider>
+              <ReportContextProvider>
+                <BIQuestionContextProvider>
+                  {children}
+                </BIQuestionContextProvider>
+              </ReportContextProvider>
             </DashboardContextProvider>
           </div>
         </AuthContextProvider>

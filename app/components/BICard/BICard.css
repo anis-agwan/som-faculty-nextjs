@@ -1,0 +1,47 @@
+.biCard {
+  transition: 0.3s;
+  width: 17vw;
+  height: 25vw;
+
+  background: #ffffff;
+  box-shadow: 0px 4.10567px 4.10567px rgba(0, 0, 0, 0.25);
+  border-radius: 1.7vw;
+  border: none;
+  /* background-image: url("./situation1.jpg"); */
+  background-repeat: no-repeat;
+  background-size: 200% 85%;
+  background-position-x: right;
+}
+
+.biCard:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  transform: scale(1.1);
+}
+
+.s1Card {
+  background-image: url("./situation1.jpg");
+}
+
+.s2Card {
+  background-image: url("./situation2.jpeg");
+}
+
+.e1Card {
+  background-image: url("./evaluation1.jpg");
+}
+
+.e2Card {
+  background-image: url("./evaluation2.jpg");
+}
+
+.biCardTitle {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1.9vw;
+  line-height: 2vw;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.065em;
+  color: #353535eb;
+}

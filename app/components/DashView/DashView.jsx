@@ -9,11 +9,13 @@ import { ReportCT } from "./SectionReports/ReportCT";
 import { ReportDD } from "./SectionReports/ReportDD";
 import { BIForm } from "../BI/BIForm/BIForm";
 import { ReportBI } from "./SectionReports/ReportBI";
+import { BISection } from "../BISection/BISection";
 
 export const DashView = ({ validBnum }) => {
   const dashCtx = useContext(DashboardContext);
   const [viewState, setViewState] = useState(dashCtx.viewState);
   const [isStudentDetails, setIsStudentDets] = useState(dashCtx.studentDetails);
+  const [isInterview, setIsInterview] = useState(true);
 
   useEffect(() => {
     console.log(validBnum);
@@ -72,23 +74,33 @@ export const DashView = ({ validBnum }) => {
         </>
       ) : (
         <>
-          {validBnum && isStudentDetails !== null ? (
+          {isInterview ? (
             <>
-              <div className="bg-white h-full  w-3/4">
-                <ReportBI
-                  bingNumber={
-                    isStudentDetails !== null
-                      ? dashCtx.studentDetails.bingNumber
-                      : ""
-                  }
-                />
+              <div className="bg-white h-full  w-full">
+                <BISection />
               </div>
             </>
           ) : (
             <>
-              <div className="flex justify-center items-center">
-                <BIForm />
-              </div>
+              {validBnum && isStudentDetails !== null ? (
+                <>
+                  <div className="bg-white h-full  w-3/4">
+                    <ReportBI
+                      bingNumber={
+                        isStudentDetails !== null
+                          ? dashCtx.studentDetails.bingNumber
+                          : ""
+                      }
+                    />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex justify-center items-center">
+                    <BIForm />
+                  </div>
+                </>
+              )}
             </>
           )}
         </>

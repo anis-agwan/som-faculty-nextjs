@@ -1,0 +1,494 @@
+"use client";
+import React, { useContext, useState } from "react";
+import { createContext } from "react";
+
+export const BIQuestionContext = createContext({
+  biState: null,
+  s1Data: [],
+  getS1Options: () => {},
+  s2Data: [],
+});
+
+export const BIQuestionContextProvider = ({ children }) => {
+  const baseBI = "http://3.14.159.174:8448/bbim/bi/";
+  const Simulation1Data = [
+    {
+      Q: "IDEALIZED INFLUENCE (B) (LS1-II)",
+      questions: [
+        {
+          question:
+            "1. Talked to me (us) about his/her most important values and beliefs.",
+        },
+        {
+          question:
+            "2.  Specified the importance of a strong sense of purpose.",
+        },
+        {
+          question:
+            "3.  Considered the moral and ethical consequences of his/her decisions.",
+        },
+        {
+          question:
+            "4.  Emphasized the importance of a collective sense of mission.",
+        },
+      ],
+
+      O1: [
+        {
+          idx: "1",
+          value: "Displayed a cyncial disregrad for values, or said nothing",
+        },
+        {
+          idx: "2",
+          value: "Discussed briefly his/her values and believes",
+        },
+        {
+          idx: "3",
+          value: "Emphasized the critical importance of values and beliefs",
+        },
+      ],
+
+      O2: [
+        {
+          idx: "1",
+          value:
+            "talked disparagingly of a sense of purpose, or didn't mention it",
+        },
+        {
+          idx: "2",
+          value: "discussed briefly",
+        },
+        {
+          idx: "3",
+          value: "evidently it was a central concern",
+        },
+      ],
+
+      O3: [
+        {
+          idx: "1",
+          value:
+            "demonstrated a contempt for the moral consequences, or did not discuss moral consequences",
+        },
+        {
+          idx: "2",
+          value: "showed a mild interest in moral consequences",
+        },
+        {
+          idx: "3",
+          value:
+            "moral and ethical considerations were a primary consideration",
+        },
+      ],
+
+      O4: [
+        {
+          idx: "1",
+          value:
+            "dismissed or downplayed a collective sense of mission, or did not mention it",
+        },
+        {
+          idx: "2",
+          value: "mentioned it briefly",
+        },
+        {
+          idx: "3",
+          value:
+            "talked at length about a collective sense of mission, or collective sense of mission was the main theme of the interaction",
+        },
+      ],
+      Observation: "Observations",
+    },
+    {
+      Q: "INSPIRATIONAL MOTIVATION (LS1-IM)",
+      questions: [
+        {
+          question: "5.  Talked optimistically about the future.",
+        },
+        {
+          question:
+            "6.  Expressed his/her confidence that we will reach our goals.",
+        },
+        {
+          question:
+            "7.  Talked enthusiastically about what needs to be accomplished.",
+        },
+        {
+          question: "8.  Articulated a compelling vision of the future.",
+        },
+      ],
+
+      O1: [
+        {
+          idx: "1",
+          value:
+            "talked pessimistically about the future, did not mention the future",
+        },
+        {
+          idx: "2",
+          value: "made some positive comments about the future",
+        },
+        {
+          idx: "3",
+          value: "discussed the future positively",
+        },
+      ],
+
+      O2: [
+        {
+          idx: "1",
+          value:
+            "expressed doubt that we would reach our goals, emphasized obstacles in the way of success, or did not discuss goals",
+        },
+        {
+          idx: "2",
+          value:
+            "showed some degree of confidence that we would meet our goals",
+        },
+        {
+          idx: "3",
+          value: "expressed strong confidence we would meet our goals",
+        },
+      ],
+
+      O3: [
+        {
+          idx: "1",
+          value:
+            "showed no enthusiasm for what needs to be done, or emphasized the onerous nature of what has to be done",
+        },
+        {
+          idx: "2",
+          value: "expressed some enthusiasm for what needs to be done",
+        },
+        {
+          idx: "3",
+          value:
+            "demonstrated a great deal of enthusiasm and excitement about what needs to be done",
+        },
+      ],
+
+      O4: [
+        {
+          idx: "1",
+          value:
+            "painted a grim picture of the future, or did not discuss the future",
+        },
+        {
+          idx: "2",
+          value: "mentioned the future in somewhat positive terms",
+        },
+        {
+          idx: "3",
+          value: "articulated a positive and compelling vision of the future",
+        },
+      ],
+      Observation: "Observations",
+    },
+    {
+      Q: "INTELLECTUAL STIMULATION (LS1-IS)",
+      questions: [
+        {
+          question:
+            "9.  Reexamined critical assumptions to question whether they were appropriate.",
+        },
+        {
+          question: "10.  Sought differing perspectives when solving problems.",
+        },
+        {
+          question:
+            "11.  Suggested new ways of looking at how I (we) do my (our) job(s).",
+        },
+        {
+          question:
+            "12.  Got me (us) to look at problems from many different angles.",
+        },
+      ],
+
+      O1: [
+        {
+          idx: "1",
+          value:
+            "refused to reconsider critical assumptions, expressed impatience with my (our) proposal to reconsider them, or did not mention critical assumptions",
+        },
+        {
+          idx: "2",
+          value: "briefly noted critical assumptions and commented on them",
+        },
+        {
+          idx: "3",
+          value:
+            "reexamined critical assumptions, or forcefully argued that we need to reconsider critical assumptions",
+        },
+      ],
+
+      O2: [
+        {
+          idx: "1",
+          value:
+            "refused to consider or discuss alternative perspectives, cut me off when I (we) suggested a different perspective, or did not seek new perspectives",
+        },
+        {
+          idx: "2",
+          value:
+            "made some effort to get a different perspective on problems to be solved",
+        },
+        {
+          idx: "3",
+          value:
+            "strongly urged me (us) to provide insight and alternatives on problems we face",
+        },
+      ],
+
+      O3: [
+        {
+          idx: "1",
+          value:
+            "refused to look at new ways of doing my job, emphasized sticking to the standard ways, berated me (us) for suggesting alternatives, or did not suggest any new ways of doing my work",
+        },
+        {
+          idx: "2",
+          value:
+            "made some brief comments or suggestions about ways to do my (our) work",
+        },
+        {
+          idx: "3",
+          value:
+            "emphasized new ways to do my (our) job and encouraged me (us) to consider them",
+        },
+      ],
+
+      O4: [
+        {
+          idx: "1",
+          value:
+            "berated me (us) for trying to look at problems from different angles, showed impatience when I (we) tried to discuss problems, did not make any effort to get me (us) to look at problems for different angles",
+        },
+        {
+          idx: "2",
+          value:
+            "made some effort to get me (us) to look at problems for different angles",
+        },
+        {
+          idx: "3",
+          value:
+            "made an energetic effort to get me (us) to look at problems from different angles",
+        },
+      ],
+      Observation: "Observations",
+    },
+    {
+      Q: "INDIVIDUALIZED CONSIDERATION (LS1-IC)",
+      questions: [
+        {
+          question:
+            "13.  Treated me (us) as an individual rather than just a member of the group.",
+        },
+        {
+          question: "14.  Focused me on developing my strengths.",
+        },
+        {
+          question: "15.  Spent time teaching and coaching.",
+        },
+        {
+          question:
+            "16.  Treated me (us) as an individual(s) with different needs, abilities and aspirations.",
+        },
+      ],
+
+      O1: [
+        {
+          idx: "1",
+          value:
+            "referred to the group rather than to me (us), refused to consider me (us) as an individual, de-emphasized any individual differences on my (our) part, cut me (us) off when I mentioned myself",
+        },
+        {
+          idx: "2",
+          value: "made some effort to treat me (us) distinctly from the group",
+        },
+        {
+          idx: "3",
+          value:
+            "showed a great interest in me (us) as an individual with distinct needs and interests",
+        },
+      ],
+
+      O2: [
+        {
+          idx: "1",
+          value:
+            "showed contempt for my (our) self development, indicated I (we) was (were) incapable of development, said I (we) did not have any strengths, or did not make any mention of my (us) developing my (our) strengths",
+        },
+        {
+          idx: "2",
+          value: "encouraged me (us) somewhat to develop my (our) strengths",
+        },
+        {
+          idx: "3",
+          value:
+            "vigorously encouraged me (us) to develop my (our) strengths, made many suggestions and proposals and plans for developing my (our) strengths",
+        },
+      ],
+
+      O3: [
+        {
+          idx: "1",
+          value:
+            "gave me (us) orders, refused my (our) requests for learning my (our) job, told me (us) I (we) should do as I (we) was (were) told, or did not spend any time teaching me (us) the job or giving me (us) advice on how to do the job better",
+        },
+        {
+          idx: "2",
+          value:
+            "explained some aspects of my (our) job, made some helpful suggestions about my (our) job",
+        },
+        {
+          idx: "3",
+          value:
+            "spent most of his/her time helping me (us) to understand and do my (our) job better",
+        },
+      ],
+
+      O4: [
+        {
+          idx: "1",
+          value:
+            "denigrated or downplayed my (our) interests and aspirations, told me (us) that my (our) job was to work and get paid, did not show any recognition of my (our) unique abilities and needs",
+        },
+        {
+          idx: "2",
+          value: "showed some awareness of my (our) unique qualities",
+        },
+        {
+          idx: "3",
+          value: "made me (us) feel like a special and unique person(s)",
+        },
+      ],
+      Observation: "Observations",
+    },
+    {
+      Q: "CONTINGENT REWARD (Transactional Leadership) (LS1-CR)",
+      questions: [
+        {
+          question:
+            "17.  Made clear what I (we) could expect to receive if my (our) performance met designated standards.",
+        },
+        {
+          question:
+            "18.  Provided his assistance in exchange for my (our) effort.",
+        },
+        {
+          question:
+            "19.  Made sure I (we) would receive appropriate rewards for achieving performance targets.",
+        },
+        {
+          question:
+            "20.  Expressed his/her satisfaction whe I (we) did a good job.",
+        },
+      ],
+      O1: [
+        {
+          idx: "1",
+          value:
+            "emphasized that I was supposed to work hard but did not mention any rewards or relate performance and rewards, gave me the impression there were no standards or set standards that were arbitrary and/or impossible",
+        },
+        {
+          idx: "2",
+          value:
+            "discussed briefly the relationship between my (our) performance and what I (we) could expect in return",
+        },
+        {
+          idx: "3",
+          value:
+            "emphasized the relationship between my (our performance and what I (we) could expect in return",
+        },
+      ],
+
+      O2: [
+        {
+          idx: "1",
+          value:
+            "made it clear that he/she was note going to help me regardless of my (our) level of effort, argued that I (we) should maintain a high level of effort regardless of any assistance, emphasized punishment for failure to perform",
+        },
+        {
+          idx: "2",
+          value:
+            "indicated that I (we) could expect assistance in exchange for effort",
+        },
+        {
+          idx: "3",
+          value:
+            "emphasized the relationship between my (our) level of effort and his/her assistance",
+        },
+      ],
+
+      O3: [
+        {
+          idx: "1",
+          value:
+            "emphasized punishment for not meeting targets rather than rewards for meeting targets, said that I (we) was getting a paycheck and that was enough, told me (us) I was lucky to have a job, or did not mention that meeting targets would result in some reward",
+        },
+        {
+          idx: "2",
+          value:
+            "suggested briefly that I (we) would expect some reward for meeting targets",
+        },
+        {
+          idx: "3",
+          value:
+            "emphasized the strong relationship between meeting performance targets and rewards that would be forthcoming",
+        },
+      ],
+
+      O4: [
+        {
+          idx: "1",
+          value:
+            "emphasized my (our) failures rather than my (our) successes, refused to recognize that I (we) had done a good job, talked about rewards in the future rather than for past performance, or showed no reaction to my (our) success",
+        },
+        {
+          idx: "2",
+          value: "expressed mild satisfaction with my (our) success",
+        },
+        {
+          idx: "3",
+          value:
+            "expressed great and sincere satisfaction for my (our) good work",
+        },
+      ],
+      Observation: "Observations",
+    },
+  ];
+
+  const gettingS1Options = async () => {
+    const url = `${baseBI}getQuestions`;
+    let data = {};
+    try {
+      const res = await fetch(url);
+
+      await res
+        .json()
+        .then((r) => {
+          console.log(r);
+          data = r;
+        })
+        .catch((rr) => {
+          throw new Error("Error at getting s1 options");
+        });
+    } catch (err) {
+      console.log(err);
+    }
+
+    return data;
+  };
+
+  return (
+    <BIQuestionContext.Provider
+      value={{
+        s1Data: Simulation1Data,
+        getS1Options: gettingS1Options,
+      }}
+    >
+      {children}
+    </BIQuestionContext.Provider>
+  );
+};
