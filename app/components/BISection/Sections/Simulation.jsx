@@ -107,11 +107,7 @@ export const Simulation = ({ s1Data }) => {
   };
 
   const onSubmitHandler = async () => {
-    if (section === BI_SECTION.SIMULTAION1) {
-      router.push(`/Quiz/section-complete?section=${section}`);
-    } else if (section === BI_SECTION.SIMULATION2) {
-      router.push(`/Quiz/section-complete?section=${section}`);
-    }
+    router.push(`/Quiz/section-complete?section=${section}`);
   };
 
   useEffect(() => {
@@ -124,8 +120,12 @@ export const Simulation = ({ s1Data }) => {
       setSubmitBtnDisabled(false);
     }
 
+    if (biQctx.s2CompleteStatus) {
+      setSubmitBtnDisabled(false);
+    }
+
     console.log(s1Data);
-  }, [optAnswerArr, biQctx.s1CompleteStatus]);
+  }, [optAnswerArr, biQctx.s1CompleteStatus, biQctx.s2CompleteStatus]);
 
   return (
     <div className="flex flex-col h-full w-full p-8 gap-6">

@@ -12,8 +12,11 @@ export const BIQuestionContext = createContext({
   updateS1Answers: () => {},
   updateSim1Observations: () => {},
   s1CompleteStatus: null,
+  s2CompleteStatus: null,
+  e1CompleteStatus: null,
+  e2CompleteStatus: null,
   changeS1CompStatus: () => {},
-  s2Data: [],
+  e1Data: [],
 });
 
 export const BIQuestionContextProvider = ({ children }) => {
@@ -465,11 +468,139 @@ export const BIQuestionContextProvider = ({ children }) => {
       Observation: "Observations",
     },
   ];
+  const Evaluation1Data = [
+    {
+      Q: "ADAPTING TO CHANGE EVALUATION - Assessor A",
+      questions: [
+        {
+          question: "Q1-Open to change",
+        },
+        {
+          question: "Q2-Effectively addapts to change",
+        },
+      ],
+
+      O1: [
+        {
+          idx: "1",
+          value:
+            "1 : Unwilling to consider alternative approaches or ways of doing things.  Prefers to stick with what has worked in the past rather than try new ideas.",
+        },
+        {
+          idx: "2",
+          value:
+            "2 : Unwilling to consider alternative approaches or ways of doing things.  Prefers to stick with what has worked in the past rather than try new ideas.",
+        },
+        {
+          idx: "3",
+          value:
+            "3 : Unwilling to consider alternative approaches or ways of doing things.  Prefers to stick with what has worked in the past rather than try new ideas.",
+        },
+        {
+          idx: "4",
+          value:
+            "4 : Expressed an interest in trying new things.  Considers alternative approaches to or ways of doing things.",
+        },
+        {
+          idx: "5",
+          value:
+            "5 : Expressed an interest in trying new things.  Considers alternative approaches to or ways of doing things.",
+        },
+        {
+          idx: "6",
+          value:
+            "6 : Expressed an interest in trying new things.  Considers alternative approaches to or ways of doing things.",
+        },
+        {
+          idx: "7",
+          value:
+            "7 : Expressed an interest in trying new things.  Considers alternative approaches to or ways of doing things.",
+        },
+        {
+          idx: "8",
+          value:
+            "8 : Clearly enjoys change.  Solicits new ideas from others and acts on them to help produce change.",
+        },
+        {
+          idx: "9",
+          value:
+            "9 : Clearly enjoys change.  Solicits new ideas from others and acts on them to help produce change.",
+        },
+        {
+          idx: "10",
+          value:
+            "10 : Clearly enjoys change.  Solicits new ideas from others and acts on them to help produce change.",
+        },
+      ],
+
+      O2: [
+        {
+          idx: "1",
+          value:
+            "1 : Demonstrated a low level of flexibility.  Strongly prefers structured tasks and stable routine.  Showed almost no willingness or ability to change.",
+        },
+        {
+          idx: "2",
+          value:
+            "2 : Demonstrated a low level of flexibility.  Strongly prefers structured tasks and stable routine.  Showed almost no willingness or ability to change.",
+        },
+        {
+          idx: "3",
+          value:
+            "3 : Demonstrated a low level of flexibility.  Strongly prefers structured tasks and stable routine.  Showed almost no willingness or ability to change.",
+        },
+        {
+          idx: "4",
+          value:
+            "4 : Demonstrated a willingness and ability to accept and adapt to change.  Effectively modified behavior/attitudes in response to changing demands/expectations.",
+        },
+        {
+          idx: "5",
+          value:
+            "5 : Demonstrated a willingness and ability to accept and adapt to change.  Effectively modified behavior/attitudes in response to changing demands/expectations.",
+        },
+        {
+          idx: "6",
+          value:
+            "6 : Demonstrated a willingness and ability to accept and adapt to change.  Effectively modified behavior/attitudes in response to changing demands/expectations.",
+        },
+        {
+          idx: "7",
+          value:
+            "7 : Demonstrated a willingness and ability to accept and adapt to change.  Effectively modified behavior/attitudes in response to changing demands/expectations.",
+        },
+        {
+          idx: "8",
+          value:
+            "8 : Demonstrated extreme flexibility and the ability to adapt quickly to a variety of changes.  Provided examples of facilitating change or helping others to adapt to change.",
+        },
+        {
+          idx: "9",
+          value:
+            "9 : Demonstrated extreme flexibility and the ability to adapt quickly to a variety of changes.  Provided examples of facilitating change or helping others to adapt to change.",
+        },
+        {
+          idx: "10",
+          value:
+            "10 : Demonstrated extreme flexibility and the ability to adapt quickly to a variety of changes.  Provided examples of facilitating change or helping others to adapt to change.",
+        },
+      ],
+
+      Observation: "Observations",
+      SeekingMoreInfo: "Seeking More Information",
+      SharingResponsibility: "Sharing Responsibility",
+    },
+  ];
+
   const [sim1Answers, setSim1Answers] = useState({});
   const [arrSim1AnsStatus, setArrSim1Status] = useState(Array(20).fill(0));
   const [arrSim2AnsStatus, setArrSim2Status] = useState(Array(20).fill(0));
+  const [arrEval1AnsStatus, setArrEval1Status] = useState(Array(5).fill(0));
+  const [arrEval2AnsStatus, setArrEval2Status] = useState(Array(5).fill(0));
   const [sim1Complete, setSim1Complete] = useState(false);
   const [sim2Complete, setSim2Complete] = useState(false);
+  const [eval1Complete, setEval1Complete] = useState(false);
+  const [eval2Complete, setEval2Complete] = useState(false);
 
   const gettingS1Options = async () => {
     const url = `${baseBI}getQuestions`;
@@ -530,6 +661,12 @@ export const BIQuestionContextProvider = ({ children }) => {
         prevSim1[`contingentReward2Score${idx}`] = value;
         console.log(prevSim1);
       }
+    } else if (section === BI_SECTION.EVALUATION1) {
+      prevSim1[`adaptToChange1Score${qidx + 1}`] = value;
+      console.log(prevSim1);
+    } else if (section === BI_SECTION.EVALUATION2) {
+      prevSim1[`adaptToChange2Score${qidx + 1}`] = value;
+      console.log(prevSim1);
     }
 
     setSim1Answers(prevSim1);
@@ -573,6 +710,28 @@ export const BIQuestionContextProvider = ({ children }) => {
         prevSim1[`contingentReward2Observation`] = value;
         console.log(prevSim1);
       }
+    } else if (section === BI_SECTION.EVALUATION1) {
+      if (idx === 2) {
+        prevSim1[`adaptToChange1Observation`] = value;
+        console.log(prevSim1);
+      } else if (idx === 3) {
+        prevSim1[`adaptToChange1SeekingMoreInformation`] = value;
+        console.log(prevSim1);
+      } else if (idx === 4) {
+        prevSim1[`adaptToChange1SharingResponsibility`] = value;
+        console.log(prevSim1);
+      }
+    } else if (section === BI_SECTION.EVALUATION2) {
+      if (idx === 2) {
+        prevSim1[`adaptToChange1Observation`] = value;
+        console.log(prevSim1);
+      } else if (idx === 3) {
+        prevSim1[`adaptToChange2SeekingMoreInformation`] = value;
+        console.log(prevSim1);
+      } else if (idx === 4) {
+        prevSim1[`adaptToChange2SharingResponsibility`] = value;
+        console.log(prevSim1);
+      }
     }
 
     setSim1Answers(prevSim1);
@@ -589,10 +748,24 @@ export const BIQuestionContextProvider = ({ children }) => {
     } else if (section === BI_SECTION.SIMULATION2) {
       let prev = arrSim2AnsStatus;
       arrSim2AnsStatus[idx] = 1;
-      setArrSim1Status(arrSim2AnsStatus);
+      setArrSim2Status(arrSim2AnsStatus);
       console.log(arrSim2AnsStatus);
-      setSim1Complete(!arrSim2AnsStatus.includes(0));
+      setSim2Complete(!arrSim2AnsStatus.includes(0));
       console.log(sim2Complete);
+    } else if (section === BI_SECTION.EVALUATION1) {
+      let prev = arrEval1AnsStatus;
+      arrEval1AnsStatus[idx] = 1;
+      setArrEval1Status(arrEval1AnsStatus);
+      console.log(arrEval1AnsStatus);
+      setEval1Complete(!arrEval1AnsStatus.includes(0));
+      console.log(eval1Complete);
+    } else if (section === BI_SECTION.EVALUATION2) {
+      let prev = arrEval2AnsStatus;
+      arrEval2AnsStatus[idx] = 1;
+      setArrEval2Status(arrEval2AnsStatus);
+      console.log(arrEval2AnsStatus);
+      setEval2Complete(!arrEval2AnsStatus.includes(0));
+      console.log(eval2Complete);
     }
   };
 
@@ -605,7 +778,11 @@ export const BIQuestionContextProvider = ({ children }) => {
         updateS1Answers: updatingSim1Answers,
         updateSim1Observations: updatingSim1Observations,
         s1CompleteStatus: sim1Complete,
+        s2CompleteStatus: sim2Complete,
+        e1CompleteStatus: eval1Complete,
+        e2CompleteStatus: eval2Complete,
         changeS1CompStatus: changingS1CompState,
+        e1Data: Evaluation1Data,
       }}
     >
       {children}

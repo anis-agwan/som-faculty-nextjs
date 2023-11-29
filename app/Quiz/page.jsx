@@ -11,6 +11,7 @@ export default function Quiz() {
   const section = searchParams.get("section");
   const biqctx = useContext(BIQuestionContext);
   const s1Data = biqctx.s1Data;
+  const e1Data = biqctx.e1Data;
 
   useEffect(() => {
     if (section === BI_SECTION.SIMULTAION1) {
@@ -37,14 +38,14 @@ export default function Quiz() {
       {section === BI_SECTION.EVALUATION1 && (
         <>
           <div>
-            <Evaluation />
+            <Evaluation e1Data={e1Data} />
           </div>
         </>
       )}
       {section === BI_SECTION.EVALUATION2 && (
         <>
           <div>
-            <Evaluation />
+            <Evaluation e1Data={e1Data} />
           </div>
         </>
       )}
