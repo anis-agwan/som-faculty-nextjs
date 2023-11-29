@@ -2,34 +2,51 @@ import React, { useContext, useEffect, useState } from "react";
 import "./Sections.css";
 import { BIQuestionContext } from "@/app/store/biquestion-context";
 import { StartButton } from "../../Buttons/StartButton/StartButton";
+import { useRouter, useSearchParams } from "next/navigation";
+import { BI_SECTION } from "@/app/enums/bi_section_enums";
 
 export const Simulation = ({ s1Data }) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const section = searchParams.get("section");
   const biQctx = useContext(BIQuestionContext);
   const [optionsArr, setOptionsArr] = useState([]);
 
   const [currTopic, setCurrTopic] = useState(0);
+  const [currOptRange, setCurrOptRange] = useState(0);
 
   const [isNextBtnDisabled, setNextBtnDisabled] = useState(false);
   const [isPrevBtnDisabled, setPrevBtnDisabled] = useState(false);
-  const [optAnswerArr, setOptAnswerArr] = useState([-10, -10, -10, -10]);
+  const [isSubmitBtnDisabled, setSubmitBtnDisabled] = useState(true);
+
+  const [optAnswerArr, setOptAnswerArr] = useState([-10, -10, -10, -10, -10]);
 
   const handleAnswer = (qidx, idx, value) => {
-    biQctx.updateS1Answers(qidx, idx, value);
-  };
-
-  const highlightSelect = (idx, value) => {
-    console.log("Q: ", idx, "Op: ", value);
-
     let prev = optAnswerArr;
-    prev[idx] = value;
+    prev[idx - 1] = value;
     setOptAnswerArr(prev);
     console.log(optAnswerArr);
-    // console.log(prev);
+    biQctx.changeS1CompStatus(currOptRange + idx - 1, section);
+    biQctx.updateS1Answers(qidx, idx, value, section);
   };
+
+  //   const highlightSelect = (idx, value) => {
+  //     console.log("Q: ", idx, "Op: ", value);
+
+  //     let prev = optAnswerArr;
+  //     prev[idx] = value;
+  //     setOptAnswerArr(prev);
+  //     console.log(optAnswerArr);
+  //     // console.log(prev);
+  //   };
 
   const handleObservations = (event, idx) => {
     console.log(idx, ": ", event.target.value);
-    biQctx.updateSim1Observations(idx, event.target.value);
+    let prev = optAnswerArr;
+    prev[prev.length - 1] = 1;
+    setOptAnswerArr(prev);
+    console.log(optAnswerArr);
+    biQctx.updateSim1Observations(idx, event.target.value, section);
   };
 
   const getOptions = async () => {
@@ -44,33 +61,56 @@ export const Simulation = ({ s1Data }) => {
       });
   };
 
+  const eraseText = () => {
+    document.getElementById("observationTxtBox").value = "";
+  };
+
   const prevHandler = async () => {
     if (currTopic > 0) {
       let newT = currTopic - 1;
+      let newRange = currOptRange - 4;
       console.log(newT);
       if (newT === 0) {
         console.log("DISABLING");
         await setPrevBtnDisabled(true);
       }
+      setCurrOptRange(newRange);
       setCurrTopic(newT);
       await setNextBtnDisabled(false);
       window.scrollTo(0, 0);
       setOptAnswerArr([-10, -10, -10, -10]);
+      eraseText();
     }
   };
 
   const nextHandler = async () => {
+    if (optAnswerArr.includes(-10)) {
+      alert("Please fill all the section before moving ahead");
+      return;
+    }
+
     if (currTopic < s1Data.length) {
       let newT = currTopic + 1;
-      console.log(newT);
+      let newRange = currOptRange + 4;
+      //   console.log(newT);
       await setPrevBtnDisabled(false);
       if (newT + 1 === s1Data.length) {
         console.log("DISABLING");
         await setNextBtnDisabled(true);
       }
+      setCurrOptRange(newRange);
       setCurrTopic(newT);
       window.scrollTo(0, 0);
       setOptAnswerArr([-10, -10, -10, -10]);
+      eraseText();
+    }
+  };
+
+  const onSubmitHandler = async () => {
+    if (section === BI_SECTION.SIMULTAION1) {
+      router.push(`/Quiz/section-complete?section=${section}`);
+    } else if (section === BI_SECTION.SIMULATION2) {
+      router.push(`/Quiz/section-complete?section=${section}`);
     }
   };
 
@@ -80,8 +120,12 @@ export const Simulation = ({ s1Data }) => {
       getOptions();
     }
 
+    if (biQctx.s1CompleteStatus) {
+      setSubmitBtnDisabled(false);
+    }
+
     console.log(s1Data);
-  }, [optAnswerArr]);
+  }, [optAnswerArr, biQctx.s1CompleteStatus]);
 
   return (
     <div className="flex flex-col h-full w-full p-8 gap-6">
@@ -90,13 +134,20 @@ export const Simulation = ({ s1Data }) => {
           <div className="flex flex-col gap-6">
             <div>
               <h1 className="sectionTitle">{s1Data[currTopic].Q}</h1>
-              <h4 className="sectionDescription">
-                Note: Evaluate the following questions as if you were the group
-                leader
-              </h4>
+              {section === BI_SECTION.SIMULTAION1 && (
+                <h4 className="sectionDescription">
+                  Note: Evaluate the following questions as if you were the
+                  group leader
+                </h4>
+              )}
+              {section === BI_SECTION.SIMULATION2 && (
+                <h4 className="sectionDescription">
+                  Note : Evaluate the following questions as if you are Kerry
+                </h4>
+              )}
             </div>
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col ">
             {s1Data.length > 0 && (
               <>
                 {s1Data[currTopic].questions.map((elem, idx) => {
@@ -108,27 +159,33 @@ export const Simulation = ({ s1Data }) => {
                       </div>
 
                       <div className="flex flex-col w-full gap-3">
-                        {optionsArr[currTopic].options.map((opt, id) => {
-                          return (
-                            <div key={id}>
-                              {opt.idx !== "None" && (
-                                <div>
-                                  <button
-                                    className={`${
-                                      optAnswerArr[idx] === id && "selected"
-                                    } w-full h-full flex optionsBtn px-12 py-6 justify-center items-center`}
-                                    onClick={() => {
-                                      handleAnswer(currTopic, idx + 1, id + 1);
-                                      //   highlightSelect(idx, id);
-                                    }}
-                                  >
-                                    {opt.idx}
-                                  </button>
-                                </div>
-                              )}
-                            </div>
-                          );
-                        })}
+                        {optionsArr[currOptRange + idx].options.map(
+                          (opt, id) => {
+                            return (
+                              <div key={id}>
+                                {opt.idx !== "None" && (
+                                  <div>
+                                    <button
+                                      className={`${
+                                        optAnswerArr[idx] === id && "selected"
+                                      } w-full h-full flex optionsBtn px-12 py-6 justify-center items-center`}
+                                      onClick={() => {
+                                        handleAnswer(
+                                          currTopic,
+                                          idx + 1,
+                                          id + 1
+                                        );
+                                        //   highlightSelect(idx, id);
+                                      }}
+                                    >
+                                      {opt.idx}
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          }
+                        )}
                       </div>
                     </div>
                   );
@@ -144,6 +201,7 @@ export const Simulation = ({ s1Data }) => {
             <div className="h-1/4">
               <textarea
                 className="observationTxtBox w-full"
+                id="observationTxtBox"
                 cols="40"
                 rows="10"
                 onChange={() => {
@@ -163,6 +221,12 @@ export const Simulation = ({ s1Data }) => {
               <StartButton
                 buttonText={"Next"}
                 isBtnDisabled={isNextBtnDisabled}
+              />
+            </div>
+            <div className="w-1/6" onClick={onSubmitHandler}>
+              <StartButton
+                buttonText={"Submit"}
+                isBtnDisabled={isSubmitBtnDisabled}
               />
             </div>
           </div>

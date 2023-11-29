@@ -30,7 +30,7 @@ export default function Quiz() {
       {section === BI_SECTION.SIMULATION2 && (
         <>
           <div>
-            <Simulation />
+            <Simulation s1Data={s1Data} />
           </div>
         </>
       )}

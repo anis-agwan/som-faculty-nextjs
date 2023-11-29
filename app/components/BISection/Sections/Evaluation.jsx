@@ -1,5 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 
 export const Evaluation = () => {
-  return <div>Evaluation</div>;
+  const [optionsArr, setOptionsArr] = useState([]);
+  return (
+    <div className="flex flex-col h-full w-full p-8 gap-6">
+      {optionsArr.length > 0 ? <></> : <>Evaluation</>}
+    </div>
+  );
 };

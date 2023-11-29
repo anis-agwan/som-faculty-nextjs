@@ -1,6 +1,8 @@
 "use client";
 import React, { useContext, useState } from "react";
 import { createContext } from "react";
+import { BI_SECTION } from "../enums/bi_section_enums";
+import { SECTION } from "../enums/section_enums";
 
 export const BIQuestionContext = createContext({
   biState: null,
@@ -9,6 +11,8 @@ export const BIQuestionContext = createContext({
   s1Answers: {},
   updateS1Answers: () => {},
   updateSim1Observations: () => {},
+  s1CompleteStatus: null,
+  changeS1CompStatus: () => {},
   s2Data: [],
 });
 
@@ -462,6 +466,10 @@ export const BIQuestionContextProvider = ({ children }) => {
     },
   ];
   const [sim1Answers, setSim1Answers] = useState({});
+  const [arrSim1AnsStatus, setArrSim1Status] = useState(Array(20).fill(0));
+  const [arrSim2AnsStatus, setArrSim2Status] = useState(Array(20).fill(0));
+  const [sim1Complete, setSim1Complete] = useState(false);
+  const [sim2Complete, setSim2Complete] = useState(false);
 
   const gettingS1Options = async () => {
     const url = `${baseBI}getQuestions`;
@@ -485,48 +493,107 @@ export const BIQuestionContextProvider = ({ children }) => {
     return data;
   };
 
-  const updatingSim1Answers = (qidx, idx, value) => {
+  const updatingSim1Answers = (qidx, idx, value, section) => {
     let prevSim1 = sim1Answers;
-    if (qidx === 0) {
-      prevSim1[`idealizedInfluence1Score${idx}`] = value;
-      console.log(prevSim1);
-    } else if (qidx === 1) {
-      prevSim1[`inspirationalMotivation1Score${idx}`] = value;
-      console.log(prevSim1);
-    } else if (qidx === 2) {
-      prevSim1[`intellectualStimulation1Score${idx}`] = value;
-      console.log(prevSim1);
-    } else if (qidx === 3) {
-      prevSim1[`individualizedConsideration1Score${idx}`] = value;
-      console.log(prevSim1);
-    } else if (qidx === 4) {
-      prevSim1[`contingentReward1Score${idx}`] = value;
-      console.log(prevSim1);
+    if (section === BI_SECTION.SIMULTAION1) {
+      console.log("S1");
+      if (qidx === 0) {
+        prevSim1[`idealizedInfluence1Score${idx}`] = value;
+        console.log(prevSim1);
+      } else if (qidx === 1) {
+        prevSim1[`inspirationalMotivation1Score${idx}`] = value;
+        console.log(prevSim1);
+      } else if (qidx === 2) {
+        prevSim1[`intellectualStimulation1Score${idx}`] = value;
+        console.log(prevSim1);
+      } else if (qidx === 3) {
+        prevSim1[`individualizedConsideration1Score${idx}`] = value;
+        console.log(prevSim1);
+      } else if (qidx === 4) {
+        prevSim1[`contingentReward1Score${idx}`] = value;
+        console.log(prevSim1);
+      }
+    } else if (section === BI_SECTION.SIMULATION2) {
+      if (qidx === 0) {
+        prevSim1[`idealizedInfluence2Score${idx}`] = value;
+        console.log(prevSim1);
+      } else if (qidx === 1) {
+        prevSim1[`inspirationalMotivation2Score${idx}`] = value;
+        console.log(prevSim1);
+      } else if (qidx === 2) {
+        prevSim1[`intellectualStimulation2Score${idx}`] = value;
+        console.log(prevSim1);
+      } else if (qidx === 3) {
+        prevSim1[`individualizedConsideration2Score${idx}`] = value;
+        console.log(prevSim1);
+      } else if (qidx === 4) {
+        prevSim1[`contingentReward2Score${idx}`] = value;
+        console.log(prevSim1);
+      }
     }
 
     setSim1Answers(prevSim1);
   };
 
-  const updatingSim1Observations = (idx, value) => {
+  const updatingSim1Observations = (idx, value, section) => {
     let prevSim1 = sim1Answers;
-    if (idx === 0) {
-      prevSim1["idealizedInfluence1observation"] = value;
-      console.log(prevSim1);
-    } else if (idx === 1) {
-      prevSim1[`inspirationalMotivation1Observation`] = value;
-      console.log(prevSim1);
-    } else if (idx === 2) {
-      prevSim1[`intellectualStimulation1Observation`] = value;
-      console.log(prevSim1);
-    } else if (idx === 3) {
-      prevSim1[`individualizedConsideration1Observation`] = value;
-      console.log(prevSim1);
-    } else if (idx === 4) {
-      prevSim1[`contingentReward1Observation`] = value;
-      console.log(prevSim1);
+    console.log(section);
+    if (section === BI_SECTION.SIMULTAION1) {
+      console.log("S1");
+      if (idx === 0) {
+        prevSim1["idealizedInfluence1observation"] = value;
+        console.log(prevSim1);
+      } else if (idx === 1) {
+        prevSim1[`inspirationalMotivation1Observation`] = value;
+        console.log(prevSim1);
+      } else if (idx === 2) {
+        prevSim1[`intellectualStimulation1Observation`] = value;
+        console.log(prevSim1);
+      } else if (idx === 3) {
+        prevSim1[`individualizedConsideration1Observation`] = value;
+        console.log(prevSim1);
+      } else if (idx === 4) {
+        prevSim1[`contingentReward1Observation`] = value;
+        console.log(prevSim1);
+      }
+    } else if (section === BI_SECTION.SIMULATION2) {
+      if (idx === 0) {
+        prevSim1["idealizedInfluence2observation"] = value;
+        console.log(prevSim1);
+      } else if (idx === 1) {
+        prevSim1[`inspirationalMotivation2Observation`] = value;
+        console.log(prevSim1);
+      } else if (idx === 2) {
+        prevSim1[`intellectualStimulation2Observation`] = value;
+        console.log(prevSim1);
+      } else if (idx === 3) {
+        prevSim1[`individualizedConsideration2Observation`] = value;
+        console.log(prevSim1);
+      } else if (idx === 4) {
+        prevSim1[`contingentReward2Observation`] = value;
+        console.log(prevSim1);
+      }
     }
 
     setSim1Answers(prevSim1);
+  };
+
+  const changingS1CompState = (idx, section) => {
+    if (section === BI_SECTION.SIMULTAION1) {
+      let prev = arrSim1AnsStatus;
+      arrSim1AnsStatus[idx] = 1;
+      setArrSim1Status(arrSim1AnsStatus);
+      console.log(arrSim1AnsStatus);
+      setSim1Complete(!arrSim1AnsStatus.includes(0));
+      console.log(sim1Complete);
+    } else if (section === BI_SECTION.SIMULATION2) {
+      let prev = arrSim2AnsStatus;
+      arrSim2AnsStatus[idx] = 1;
+      setArrSim1Status(arrSim2AnsStatus);
+      console.log(arrSim2AnsStatus);
+      setSim1Complete(!arrSim2AnsStatus.includes(0));
+      console.log(sim2Complete);
+    }
   };
 
   return (
@@ -537,6 +604,8 @@ export const BIQuestionContextProvider = ({ children }) => {
         s1Answers: sim1Answers,
         updateS1Answers: updatingSim1Answers,
         updateSim1Observations: updatingSim1Observations,
+        s1CompleteStatus: sim1Complete,
+        changeS1CompStatus: changingS1CompState,
       }}
     >
       {children}

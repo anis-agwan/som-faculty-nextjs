@@ -89,7 +89,7 @@ export const Navbar = () => {
 
   const imgClick = () => {
     if (authCtx.isLoggedIn) {
-      router.push("/SelectionScreen");
+      router.push("/Dashboard");
     } else {
       router.push("/");
     }
