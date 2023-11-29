@@ -19,11 +19,14 @@ export const BIQuestionContext = createContext({
   e2CompleteStatus: null,
   changeS1CompStatus: () => {},
   e1Data: [],
+  submitS1: () => {},
+  submitS2: () => {},
 });
 
 export const BIQuestionContextProvider = ({ children }) => {
   const authCtx = useContext(AuthContext);
   const baseBI = "http://3.14.159.174:8448/bbim/bi/";
+
   const Simulation1Data = [
     {
       Q: "IDEALIZED INFLUENCE (B) (LS1-II)",
@@ -777,10 +780,51 @@ export const BIQuestionContextProvider = ({ children }) => {
     }
   };
 
-  const submitAnswers = async () => {
+  const submitS1Answers = async () => {
     // await authCtx.onUpdateStats()
 
     try {
+      const url = `${baseBI}biEvaluation1Data`;
+      let data = {
+        bingNumber: authCtx.studentInfo.bingNumber,
+        ...sim1Answers,
+      };
+      console.log(data);
+      const res = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      console.log(res);
+
+      //   });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const submitS2Answers = async () => {
+    // await authCtx.onUpdateStats()
+
+    try {
+      const url = `${baseBI}biEvaluation2Data`;
+      let data = {
+        bingNumber: authCtx.studentInfo.bingNumber,
+        ...sim1Answers,
+      };
+      console.log(data);
+      const res = fetch(url, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      console.log(res);
     } catch (err) {
       console.log(err);
     }
@@ -801,6 +845,8 @@ export const BIQuestionContextProvider = ({ children }) => {
         e2CompleteStatus: eval2Complete,
         changeS1CompStatus: changingS1CompState,
         e1Data: Evaluation1Data,
+        submitS1: submitS1Answers,
+        submitS2: submitS2Answers,
       }}
     >
       {children}

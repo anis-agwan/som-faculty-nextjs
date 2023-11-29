@@ -4,12 +4,14 @@ import { BIQuestionContext } from "@/app/store/biquestion-context";
 import { StartButton } from "../../Buttons/StartButton/StartButton";
 import { useRouter, useSearchParams } from "next/navigation";
 import { BI_SECTION } from "@/app/enums/bi_section_enums";
+import { AuthContext } from "@/app/store/auth-context";
 
 export const Simulation = ({ s1Data }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const section = searchParams.get("section");
   const biQctx = useContext(BIQuestionContext);
+  const authCtx = useContext(AuthContext);
   const [optionsArr, setOptionsArr] = useState([]);
 
   const [currTopic, setCurrTopic] = useState(0);
@@ -112,6 +114,7 @@ export const Simulation = ({ s1Data }) => {
 
   useEffect(() => {
     // biQctx.getS1Options();
+    // console.log(authCtx.studentInfo);
     if (optionsArr.length <= 0) {
       getOptions();
     }

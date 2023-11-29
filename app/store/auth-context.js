@@ -17,11 +17,13 @@ export const AuthContext = createContext({
   onUpdateStats: (email, section) => {},
   signUpStudentData: {},
   passStudentData: (student) => {},
+  getStudentInfo: () => {},
+  studentInfo: {},
 });
 
 export const AuthContextProvider = ({ children }) => {
   const baseURL = "http://3.13.110.40:8080/login-register/";
-
+  const [studInfo, setStudInfo] = useState({});
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({});
   const [signUpStuData, setSignUpStudentData] = useState({});
@@ -37,6 +39,35 @@ export const AuthContextProvider = ({ children }) => {
       setLoggedIn(true);
     }
   }, []);
+
+  const gettingStudentInfo = async (bNum) => {
+    try {
+      const url = `${baseURL}login/getUser/${bNum}`;
+      let data = false;
+      const res = await fetch(url);
+      // console.log(res);
+      await res
+        .json()
+        .then(async (r) => {
+          data = true;
+
+          if (r.validationIndicator === "Valid") {
+            console.log(r);
+            await setStudInfo(r);
+          } else {
+            data = false;
+            alert("No such student exists");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const logoutHandler = () => {
     localStorage.removeItem("isLoggedIn");
@@ -359,6 +390,8 @@ export const AuthContextProvider = ({ children }) => {
         onUpdateStats: updateStats,
         signUpStudentData: signUpStuData,
         passStudentData: studentDataHandler,
+        getStudentInfo: gettingStudentInfo,
+        studentInfo: studInfo,
       }}
     >
       {children}

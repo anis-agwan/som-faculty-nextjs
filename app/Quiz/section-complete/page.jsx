@@ -1,14 +1,21 @@
 "use client";
 import { useSearchParams } from "next/navigation";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import "./SectionComplete.css";
 import { BI_SECTION } from "@/app/enums/bi_section_enums";
 import { useRouter } from "next/navigation";
+import { BIQuestionContext } from "@/app/store/biquestion-context";
 
 export default function SectionComplete() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const section = searchParams.get("section");
+  const biQCtx = useContext(BIQuestionContext);
+
+  useEffect(() => {
+    console.log(biQCtx.s1Answers);
+  }, []);
+
   return (
     <div className="flex h-screen w-full justify-center items-center text-black">
       <div className="scoreBox w-1/2 h-1/2 flex flex-col justify-center items-center gap-28">
@@ -71,10 +78,12 @@ export default function SectionComplete() {
             </div>
             <button
               className="completeBtn"
-              //   onClick={() => {
-              //     router.push(`/Quiz?section=${BI_SECTION.SIMULATION2}`);
-              //     // router.push(`/Quiz?section=${BI_SECTION.SIMULATION2}`);
-              //   }}
+              onClick={() => {
+                biQCtx.submitS1();
+                biQCtx.submitS2();
+                router.push(`/Dashboard`);
+                // router.push(`/Quiz?section=${BI_SECTION.SIMULATION2}`);
+              }}
             >
               Submit All the Answers
             </button>

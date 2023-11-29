@@ -2,10 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "./components/Navbar/Navbar";
 import { AuthContextProvider } from "./store/auth-context";
-import {
-  DashboardContext,
-  DashboardContextProvider,
-} from "./store/dashboard-context";
+import { DashboardContextProvider } from "./store/dashboard-context";
 import { ReportContextProvider } from "./store/reports-context";
 import { BIQuestionContextProvider } from "./store/biquestion-context";
 
