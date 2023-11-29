@@ -3,12 +3,14 @@ import React, { useContext, useState } from "react";
 import { createContext } from "react";
 import { BI_SECTION } from "../enums/bi_section_enums";
 import { SECTION } from "../enums/section_enums";
+import { AuthContext } from "./auth-context";
 
 export const BIQuestionContext = createContext({
   biState: null,
   s1Data: [],
   getS1Options: () => {},
   s1Answers: {},
+  s2Answers: {},
   updateS1Answers: () => {},
   updateSim1Observations: () => {},
   s1CompleteStatus: null,
@@ -20,6 +22,7 @@ export const BIQuestionContext = createContext({
 });
 
 export const BIQuestionContextProvider = ({ children }) => {
+  const authCtx = useContext(AuthContext);
   const baseBI = "http://3.14.159.174:8448/bbim/bi/";
   const Simulation1Data = [
     {
@@ -593,6 +596,7 @@ export const BIQuestionContextProvider = ({ children }) => {
   ];
 
   const [sim1Answers, setSim1Answers] = useState({});
+  const [sim2Answers, setSim2Answers] = useState({});
   const [arrSim1AnsStatus, setArrSim1Status] = useState(Array(20).fill(0));
   const [arrSim2AnsStatus, setArrSim2Status] = useState(Array(20).fill(0));
   const [arrEval1AnsStatus, setArrEval1Status] = useState(Array(5).fill(0));
@@ -626,6 +630,7 @@ export const BIQuestionContextProvider = ({ children }) => {
 
   const updatingSim1Answers = (qidx, idx, value, section) => {
     let prevSim1 = sim1Answers;
+    let prevSim2 = sim2Answers;
     if (section === BI_SECTION.SIMULTAION1) {
       console.log("S1");
       if (qidx === 0) {
@@ -646,34 +651,36 @@ export const BIQuestionContextProvider = ({ children }) => {
       }
     } else if (section === BI_SECTION.SIMULATION2) {
       if (qidx === 0) {
-        prevSim1[`idealizedInfluence2Score${idx}`] = value;
-        console.log(prevSim1);
+        prevSim2[`idealizedInfluence2Score${idx}`] = value;
+        console.log(prevSim2);
       } else if (qidx === 1) {
-        prevSim1[`inspirationalMotivation2Score${idx}`] = value;
-        console.log(prevSim1);
+        prevSim2[`inspirationalMotivation2Score${idx}`] = value;
+        console.log(prevSim2);
       } else if (qidx === 2) {
-        prevSim1[`intellectualStimulation2Score${idx}`] = value;
-        console.log(prevSim1);
+        prevSim2[`intellectualStimulation2Score${idx}`] = value;
+        console.log(prevSim2);
       } else if (qidx === 3) {
-        prevSim1[`individualizedConsideration2Score${idx}`] = value;
-        console.log(prevSim1);
+        prevSim2[`individualizedConsideration2Score${idx}`] = value;
+        console.log(prevSim2);
       } else if (qidx === 4) {
-        prevSim1[`contingentReward2Score${idx}`] = value;
-        console.log(prevSim1);
+        prevSim2[`contingentReward2Score${idx}`] = value;
+        console.log(prevSim2);
       }
     } else if (section === BI_SECTION.EVALUATION1) {
       prevSim1[`adaptToChange1Score${qidx + 1}`] = value;
       console.log(prevSim1);
     } else if (section === BI_SECTION.EVALUATION2) {
-      prevSim1[`adaptToChange2Score${qidx + 1}`] = value;
-      console.log(prevSim1);
+      prevSim2[`adaptToChange2Score${qidx + 1}`] = value;
+      console.log(prevSim2);
     }
 
     setSim1Answers(prevSim1);
+    setSim2Answers(prevSim2);
   };
 
   const updatingSim1Observations = (idx, value, section) => {
     let prevSim1 = sim1Answers;
+    let prevSim2 = sim2Answers;
     console.log(section);
     if (section === BI_SECTION.SIMULTAION1) {
       console.log("S1");
@@ -695,20 +702,20 @@ export const BIQuestionContextProvider = ({ children }) => {
       }
     } else if (section === BI_SECTION.SIMULATION2) {
       if (idx === 0) {
-        prevSim1["idealizedInfluence2observation"] = value;
-        console.log(prevSim1);
+        prevSim2["idealizedInfluence2observation"] = value;
+        console.log(prevSim2);
       } else if (idx === 1) {
-        prevSim1[`inspirationalMotivation2Observation`] = value;
-        console.log(prevSim1);
+        prevSim2[`inspirationalMotivation2Observation`] = value;
+        console.log(prevSim2);
       } else if (idx === 2) {
-        prevSim1[`intellectualStimulation2Observation`] = value;
-        console.log(prevSim1);
+        prevSim2[`intellectualStimulation2Observation`] = value;
+        console.log(prevSim2);
       } else if (idx === 3) {
-        prevSim1[`individualizedConsideration2Observation`] = value;
-        console.log(prevSim1);
+        prevSim2[`individualizedConsideration2Observation`] = value;
+        console.log(prevSim2);
       } else if (idx === 4) {
-        prevSim1[`contingentReward2Observation`] = value;
-        console.log(prevSim1);
+        prevSim2[`contingentReward2Observation`] = value;
+        console.log(prevSim2);
       }
     } else if (section === BI_SECTION.EVALUATION1) {
       if (idx === 2) {
@@ -723,18 +730,19 @@ export const BIQuestionContextProvider = ({ children }) => {
       }
     } else if (section === BI_SECTION.EVALUATION2) {
       if (idx === 2) {
-        prevSim1[`adaptToChange1Observation`] = value;
-        console.log(prevSim1);
+        prevSim2[`adaptToChange1Observation`] = value;
+        console.log(prevSim2);
       } else if (idx === 3) {
-        prevSim1[`adaptToChange2SeekingMoreInformation`] = value;
-        console.log(prevSim1);
+        prevSim2[`adaptToChange2SeekingMoreInformation`] = value;
+        console.log(prevSim2);
       } else if (idx === 4) {
-        prevSim1[`adaptToChange2SharingResponsibility`] = value;
-        console.log(prevSim1);
+        prevSim2[`adaptToChange2SharingResponsibility`] = value;
+        console.log(prevSim2);
       }
     }
 
     setSim1Answers(prevSim1);
+    setSim2Answers(prevSim2);
   };
 
   const changingS1CompState = (idx, section) => {
@@ -769,12 +777,22 @@ export const BIQuestionContextProvider = ({ children }) => {
     }
   };
 
+  const submitAnswers = async () => {
+    // await authCtx.onUpdateStats()
+
+    try {
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <BIQuestionContext.Provider
       value={{
         s1Data: Simulation1Data,
         getS1Options: gettingS1Options,
         s1Answers: sim1Answers,
+        s2Answers: sim2Answers,
         updateS1Answers: updatingSim1Answers,
         updateSim1Observations: updatingSim1Observations,
         s1CompleteStatus: sim1Complete,

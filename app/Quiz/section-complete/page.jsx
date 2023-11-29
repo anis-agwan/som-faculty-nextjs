@@ -35,6 +35,15 @@ export default function SectionComplete() {
               <h1>You Have completed Evaluation1!</h1>
               <h4>(2/4)</h4>
             </div>
+            <button
+              className="completeBtn"
+              onClick={() => {
+                router.push(`/Quiz?section=${BI_SECTION.SIMULATION2}`);
+                // router.push(`/Quiz?section=${BI_SECTION.SIMULATION2}`);
+              }}
+            >
+              Simulation 1
+            </button>
           </>
         )}
         {section === BI_SECTION.SIMULATION2 && (
@@ -43,6 +52,15 @@ export default function SectionComplete() {
               <h1>You Have completed Simulation2!</h1>
               <h4>(3/4)</h4>
             </div>
+            <button
+              className="completeBtn"
+              onClick={() => {
+                router.push(`/Quiz?section=${BI_SECTION.EVALUATION2}`);
+                // router.push(`/Quiz?section=${BI_SECTION.SIMULATION2}`);
+              }}
+            >
+              Evaluation 1
+            </button>
           </>
         )}
         {section === BI_SECTION.EVALUATION2 && (
@@ -51,6 +69,15 @@ export default function SectionComplete() {
               <h1>You Have completed Evaluation2!</h1>
               <h4>(4/4)</h4>
             </div>
+            <button
+              className="completeBtn"
+              //   onClick={() => {
+              //     router.push(`/Quiz?section=${BI_SECTION.SIMULATION2}`);
+              //     // router.push(`/Quiz?section=${BI_SECTION.SIMULATION2}`);
+              //   }}
+            >
+              Submit All the Answers
+            </button>
           </>
         )}
       </div>

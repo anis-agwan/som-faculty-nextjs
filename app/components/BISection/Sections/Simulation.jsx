@@ -200,7 +200,7 @@ export const Simulation = ({ s1Data }) => {
             </div>
             <div className="h-1/4">
               <textarea
-                className="observationTxtBox w-full"
+                className="observationTxtBox w-full ps-4"
                 id="observationTxtBox"
                 cols="40"
                 rows="10"
