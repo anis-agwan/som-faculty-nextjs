@@ -20,6 +20,13 @@ export const AuthContext = createContext({
   getStudentInfo: () => {},
   pdfStudentInfo: () => {},
   studentInfo: {},
+  getAllStudents: () => {},
+  allStudents: [],
+  pbStudents: [],
+  ctStudents: [],
+  ddStudents: [],
+  biStudents: [],
+  allOfThem: [],
 });
 
 export const AuthContextProvider = ({ children }) => {
@@ -28,6 +35,13 @@ export const AuthContextProvider = ({ children }) => {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({});
   const [signUpStuData, setSignUpStudentData] = useState({});
+
+  const [allStudentsData, setAllStudentsData] = useState([]);
+  const [pbStudentsData, setPBStudentsData] = useState([]);
+  const [ctStudentsData, setCTStudentsData] = useState([]);
+  const [ddStudentsData, setDDStudentsData] = useState([]);
+  const [biStudentsData, setBIStudentsData] = useState([]);
+  const [allOfThemAll, setThemAll] = useState([]);
 
   useEffect(() => {
     const storedUserLoggedInInfo = localStorage.getItem("isLoggedIn");
@@ -407,6 +421,125 @@ export const AuthContextProvider = ({ children }) => {
     setSignUpStudentData(student);
   };
 
+  const getiingAllStudents = async () => {
+    const url = `${baseURL}login/getcomplete`;
+    let data = {};
+    try {
+      const res = await fetch(url);
+      await res.json().then((r) => {
+        // console.log(r);
+        data = r;
+        // setThemAll(r);
+        console.log(data);
+        let mC = data.map((student, idx) => {
+          let st = {
+            name: `${student.firstName} ${student.lastName}`,
+            email: student.emailId,
+            bnumber: student.bingNumber,
+            completed: "Yes",
+          };
+          //   console.log(st);
+          return st;
+        });
+        setThemAll(mC);
+        let allComp = r.filter((student) => {
+          return (
+            student.pbComplete &&
+            student.ctComplete &&
+            student.ddComplete &&
+            student.biComplete
+          );
+        });
+
+        let mappedAllComp = allComp.map((student, idx) => {
+          let st = {
+            name: `${student.firstName} ${student.lastName}`,
+            email: student.emailId,
+            bnumber: student.bingNumber,
+            completed: "Yes",
+          };
+          //   console.log(st);
+          return st;
+        });
+        // console.log(mappedAllComp);
+        setAllStudentsData(mappedAllComp);
+
+        let pbComp = r.filter((student) => {
+          return student.pbComplete;
+        });
+
+        let mappedPBComp = pbComp.map((student, idx) => {
+          let st = {
+            name: `${student.firstName} ${student.lastName}`,
+            email: student.emailId,
+            bnumber: student.bingNumber,
+            completed: "Yes",
+          };
+          //   console.log(st);
+          return st;
+        });
+
+        setPBStudentsData(mappedPBComp);
+
+        let ctComp = r.filter((student) => {
+          return student.ctComplete;
+        });
+
+        let mappedCTComp = ctComp.map((student, idx) => {
+          let st = {
+            name: `${student.firstName} ${student.lastName}`,
+            email: student.emailId,
+            bnumber: student.bingNumber,
+            completed: "Yes",
+          };
+          //   console.log(st);
+          return st;
+        });
+
+        // console.log(mappedCTComp);
+        setCTStudentsData(mappedCTComp);
+
+        let ddComp = r.filter((student) => {
+          return student.ddComplete;
+        });
+
+        let mappedDDComp = ddComp.map((student, idx) => {
+          let st = {
+            name: `${student.firstName} ${student.lastName}`,
+            email: student.emailId,
+            bnumber: student.bingNumber,
+            completed: "Yes",
+          };
+          //   console.log(st);
+          return st;
+        });
+
+        setDDStudentsData(mappedDDComp);
+
+        let biComp = r.filter((student) => {
+          return student.biComplete;
+        });
+
+        let mappedBIComp = biComp.map((student, idx) => {
+          let st = {
+            name: `${student.firstName} ${student.lastName}`,
+            email: student.emailId,
+            bnumber: student.bingNumber,
+            completed: "Yes",
+          };
+          //   console.log(st);
+          return st;
+        });
+
+        setBIStudentsData(mappedBIComp);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+
+    return data;
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -425,6 +558,13 @@ export const AuthContextProvider = ({ children }) => {
         getStudentInfo: gettingStudentInfo,
         pdfStudentInfo: pdfStudentInfo,
         studentInfo: studInfo,
+        getAllStudents: getiingAllStudents,
+        allOfThem: allOfThemAll,
+        allStudents: allStudentsData,
+        pbStudents: pbStudentsData,
+        ctStudents: ctStudentsData,
+        ddStudents: ddStudentsData,
+        biStudents: biStudentsData,
       }}
     >
       {children}
