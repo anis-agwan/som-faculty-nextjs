@@ -120,9 +120,9 @@ export const Navbar = () => {
                     {user.firstName + " " + user.lastName}
                   </div>
                 )}
-                <div className="Dropdownlabel">
+                {/* <div className="Dropdownlabel">
                   {user.firstName + " " + user.lastName}
-                </div>
+                </div> */}
                 {/* <button onClick={profileRoute} className="ProfileBtn">
                 Profile
               </button> */}
