@@ -18,6 +18,7 @@ export const AuthContext = createContext({
   signUpStudentData: {},
   passStudentData: (student) => {},
   getStudentInfo: () => {},
+  pdfStudentInfo: () => {},
   studentInfo: {},
 });
 
@@ -64,6 +65,37 @@ export const AuthContextProvider = ({ children }) => {
         });
 
       return data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const pdfStudentInfo = async (bNum) => {
+    let cc = {};
+    try {
+      const url = `${baseURL}login/getUser/${bNum}`;
+      let data = false;
+      const res = await fetch(url);
+      // console.log(res);
+      await res
+        .json()
+        .then(async (r) => {
+          // data = true;
+
+          if (r.validationIndicator === "Valid") {
+            console.log(r);
+            // await setStudInfo(r);
+            cc = r;
+          } else {
+            // data = false;
+            alert("No such student exists");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      return cc;
     } catch (err) {
       console.log(err);
     }
@@ -391,6 +423,7 @@ export const AuthContextProvider = ({ children }) => {
         signUpStudentData: signUpStuData,
         passStudentData: studentDataHandler,
         getStudentInfo: gettingStudentInfo,
+        pdfStudentInfo: pdfStudentInfo,
         studentInfo: studInfo,
       }}
     >

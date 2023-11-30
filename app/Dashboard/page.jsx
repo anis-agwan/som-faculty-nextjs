@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Dashboard.css";
 import { SidePanel } from "../components/SidePanel/SidePanel";
 import { DashView } from "../components/DashView/DashView";
@@ -29,7 +29,7 @@ export default function Dashboard() {
     }
   };
 
-  const submitBNum = (bNum) => {
+  const submitBNum = async (bNum) => {
     console.log(isBNumValid);
     console.log(bNum);
 
@@ -37,6 +37,11 @@ export default function Dashboard() {
       console.log(res);
     });
   };
+
+  useEffect(() => {
+    console.log(dashCtx.viewState);
+    // console.log(completeStudentData);
+  }, [isBNumValid]);
 
   return (
     <div className="flex items-center h-screen text-black pt-10">
@@ -54,7 +59,10 @@ export default function Dashboard() {
             />
           </div>
           <div className="h-5/6 ">
-            <DashView validBnum={isBNumValid} />
+            <DashView
+              validBnum={isBNumValid}
+              // completeStudentData={completeStudentData}
+            />
           </div>
         </div>
       </div>

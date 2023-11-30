@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   Chart as ChartJS,
   RadialLinearScale,
@@ -23,12 +29,14 @@ ChartJS.register(
 );
 
 export const ReportPB = ({ bingNumber }) => {
+  let ref = useRef(null);
   const reportCtx = useContext(ReportContext);
   const [isLoading, setLoading] = useState(false);
   const [pbData, setPBData] = useState({});
   const [comments, setComments] = useState([]);
 
   const getPBData = async (bNum) => {
+    console.log(bNum);
     setLoading(true);
     await reportCtx.getPBGraphData(bNum).then((res) => {
       let data = {
@@ -96,6 +104,13 @@ export const ReportPB = ({ bingNumber }) => {
     setLoading(false);
   };
 
+  const downloadImg = (event) => {
+    let link = event.currentTarget;
+    link.setAttribute("download", "canvas.png");
+    let img = ref.current.toBase64Image();
+    link.setAttribute("href", img);
+  };
+
   const config = {
     scale: {
       beginAtZero: true,
@@ -113,7 +128,7 @@ export const ReportPB = ({ bingNumber }) => {
         ticks: {
           // Include a dollar sign in the ticks
           callback: function (value, index, ticks) {
-            console.log(value, index, ticks);
+            // console.log(value, index, ticks);
 
             if (index === 0) {
               return "Needs Development: " + value;
@@ -170,7 +185,7 @@ export const ReportPB = ({ bingNumber }) => {
               {Object.keys(pbData).length > 0 ? (
                 <>
                   <div className="w-10/12">
-                    <Radar data={pbData.Data} options={config} />
+                    <Radar ref={ref} data={pbData.Data} options={config} />
                   </div>
                   <div className="flex flex-col w-full px-6 pb-4">
                     <ol type="1">
@@ -186,6 +201,9 @@ export const ReportPB = ({ bingNumber }) => {
                         );
                       })}
                     </ol>
+                    <a id="down" href="linking" onClick={downloadImg}>
+                      DOWNLN
+                    </a>
                   </div>
                 </>
               ) : (

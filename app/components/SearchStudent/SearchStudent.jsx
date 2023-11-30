@@ -1,7 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./SearchStudent.css";
 import { SearchButton } from "../Buttons/SearchButtons/SearchButton";
 import { DashboardContext } from "@/app/store/dashboard-context";
+import { SECTION } from "@/app/enums/section_enums";
+import { ReportContext } from "@/app/store/reports-context";
+import { AuthContext } from "@/app/store/auth-context";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import { Pdfcreate } from "../PDF/Pdfcreate";
 
 export const SearchStudent = ({
   bNum,
@@ -9,6 +14,72 @@ export const SearchStudent = ({
   validBnum,
   onSubmit,
 }) => {
+  const dashCtx = useContext(DashboardContext);
+  const reportCtx = useContext(ReportContext);
+  const authCtx = useContext(AuthContext);
+  const [completeStudentData, setCompStudentData] = useState({});
+
+  const [isDataLoaded, setDataLoaded] = useState(validBnum);
+  // const getStudentInfo = async () => {
+  //   let sData = {};
+  //   await authCtx.pdfStudentInfo(bNum).then((r) => {
+  //     console.log(r);
+  //   });
+  //   setCompStudentData(sData);
+  // };
+
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  const handlePDFClick = async (event) => {
+    event.preventDefault();
+    await delay(1000);
+    setDataLoaded(false);
+  };
+
+  const pdfLoadHandler = async () => {
+    console.log(completeStudentData);
+    if (dashCtx.viewState === SECTION.DASH) {
+      let sData = {};
+      await authCtx.pdfStudentInfo(bNum).then((r) => {
+        // console.log(r);
+        sData["info"] = r;
+      });
+
+      await reportCtx.getPBGraphData(bNum).then((r) => {
+        // console.log("PB: ", r);
+        sData["PB"] = r;
+      });
+      await reportCtx.getCTGraphData(bNum).then((r) => {
+        // console.log("CT: ", r);
+        sData["CT"] = r;
+      });
+      await reportCtx.getDDGraphData(bNum).then((r) => {
+        // console.log("DD: ", r);
+        sData["DD"] = r;
+      });
+      await reportCtx.getBIGraphData(bNum).then((r) => {
+        // console.log("BI: ", r);
+        sData["BI"] = r;
+      });
+      // console.log(sData);
+      setCompStudentData(sData);
+      // console.log(completeStudentData);
+    }
+  };
+  const viewState = dashCtx.viewState;
+
+  useEffect(() => {
+    console.log(dashCtx.viewState);
+    console.log(authCtx.studentInfo);
+    if (Object.keys(authCtx.studentInfo).length > 0) {
+      setCompStudentData({
+        ...completeStudentData,
+        info: authCtx.studentInfo,
+      });
+    }
+    // console.log(completeStudentData);
+  }, [isDataLoaded, authCtx.studentInfo]);
+
   return (
     <div className="pt-6 px-4 h-full">
       <div className="flex gap-4 h-full pt-3">
@@ -20,14 +91,64 @@ export const SearchStudent = ({
             onChange={bNumChangeHandler}
           ></input>
         </div>
-        <div
-          className="flex justify-center items-center h-1/2 w-1/4"
-          onClick={() => {
-            validBnum ? onSubmit(bNum) : alert("Not valid BNUm");
-          }}
-        >
-          <SearchButton buttonTxt={"Search Student Reports"} />
-        </div>
+        {isDataLoaded ? (
+          <>
+            <div
+              className="flex justify-center items-center h-1/2 w-1/4"
+              // onClick={() => {
+              //   if (viewState !== SECTION.DASH) {
+              //     validBnum ? onSubmit(bNum) : alert("Not valid BNUm");
+              //   }
+              //   if (viewState === SECTION.DASH) {
+              //     pdfLoadHandler(bNum);
+              //     setDataLoaded(true);
+              //   }
+              // }}
+            >
+              {/* <Pdfcreate studentData={completeStudentData} /> */}
+              <PDFDownloadLink
+                className="Pdfcreate"
+                document={<Pdfcreate studentData={completeStudentData} />}
+                fileName={`MBA_Assessment_Report`}
+              >
+                {({ loading }) =>
+                  loading ? (
+                    <button className="bg-black text-white">
+                      loading PDF...
+                    </button>
+                  ) : (
+                    <button
+                      className="bg-black text-white"
+                      onClick={handlePDFClick}
+                    >
+                      Download PDF
+                    </button>
+                  )
+                }
+              </PDFDownloadLink>
+              {/* <Pdfcreate studentData={completeStudentData} /> */}
+              {/* <SearchButton buttonTxt={"Download Reports"} /> */}
+            </div>
+          </>
+        ) : (
+          <>
+            <div
+              className="flex justify-center items-center h-1/2 w-1/4"
+              onClick={async () => {
+                if (viewState !== SECTION.DASH) {
+                  validBnum ? onSubmit(bNum) : alert("Not valid BNUm");
+                }
+                if (viewState === SECTION.DASH) {
+                  // await getStudentInfo(bNum);
+                  await pdfLoadHandler(bNum);
+                  setDataLoaded(true);
+                }
+              }}
+            >
+              <SearchButton buttonTxt={"Search Student Reports"} />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

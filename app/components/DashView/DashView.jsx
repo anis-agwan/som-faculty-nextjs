@@ -12,12 +12,12 @@ import { BISection } from "../BISection/BISection";
 import { BIQuestionContext } from "@/app/store/biquestion-context";
 import { AuthContext } from "@/app/store/auth-context";
 
-export const DashView = ({ validBnum }) => {
+export const DashView = ({ validBnum, completeStudentData }) => {
   const dashCtx = useContext(DashboardContext);
   const [viewState, setViewState] = useState(dashCtx.viewState);
   const [isStudentDetails, setIsStudentDets] = useState(dashCtx.studentDetails);
   const [isInterview, setIsInterview] = useState(false);
-  const [isTable, setIsTable] = useState(true);
+  const [isTable, setIsTable] = useState(false);
   const biQctx = useContext(BIQuestionContext);
   const authCtx = useContext(AuthContext);
 
@@ -46,152 +46,119 @@ export const DashView = ({ validBnum }) => {
 
   return (
     <div className="flex h-full w-full justify-center px-4 pb-4 gap-2">
-      {isTable ? (
+      {dashCtx.viewState === SECTION.DASH ? (
         <>
-          <div className="bg-white h-full w-full">TABLE</div>
+          <div className="h-full w-full bg-white flex justify-center items-center">
+            DASHIG
+          </div>
         </>
       ) : (
         <>
-          {viewState !== SECTION.BI ? (
+          {isTable ? (
             <>
-              <div
-                className={`bg-white h-full ${
-                  validBnum
-                    ? isStudentDetails !== null
-                      ? "w-3/4"
-                      : "w-full"
-                    : "w-full"
-                } `}
-              >
-                <div className="h-full">
-                  {validBnum && isStudentDetails !== null && (
-                    <>
-                      {viewState === SECTION.PB && (
-                        <ReportPB
-                          bingNumber={
-                            isStudentDetails !== null
-                              ? dashCtx.studentDetails.bingNumber
-                              : ""
-                          }
-                        />
-                      )}
-                      {viewState === SECTION.CT && (
-                        <ReportCT
-                          bingNumber={
-                            isStudentDetails !== null
-                              ? dashCtx.studentDetails.bingNumber
-                              : ""
-                          }
-                        />
-                      )}
-                      {viewState === SECTION.DD && (
-                        <ReportDD
-                          bingNumber={
-                            isStudentDetails !== null
-                              ? dashCtx.studentDetails.bingNumber
-                              : ""
-                          }
-                        />
-                      )}
-                    </>
-                  )}
-                </div>
-              </div>
+              <div className="bg-white h-full w-full">TABLE</div>
             </>
           ) : (
             <>
-              {isInterview ? (
+              {viewState !== SECTION.BI ? (
                 <>
-                  <div className="bg-white h-full  w-full">
-                    <BISection />
+                  <div
+                    className={`bg-white h-full ${
+                      validBnum
+                        ? isStudentDetails !== null
+                          ? "w-3/4"
+                          : "w-full"
+                        : "w-full"
+                    } `}
+                  >
+                    <div className="h-full">
+                      {validBnum && isStudentDetails !== null && (
+                        <>
+                          {viewState === SECTION.PB && (
+                            <ReportPB
+                              bingNumber={
+                                isStudentDetails !== null
+                                  ? dashCtx.studentDetails.bingNumber
+                                  : ""
+                              }
+                            />
+                          )}
+                          {viewState === SECTION.CT && (
+                            <ReportCT
+                              bingNumber={
+                                isStudentDetails !== null
+                                  ? dashCtx.studentDetails.bingNumber
+                                  : ""
+                              }
+                            />
+                          )}
+                          {viewState === SECTION.DD && (
+                            <ReportDD
+                              bingNumber={
+                                isStudentDetails !== null
+                                  ? dashCtx.studentDetails.bingNumber
+                                  : ""
+                              }
+                            />
+                          )}
+                        </>
+                      )}
+                    </div>
                   </div>
                 </>
               ) : (
                 <>
-                  {validBnum && isStudentDetails !== null ? (
+                  {isInterview ? (
                     <>
-                      <div className="bg-white h-full  w-3/4">
-                        <ReportBI
-                          bingNumber={
-                            isStudentDetails !== null
-                              ? dashCtx.studentDetails.bingNumber
-                              : ""
-                          }
-                        />
+                      <div className="bg-white h-full  w-full">
+                        <BISection />
                       </div>
                     </>
                   ) : (
                     <>
-                      <div className="flex justify-center items-center">
-                        <BIForm formSubmit={formSubmit} />
-                      </div>
+                      {validBnum && isStudentDetails !== null ? (
+                        <>
+                          <div className="bg-white h-full  w-3/4">
+                            <ReportBI
+                              bingNumber={
+                                isStudentDetails !== null
+                                  ? dashCtx.studentDetails.bingNumber
+                                  : ""
+                              }
+                            />
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="flex justify-center items-center">
+                            <BIForm formSubmit={formSubmit} />
+                          </div>
+                        </>
+                      )}
                     </>
                   )}
                 </>
               )}
-            </>
-          )}
-          {/* <div
-        className={`bg-white h-full ${
-          validBnum
-            ? isStudentDetails !== null
-              ? "w-3/4"
-              : "w-full"
-            : "w-full"
-        } `}
-      >
-        <div className="h-full">
-          {validBnum && isStudentDetails !== null && (
-            <>
-              {viewState === SECTION.PB && (
-                <ReportPB
-                  bingNumber={
-                    isStudentDetails !== null
-                      ? dashCtx.studentDetails.bingNumber
-                      : ""
-                  }
-                />
-              )}
-              {viewState === SECTION.CT && (
-                <ReportCT
-                  bingNumber={
-                    isStudentDetails !== null
-                      ? dashCtx.studentDetails.bingNumber
-                      : ""
-                  }
-                />
-              )}
-              {viewState === SECTION.DD && (
-                <ReportDD
-                  bingNumber={
-                    isStudentDetails !== null
-                      ? dashCtx.studentDetails.bingNumber
-                      : ""
-                  }
-                />
-              )}
-            </>
-          )}
-        </div>
-      </div> */}
-          {validBnum && isStudentDetails !== null ? (
-            <>
-              <div className="h-full w-1/4 bg-white">
-                <div className="flex flex-col px-4 pt-4">
-                  <div>
-                    <h1>Student details</h1>
+              {validBnum && isStudentDetails !== null ? (
+                <>
+                  <div className="h-full w-1/4 bg-white">
+                    <div className="flex flex-col px-4 pt-4">
+                      <div>
+                        <h1>Student details</h1>
+                      </div>
+                      <div>
+                        <p>{isStudentDetails.firstName}</p>
+                        <p>{isStudentDetails.lastName}</p>
+                        <p>{isStudentDetails.bingNumber}</p>
+                        <p>{isStudentDetails.emailId}</p>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <p>{isStudentDetails.firstName}</p>
-                    <p>{isStudentDetails.lastName}</p>
-                    <p>{isStudentDetails.bingNumber}</p>
-                    <p>{isStudentDetails.emailId}</p>
-                  </div>
-                </div>
-              </div>
+                </>
+              ) : (
+                <></>
+              )}
             </>
-          ) : (
-            <></>
           )}
         </>
       )}
