@@ -221,7 +221,7 @@ export const Pdfcreate = ({ studentData }) => {
               {/* End of PB */}
 
               {/* Critical Thinking */}
-              <Text style={styles.text}>" "</Text>
+              {/* <Text style={styles.text}>" "</Text> */}
 
               <Text style={styles.text}>Little Doubt in CT section</Text>
 

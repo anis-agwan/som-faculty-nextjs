@@ -26,3 +26,8 @@ module.exports = {
     return config;
   },
 };
+
+module.exports = {
+  // ... rest of the configuration.
+  output: "standalone",
+};
