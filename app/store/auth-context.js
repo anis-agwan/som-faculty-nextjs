@@ -430,7 +430,7 @@ export const AuthContextProvider = ({ children }) => {
         // console.log(r);
         data = r;
         // setThemAll(r);
-        console.log(data);
+        // console.log(data);
         let mC = data.map((student, idx) => {
           let st = {
             name: `${student.firstName} ${student.lastName}`,

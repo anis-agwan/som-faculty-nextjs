@@ -9,6 +9,7 @@ export const SidePanel = () => {
   const dashCtx = useContext(DashboardContext);
 
   const changeState = (section) => {
+    console.log("IS STATE CHANGED? ");
     dashCtx.changeViewState(section);
   };
 

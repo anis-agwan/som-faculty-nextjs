@@ -24,7 +24,12 @@ export const Table = ({ section }) => {
           </div>
         </>
       ) : (
-        <>{section === SECTION.DASH && <MTable />}</>
+        <>
+          {section === SECTION.DASH && <MTable />}{" "}
+          {section === SECTION.PB && <MTable />}{" "}
+          {section === SECTION.CT && <MTable />}{" "}
+          {section === SECTION.DD && <MTable />}
+        </>
       )}
     </div>
   );

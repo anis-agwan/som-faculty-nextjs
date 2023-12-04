@@ -21,6 +21,8 @@ export const MTable = ({ allStudentsData }) => {
   const authCtx = useContext(AuthContext);
   const dashCtx = useContext(DashboardContext);
 
+  const setColsRows = async () => {};
+
   const columns = [
     { key: "name", name: "Name" },
     { key: "email", name: "Email" },
@@ -28,7 +30,17 @@ export const MTable = ({ allStudentsData }) => {
     { key: "completed", name: "Assessment Complete" },
   ];
 
-  const rows = authCtx.allOfThem;
+  let rows;
+
+  if (dashCtx.viewState === SECTION.DASH) {
+    rows = authCtx.allStudents;
+  } else if (dashCtx.viewState === SECTION.PB) {
+    rows = authCtx.pbStudents;
+  } else if (dashCtx.viewState === SECTION.CT) {
+    rows = authCtx.ctStudents;
+  } else if (dashCtx.viewState === SECTION.DD) {
+    rows = authCtx.ddStudents;
+  }
 
   return (
     <div className="flex w-full">
