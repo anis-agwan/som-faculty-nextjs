@@ -94,7 +94,6 @@ export const DashView = ({ validBnum, completeStudentData }) => {
                   <>
                     {viewState === SECTION.DASH && (
                       <>
-                        {console.log("DASH ", viewState)}
                         <div className="flex w-full h-full justify-center items-center overflow-auto	overscroll-auto	">
                           <Table section={SECTION.DASH} />
                         </div>

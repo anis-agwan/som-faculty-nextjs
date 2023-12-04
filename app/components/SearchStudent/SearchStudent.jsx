@@ -46,9 +46,9 @@ export const SearchStudent = ({
       });
 
       await reportCtx.getPBGraphData(bNum).then((r) => {
-        // console.log("PB: ", r);
         sData["PB"] = r;
       });
+
       await reportCtx.getCTGraphData(bNum).then((r) => {
         // console.log("CT: ", r);
         sData["CT"] = r;
@@ -77,8 +77,11 @@ export const SearchStudent = ({
         info: authCtx.studentInfo,
       });
     }
+    if (validBnum === false) {
+      setDataLoaded(false);
+    }
     // console.log(completeStudentData);
-  }, [isDataLoaded, authCtx.studentInfo]);
+  }, [isDataLoaded, authCtx.studentInfo, validBnum]);
 
   return (
     <div className="pt-6 px-4 h-full">
@@ -93,42 +96,35 @@ export const SearchStudent = ({
         </div>
         {isDataLoaded ? (
           <>
-            <div
-              className="flex justify-center items-center h-1/2 w-1/4"
-              // onClick={() => {
-              //   if (viewState !== SECTION.DASH) {
-              //     validBnum ? onSubmit(bNum) : alert("Not valid BNUm");
-              //   }
-              //   if (viewState === SECTION.DASH) {
-              //     pdfLoadHandler(bNum);
-              //     setDataLoaded(true);
-              //   }
-              // }}
+            {/* <Pdfcreate studentData={completeStudentData} /> */}
+            <PDFDownloadLink
+              className="Pdfcreate"
+              document={<Pdfcreate studentData={completeStudentData} />}
+              fileName={`${bNum}_MBA_Assessment_Report`}
             >
-              {/* <Pdfcreate studentData={completeStudentData} /> */}
-              <PDFDownloadLink
-                className="Pdfcreate"
-                document={<Pdfcreate studentData={completeStudentData} />}
-                fileName={`MBA_Assessment_Report`}
-              >
-                {({ loading }) =>
-                  loading ? (
-                    <button className="bg-black text-white">
-                      loading PDF...
-                    </button>
-                  ) : (
-                    <button
-                      className="bg-black text-white"
-                      onClick={handlePDFClick}
-                    >
-                      Download PDF
-                    </button>
-                  )
-                }
-              </PDFDownloadLink>
-              {/* <Pdfcreate studentData={completeStudentData} /> */}
-              {/* <SearchButton buttonTxt={"Download Reports"} /> */}
-            </div>
+              {({ loading }) =>
+                loading ? (
+                  <button className="bg-black text-white">
+                    loading PDF...
+                  </button>
+                ) : (
+                  <button
+                    className="w-full h-1/2 z-0 "
+                    // onClick={handlePDFClick}
+                  >
+                    <SearchButton
+                      buttonTxt={"Download Reports"}
+                      className="z-0"
+                    />
+                  </button>
+                )
+              }
+              {/* <div className="searchBtn h-2/4 p-5 flex justify-center items-center">
+                Click to download reports
+              </div> */}
+            </PDFDownloadLink>
+            {/* <Pdfcreate studentData={completeStudentData} /> */}
+            {/* <SearchButton buttonTxt={"Download Reports"} /> */}
           </>
         ) : (
           <>
