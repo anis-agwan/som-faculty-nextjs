@@ -182,7 +182,6 @@ export const Pdfcreate = ({ studentData }) => {
 
   const widthCalculator = (size) => {
     let tempVal = size * 10;
-    console.log((tempVal * 85) / 100);
     return (tempVal * 85) / 100;
   };
 
@@ -1040,14 +1039,14 @@ export const Pdfcreate = ({ studentData }) => {
 
             {/* End of BI */}
 
-            <Text style={styles.Score}> 07 </Text>
+            {/* <Text style={styles.Score}> 07 </Text>
             <Text style={styles.text}>
               Transactional Leadership (NEEDS TO BE CHANGED){" "}
             </Text>
             <Text style={styles.comment}>
               Clearly enjoys change. Solicits new ideas from others and acts on
               them to help produce change.
-            </Text>
+            </Text> */}
 
             <Text
               style={styles.pageNumber}

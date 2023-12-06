@@ -33,8 +33,8 @@ export default function Dashboard() {
   };
 
   const submitBNum = async (bNum) => {
-    console.log(isBNumValid);
-    console.log(bNum);
+    // console.log(isBNumValid);
+    // console.log(bNum);
 
     dashCtx.getStudentDetails(bNum).then((res) => {
       console.log(res);

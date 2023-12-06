@@ -34,6 +34,8 @@ export const ReportBI = ({ bingNumber }) => {
     "IS",
     "SMI",
     "SR",
+    "Adapt to Change 1",
+    "Adapt to Change 2",
   ]);
 
   const [addComData, setAddCommData] = useState([]);
@@ -50,6 +52,8 @@ export const ReportBI = ({ bingNumber }) => {
         r.biCommentIS,
         r.biCommentSMI,
         r.biCommentSR,
+        // r.avgAdaptToChange1,
+        // r.avgAdaptToChange2,
       ];
       setAddCommData(biAddComments);
 
@@ -86,6 +90,8 @@ export const ReportBI = ({ bingNumber }) => {
                 "rgba(39, 151, 245, 0.8)",
                 "rgba(39, 245, 215, 0.8)",
                 "rgba(39, 52, 245, 0.8)",
+                "rgba(245, 116, 39, 0.8)",
+                "rgba(176, 245, 39, 0.8)",
               ],
               borderColor: "rgba(0,0,0,1)",
               borderWidth: 2,
@@ -96,6 +102,8 @@ export const ReportBI = ({ bingNumber }) => {
                 r.biScoreIS,
                 r.biScoreSMI,
                 r.biScoreSR,
+                r.avgAdaptToChange1,
+                r.avgAdaptToChange2,
               ],
             },
           ],
@@ -125,7 +133,9 @@ export const ReportBI = ({ bingNumber }) => {
             return `Score: ${context[0].formattedValue}`;
           },
           label: (context) => {
-            const st = splitStringAfterEightWords(comments[context.dataIndex]);
+            const st = splitStringAfterEightWords(
+              addComData[context.dataIndex]
+            );
             return st;
           },
         },
@@ -136,7 +146,7 @@ export const ReportBI = ({ bingNumber }) => {
         ticks: {
           // Include a dollar sign in the ticks
           callback: function (value, index, ticks) {
-            console.log(value, index, ticks);
+            // console.log(value, index, ticks);
 
             if (index === 0) {
               return "Needs Development: " + value;
@@ -175,9 +185,9 @@ export const ReportBI = ({ bingNumber }) => {
               {Object.keys(biData).length > 0 &&
               Object.keys(avgData).length > 0 ? (
                 <>
-                  <div className="w-10/12 pt-3">
+                  {/* <div className="w-10/12 pt-3">
                     <Bar data={avgData.Data} options={config} />
-                  </div>
+                  </div> */}
                   <div className="w-10/12 pt-3">
                     <Bar data={biData.Data} options={config} />
                   </div>

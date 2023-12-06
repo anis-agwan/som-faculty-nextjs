@@ -28,20 +28,32 @@ export const SearchStudent = ({
   //   setCompStudentData(sData);
   // };
 
-  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  // const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-  const handlePDFClick = async (event) => {
-    event.preventDefault();
-    await delay(1000);
-    setDataLoaded(false);
+  // const handlePDFClick = async (event) => {
+  //   event.preventDefault();
+  //   await delay(1000);
+  //   setDataLoaded(false);
+  // };
+
+  const checkUser = async (bNum) => {
+    if (dashCtx.viewState === SECTION.DASH) {
+      let data = {};
+      await authCtx.pdfStudentInfo(bNum).then((r) => {
+        // console.log(r);
+        data = r;
+      });
+      console.log(data);
+      return data;
+    }
   };
 
-  const pdfLoadHandler = async () => {
+  const pdfLoadHandler = async (bNum) => {
     console.log(completeStudentData);
     if (dashCtx.viewState === SECTION.DASH) {
       let sData = {};
       await authCtx.pdfStudentInfo(bNum).then((r) => {
-        // console.log(r);
+        console.log(r);
         sData["info"] = r;
       });
 
@@ -66,6 +78,7 @@ export const SearchStudent = ({
       // console.log(completeStudentData);
     }
   };
+
   const viewState = dashCtx.viewState;
 
   useEffect(() => {
@@ -131,13 +144,32 @@ export const SearchStudent = ({
             <div
               className="flex justify-center items-center h-1/2 w-1/4"
               onClick={async () => {
+                console.log(dashCtx.viewState);
                 if (viewState !== SECTION.DASH) {
-                  validBnum ? onSubmit(bNum) : alert("Not valid BNUm");
+                  console.log("NOTNOT");
+                  if (validBnum) {
+                    onSubmit(bNum);
+                  } else {
+                    alert("Not valid BNUm");
+                    return;
+                  }
+                  // validBnum ? onSubmit(bNum) : alert("Not valid BNUm") ret;
                 }
                 if (viewState === SECTION.DASH) {
+                  console.log("YESYES");
                   // await getStudentInfo(bNum);
-                  await pdfLoadHandler(bNum);
-                  setDataLoaded(true);
+                  if (validBnum) {
+                    let dd = await checkUser(bNum);
+                    console.log(dd);
+                    if (dd && Object.keys(dd).length === 0) {
+                      return;
+                    }
+                    await pdfLoadHandler(bNum);
+                    setDataLoaded(true);
+                  } else {
+                    alert("Not valid BNUm");
+                    return;
+                  }
                 }
               }}
             >
