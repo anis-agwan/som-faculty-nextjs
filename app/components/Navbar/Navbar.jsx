@@ -70,15 +70,15 @@ export const Navbar = () => {
       router.push("/");
     }
   };
-  const reportRoute = () => {
-    setMenuActive(false);
-    if (authCtx.isLoggedIn) {
-      setMenuActive(false);
-      router.push("Reports");
-    } else {
-      router.push("/");
-    }
-  };
+  // const reportRoute = () => {
+  //   setMenuActive(false);
+  //   if (authCtx.isLoggedIn) {
+  //     setMenuActive(false);
+  //     router.push("Reports");
+  //   } else {
+  //     router.push("/");
+  //   }
+  // };
 
   const logginOut = () => {
     authCtx.onLogout();
@@ -137,14 +137,14 @@ export const Navbar = () => {
                   Dashboard
                 </button>{" "}
                 {/* </Link> */}
-                <button
+                {/* <button
                   className="ReportsBtn1"
                   onClick={() => {
                     reportRoute();
                   }}
                 >
                   Reports
-                </button>
+                </button> */}
                 {/* <button onClick={aboutUsRoute} className='AboutUsBtn1' >About Us</button> */}
                 <button className="LogoutBtn" onClick={logginOut}>
                   Logout

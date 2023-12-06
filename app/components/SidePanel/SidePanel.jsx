@@ -13,6 +13,13 @@ export const SidePanel = () => {
     dashCtx.changeViewState(section);
   };
 
+  const logginOut = () => {
+    authCtx.onLogout();
+    setIsLoggedIn(false);
+    setMenuActive(false);
+    router.push("/");
+  };
+
   return (
     <div className="flex flex-col gap-10 h-3/4 text-white justify-between">
       <div className="flex flex-col gap-3">
@@ -67,9 +74,7 @@ export const SidePanel = () => {
           </button>
         </div>
       </div>
-      <div>
-        <button className="portalBtn">Logout</button>
-      </div>
+      <div>{/* <button className="portalBtn">Logout</button> */}</div>
     </div>
   );
 };

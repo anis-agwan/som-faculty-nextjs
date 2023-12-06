@@ -6,9 +6,12 @@ import { SidePanel } from "../components/SidePanel/SidePanel";
 import { DashView } from "../components/DashView/DashView";
 import { SearchStudent } from "../components/SearchStudent/SearchStudent";
 import { DashboardContext } from "../store/dashboard-context";
+import { AuthContext } from "../store/auth-context";
+import { redirect } from "next/navigation";
 
 export default function Dashboard() {
   const dashCtx = useContext(DashboardContext);
+  const authCtx = useContext(AuthContext);
   const [bNum, setBNum] = useState("");
   const [isBNumValid, setBNumValid] = useState(false);
 
@@ -41,6 +44,10 @@ export default function Dashboard() {
   useEffect(() => {
     console.log(dashCtx.viewState);
     // console.log(completeStudentData);
+    if (!authCtx.isLoggedIn) {
+      console.log(authCtx.isLoggedIn);
+      redirect("/");
+    }
   }, [isBNumValid]);
 
   return (

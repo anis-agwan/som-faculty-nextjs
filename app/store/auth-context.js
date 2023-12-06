@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { TOKEN_ENUMS } from "../enums/token_enums";
 import { USER_ROLE } from "../enums/role_enums";
 
@@ -45,6 +45,18 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     const storedUserLoggedInInfo = localStorage.getItem("isLoggedIn");
+
+    if (storedUserLoggedInInfo) {
+      if (typeof window !== undefined) {
+        localStorage.clear();
+      }
+    }
+
+    // if (storedUserLoggedInInfo === 1) {
+    //   console.log(storedUserLoggedInInfo);
+    //   redirect("/");
+    // }
+
     const user = JSON.parse(localStorage.getItem("userDetails"));
 
     // console.log(user);
