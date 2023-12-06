@@ -61,7 +61,7 @@ export const SearchStudent = ({
         // console.log("BI: ", r);
         sData["BI"] = r;
       });
-      // console.log(sData);
+      console.log(sData);
       setCompStudentData(sData);
       // console.log(completeStudentData);
     }

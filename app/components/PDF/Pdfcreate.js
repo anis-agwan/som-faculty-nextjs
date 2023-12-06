@@ -10,6 +10,7 @@ import {
   Image,
   Document,
   StyleSheet,
+  Canvas,
 } from "@react-pdf/renderer";
 
 import BIcon from "./BinghamtonIcon.png";
@@ -106,6 +107,64 @@ const styles = StyleSheet.create({
     top: 10,
     width: 600,
   },
+
+  startLine: {
+    left: 38,
+    backgroundColor: "black",
+    height: 20,
+    top: 10,
+    width: 2,
+  },
+
+  redBarLine: {
+    marginBottom: 20,
+    left: 40,
+    height: 10,
+    top: -15,
+    backgroundColor: "orange",
+  },
+
+  greenBarLine: {
+    marginBottom: 20,
+    left: 40,
+    height: 10,
+    top: -15,
+    backgroundColor: "green",
+  },
+
+  yellowBarLine: {
+    marginBottom: 20,
+    left: 40,
+    height: 10,
+    top: -15,
+    backgroundColor: "yellow",
+  },
+
+  barBg: {
+    left: 40,
+    right: 40,
+    backgroundColor: "#d9d9d9",
+    height: 10,
+    top: -5,
+  },
+
+  needsImprov: {
+    top: 50,
+    left: 20,
+    fontSize: 10,
+    textAlign: "left",
+    color: "#FA8D33",
+  },
+
+  excellent: {
+    top: -22,
+    left: -20,
+    right: 110,
+    width: "100%",
+    fontSize: 10,
+    textAlign: "right",
+    color: "#FA8D33",
+  },
 });
 
 export const Pdfcreate = ({ studentData }) => {
@@ -121,13 +180,19 @@ export const Pdfcreate = ({ studentData }) => {
     setMonthName(month);
   }, []);
 
+  const widthCalculator = (size) => {
+    let tempVal = size * 10;
+    console.log((tempVal * 85) / 100);
+    return (tempVal * 85) / 100;
+  };
+
   return (
     <>
       <>
         <Document>
           <Page size="A4" style={styles.body}>
             <Text style={styles.title} fixed>
-              LEADERSHIP ASSESSMENT REPORT
+              LEADERSHIP COMPETENCIES
             </Text>
             <Svg style={styles.svgLine} fixed>
               <Line
@@ -171,6 +236,49 @@ export const Pdfcreate = ({ studentData }) => {
               {studentData.PB.openToChangeScoreComment}
             </Text>
 
+            <Text style={styles.needsImprov}>Needs Improvement</Text>
+            <Svg style={styles.startLine}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg style={styles.barBg} width={"85%"}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+
+            <Svg
+              style={
+                widthCalculator(studentData.PB.openToChangeScore) > 60
+                  ? styles.greenBarLine
+                  : widthCalculator(studentData.PB.openToChangeScore) > 30
+                  ? styles.yellowBarLine
+                  : styles.redBarLine
+              }
+              width={`${widthCalculator(studentData.PB.openToChangeScore)}%`}
+            >
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Text style={styles.excellent}>Excellent</Text>
+
             <Text style={styles.Score}>
               {Math.floor(studentData.PB.coachingScore / 10) === 0
                 ? `0${studentData.PB.coachingScore}`
@@ -180,6 +288,49 @@ export const Pdfcreate = ({ studentData }) => {
             <Text style={styles.comment}>
               {studentData.PB.coachingScoreComment}
             </Text>
+
+            <Text style={styles.needsImprov}>Needs Improvement</Text>
+            <Svg style={styles.startLine}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg style={styles.barBg} width={"85%"}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+
+            <Svg
+              style={
+                widthCalculator(studentData.PB.coachingScore) > 60
+                  ? styles.greenBarLine
+                  : widthCalculator(studentData.PB.coachingScore) > 30
+                  ? styles.yellowBarLine
+                  : styles.redBarLine
+              }
+              width={`${widthCalculator(studentData.PB.coachingScore)}%`}
+            >
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Text style={styles.excellent}>Excellent</Text>
 
             <Text style={styles.Score}>
               {Math.floor(studentData.PB.empoweringScore / 10) === 0
@@ -191,15 +342,102 @@ export const Pdfcreate = ({ studentData }) => {
               {studentData.PB.empoweringScoreComment}
             </Text>
 
+            <Text style={styles.needsImprov}>Needs Improvement</Text>
+            <Svg style={styles.startLine}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg style={styles.barBg} width={"85%"}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+
+            <Svg
+              style={
+                widthCalculator(studentData.PB.empoweringScore) > 60
+                  ? styles.greenBarLine
+                  : widthCalculator(studentData.PB.empoweringScore) > 30
+                  ? styles.yellowBarLine
+                  : styles.redBarLine
+              }
+              width={`${widthCalculator(studentData.PB.empoweringScore)}%`}
+            >
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Text style={styles.excellent}>Excellent</Text>
+
             <Text style={styles.Score}>
               {Math.floor(studentData.PB.teamworkScore / 10) === 0
                 ? `0${studentData.PB.teamworkScore}`
                 : studentData.PB.teamworkScore}
             </Text>
+            <Text>{"          "}</Text>
             <Text style={styles.text}>Teamwork Beliefs </Text>
             <Text style={styles.comment}>
               {studentData.PB.teamworkScoreComment}
             </Text>
+
+            <Text style={styles.needsImprov}>Needs Improvement</Text>
+            <Svg style={styles.startLine}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg style={styles.barBg} width={"85%"}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+
+            <Svg
+              style={
+                widthCalculator(studentData.PB.teamworkScore) > 60
+                  ? styles.greenBarLine
+                  : widthCalculator(studentData.PB.teamworkScore) > 30
+                  ? styles.yellowBarLine
+                  : styles.redBarLine
+              }
+              width={`${widthCalculator(studentData.PB.teamworkScore)}%`}
+            >
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Text style={styles.excellent}>Excellent</Text>
 
             <Text style={styles.Score}>
               {Math.floor(studentData.PB.planningAndOrganizingScore / 10) === 0
@@ -211,12 +449,57 @@ export const Pdfcreate = ({ studentData }) => {
               {studentData.PB.planningAndOrganizingScoreComment}
             </Text>
 
+            <Text style={styles.needsImprov}>Needs Improvement</Text>
+            <Svg style={styles.startLine}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg style={styles.barBg} width={"85%"}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg
+              style={
+                widthCalculator(studentData.PB.planningAndOrganizingScore) > 60
+                  ? styles.greenBarLine
+                  : widthCalculator(studentData.PB.planningAndOrganizingScore) >
+                    30
+                  ? styles.yellowBarLine
+                  : styles.redBarLine
+              }
+              width={`${widthCalculator(
+                studentData.PB.planningAndOrganizingScore
+              )}%`}
+            >
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Text style={styles.excellent}>Excellent</Text>
+
             {/* End of PB */}
 
             {/* Critical Thinking */}
             {/* <Text style={styles.text}>" "</Text> */}
 
-            <Text style={styles.text}>Little Doubt in CT section</Text>
+            {/* <Text style={styles.text}>Little Doubt in CT section</Text> */}
 
             <Text style={styles.Score}>
               {Math.floor(studentData.CT.sec1AnalysisScore / 10) === 0
@@ -228,6 +511,48 @@ export const Pdfcreate = ({ studentData }) => {
               {studentData.CT.analysesScoreComment}
             </Text>
 
+            <Text style={styles.needsImprov}>Needs Improvement</Text>
+            <Svg style={styles.startLine}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg style={styles.barBg} width={"85%"}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg
+              style={
+                widthCalculator(studentData.CT.sec1AnalysisScore) > 60
+                  ? styles.greenBarLine
+                  : widthCalculator(studentData.CT.sec1AnalysisScore) > 30
+                  ? styles.yellowBarLine
+                  : styles.redBarLine
+              }
+              width={`${widthCalculator(studentData.CT.sec1AnalysisScore)}%`}
+            >
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Text style={styles.excellent}>Excellent</Text>
+
             <Text style={styles.Score}>
               {Math.floor(studentData.CT.sec2ConnectionsScore / 10) === 0
                 ? `0${studentData.CT.sec2ConnectionsScore}`
@@ -238,6 +563,48 @@ export const Pdfcreate = ({ studentData }) => {
               {studentData.CT.decisivenessScoreComment}
             </Text>
 
+            <Text style={styles.needsImprov}>Needs Improvement</Text>
+            <Svg style={styles.startLine}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg style={styles.barBg} width={"85%"}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg
+              style={
+                widthCalculator(studentData.CT.sec2ConnectionsScore) > 60
+                  ? styles.greenBarLine
+                  : widthCalculator(studentData.CT.sec2ConnectionsScore) > 30
+                  ? styles.yellowBarLine
+                  : styles.redBarLine
+              }
+              width={`${widthCalculator(studentData.CT.sec2ConnectionsScore)}%`}
+            >
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Text style={styles.excellent}>Excellent</Text>
+
             <Text style={styles.Score}>
               {Math.floor(studentData.CT.sec3DepthScore / 10) === 0
                 ? `0${studentData.CT.sec3DepthScore}`
@@ -247,6 +614,48 @@ export const Pdfcreate = ({ studentData }) => {
             <Text style={styles.comment}>
               {studentData.CT.logicalReasoningScoreComment}
             </Text>
+
+            <Text style={styles.needsImprov}>Needs Improvement</Text>
+            <Svg style={styles.startLine}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg style={styles.barBg} width={"85%"}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg
+              style={
+                widthCalculator(studentData.CT.sec3DepthScore) > 60
+                  ? styles.greenBarLine
+                  : widthCalculator(studentData.CT.sec3DepthScore) > 30
+                  ? styles.yellowBarLine
+                  : styles.redBarLine
+              }
+              width={`${widthCalculator(studentData.CT.sec3DepthScore)}%`}
+            >
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Text style={styles.excellent}>Excellent</Text>
 
             {/* End of CT */}
 
@@ -264,6 +673,54 @@ export const Pdfcreate = ({ studentData }) => {
               {studentData.DD.rankData.judgementScoreComment}
             </Text>
 
+            <Text style={styles.needsImprov}>Needs Improvement</Text>
+            <Svg style={styles.startLine}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg style={styles.barBg} width={"85%"}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg
+              style={
+                widthCalculator(
+                  studentData.DD.rankData.convertedRankDecisionScore
+                ) > 60
+                  ? styles.greenBarLine
+                  : widthCalculator(
+                      studentData.DD.rankData.convertedRankDecisionScore
+                    ) > 30
+                  ? styles.yellowBarLine
+                  : styles.redBarLine
+              }
+              width={`${widthCalculator(
+                studentData.DD.rankData.convertedRankDecisionScore
+              )}%`}
+            >
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Text style={styles.excellent}>Excellent</Text>
+
             <Text style={styles.Score}>
               {Math.floor(
                 studentData.DD.rateData.convertedDesirabilityDecisionsScore / 10
@@ -276,9 +733,59 @@ export const Pdfcreate = ({ studentData }) => {
               {studentData.DD.rateData.considerationOfAlternativesScoreComment}
             </Text>
 
+            <Text style={styles.needsImprov}>Needs Improvement</Text>
+            <Svg style={styles.startLine}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg style={styles.barBg} width={"85%"}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg
+              style={
+                widthCalculator(
+                  studentData.DD.rateData.convertedDesirabilityDecisionsScore
+                ) > 60
+                  ? styles.greenBarLine
+                  : widthCalculator(
+                      studentData.DD.rateData
+                        .convertedDesirabilityDecisionsScore
+                    ) > 30
+                  ? styles.yellowBarLine
+                  : styles.redBarLine
+              }
+              width={`${widthCalculator(
+                studentData.DD.rateData.convertedDesirabilityDecisionsScore
+              )}%`}
+            >
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Text style={styles.excellent}>Excellent</Text>
+
             {/* End of DD */}
 
             {/* Behavioral Interview */}
+            <Text>{"      "}</Text>
             <Text style={styles.Score}>
               {Math.floor(studentData.BI.biScoreIII / 10) === 0
                 ? `0${studentData.BI.biScoreIII}`
@@ -289,6 +796,48 @@ export const Pdfcreate = ({ studentData }) => {
             </Text>
             <Text style={styles.comment}>{studentData.BI.biCommentIII}</Text>
 
+            <Text style={styles.needsImprov}>Needs Improvement</Text>
+            <Svg style={styles.startLine}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg style={styles.barBg} width={"85%"}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg
+              style={
+                widthCalculator(studentData.BI.biScoreIII) > 60
+                  ? styles.greenBarLine
+                  : widthCalculator(studentData.BI.biScoreIII) > 30
+                  ? styles.yellowBarLine
+                  : styles.redBarLine
+              }
+              width={`${widthCalculator(studentData.BI.biScoreIII)}%`}
+            >
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Text style={styles.excellent}>Excellent</Text>
+
             <Text style={styles.Score}>
               {Math.floor(studentData.BI.biScoreIS / 10) === 0
                 ? `0${studentData.BI.biScoreIS}`
@@ -296,6 +845,48 @@ export const Pdfcreate = ({ studentData }) => {
             </Text>
             <Text style={styles.text}>Intellectual Stimulation </Text>
             <Text style={styles.comment}>{studentData.BI.biCommentIS}</Text>
+
+            <Text style={styles.needsImprov}>Needs Improvement</Text>
+            <Svg style={styles.startLine}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg style={styles.barBg} width={"85%"}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg
+              style={
+                widthCalculator(studentData.BI.biScoreIS) > 60
+                  ? styles.greenBarLine
+                  : widthCalculator(studentData.BI.biScoreIS) > 30
+                  ? styles.yellowBarLine
+                  : styles.redBarLine
+              }
+              width={`${widthCalculator(studentData.BI.biScoreIS)}%`}
+            >
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Text style={styles.excellent}>Excellent</Text>
 
             <Text style={styles.Score}>
               {Math.floor(studentData.BI.biScoreIC / 10) === 0
@@ -305,6 +896,48 @@ export const Pdfcreate = ({ studentData }) => {
             <Text style={styles.text}>Individualized Consideration </Text>
             <Text style={styles.comment}>{studentData.BI.biCommentIC}</Text>
 
+            <Text style={styles.needsImprov}>Needs Improvement</Text>
+            <Svg style={styles.startLine}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg style={styles.barBg} width={"85%"}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg
+              style={
+                widthCalculator(studentData.BI.biScoreIC) > 60
+                  ? styles.greenBarLine
+                  : widthCalculator(studentData.BI.biScoreIC) > 30
+                  ? styles.yellowBarLine
+                  : styles.redBarLine
+              }
+              width={`${widthCalculator(studentData.BI.biScoreIC)}%`}
+            >
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Text style={styles.excellent}>Excellent</Text>
+
             <Text style={styles.Score}>
               {Math.floor(studentData.BI.biScoreSR / 10) === 0
                 ? `0${studentData.BI.biScoreSR}`
@@ -313,6 +946,48 @@ export const Pdfcreate = ({ studentData }) => {
             <Text style={styles.text}>Sharing Responsibility </Text>
             <Text style={styles.comment}>{studentData.BI.biCommentSR}</Text>
 
+            <Text style={styles.needsImprov}>Needs Improvement</Text>
+            <Svg style={styles.startLine}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg style={styles.barBg} width={"85%"}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg
+              style={
+                widthCalculator(studentData.BI.biScoreSR) > 60
+                  ? styles.greenBarLine
+                  : widthCalculator(studentData.BI.biScoreSR) > 30
+                  ? styles.yellowBarLine
+                  : styles.redBarLine
+              }
+              width={`${widthCalculator(studentData.BI.biScoreSR)}%`}
+            >
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Text style={styles.excellent}>Excellent</Text>
+
             <Text style={styles.Score}>
               {Math.floor(studentData.BI.biScoreSMI / 10) === 0
                 ? `0${studentData.BI.biScoreSMI}`
@@ -320,6 +995,48 @@ export const Pdfcreate = ({ studentData }) => {
             </Text>
             <Text style={styles.text}>Seeking More Information </Text>
             <Text style={styles.comment}>{studentData.BI.biCommentSMI}</Text>
+
+            <Text style={styles.needsImprov}>Needs Improvement</Text>
+            <Svg style={styles.startLine}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg style={styles.barBg} width={"85%"}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg
+              style={
+                widthCalculator(studentData.BI.biScoreSMI) > 60
+                  ? styles.greenBarLine
+                  : widthCalculator(studentData.BI.biScoreSMI) > 30
+                  ? styles.yellowBarLine
+                  : styles.redBarLine
+              }
+              width={`${widthCalculator(studentData.BI.biScoreSMI)}%`}
+            >
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Text style={styles.excellent}>Excellent</Text>
 
             {/* End of BI */}
 
