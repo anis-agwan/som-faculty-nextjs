@@ -44,10 +44,10 @@ export default function Dashboard() {
   useEffect(() => {
     console.log(dashCtx.viewState);
     // console.log(completeStudentData);
-    if (!authCtx.isLoggedIn) {
-      console.log(authCtx.isLoggedIn);
-      redirect("/");
-    }
+    // if (!authCtx.isLoggedIn) {
+    //   console.log(authCtx.isLoggedIn);
+    //   redirect("/");
+    // }
   }, [isBNumValid]);
 
   return (

@@ -74,7 +74,17 @@ export const SidePanel = () => {
           </button>
         </div>
       </div>
-      <div>{/* <button className="portalBtn">Logout</button> */}</div>
+      <div>
+        <button
+          className="portalBtn"
+          onClick={() => {
+            console.log("INVITE");
+            changeState(SECTION.INVITE);
+          }}
+        >
+          Invite
+        </button>
+      </div>
     </div>
   );
 };

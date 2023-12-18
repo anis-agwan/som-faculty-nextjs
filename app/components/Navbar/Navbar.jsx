@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Link from "next/link";
 
 import { useRouter } from "next/navigation";
@@ -65,7 +65,7 @@ export const Navbar = () => {
     // let path = `/SelectionScreen`;
     setMenuActive(false);
     if (authCtx.isLoggedIn) {
-      router.push("SelectionScreen");
+      router.push("Dashboard");
     } else {
       router.push("/");
     }

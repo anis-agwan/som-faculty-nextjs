@@ -4,6 +4,7 @@ export const SECTION = {
   CT: "CT",
   DD: "DD",
   BI: "BI",
+  INVITE: "INVITE",
 };
 
 Object.freeze(SECTION);
