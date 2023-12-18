@@ -15,6 +15,7 @@ export const AuthContext = createContext({
   onTokenSubmit: (email, token) => {},
   onRegisterNewPassword: (email, newPass) => {},
   onUpdateStats: (email, section) => {},
+  invite: (email, role) => {},
   signUpStudentData: {},
   passStudentData: (student) => {},
   getStudentInfo: () => {},
@@ -428,6 +429,34 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
+  const inviteHandler = async (email, role) => {
+    const url = `${baseURL}login/invite`;
+
+    const user = {
+      email: email,
+      role: role,
+    };
+
+    let message = "";
+
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(user),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      message = res.text();
+    } catch (err) {
+      console.log(err);
+      message = err;
+    }
+
+    return message;
+  };
+
   const studentDataHandler = (student) => {
     console.log(student);
     setSignUpStudentData(student);
@@ -565,6 +594,7 @@ export const AuthContextProvider = ({ children }) => {
         onTokenSubmit: tokenSubmitHandler,
         onRegisterNewPassword: registerNewPassword,
         onUpdateStats: updateStats,
+        invite: inviteHandler,
         signUpStudentData: signUpStuData,
         passStudentData: studentDataHandler,
         getStudentInfo: gettingStudentInfo,

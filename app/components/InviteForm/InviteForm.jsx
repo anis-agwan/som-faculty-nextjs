@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./InviteForm.css";
 import { InviteButton } from "../Buttons/InviteButtons/InviteButton";
 import { USER_ROLE } from "@/app/enums/role_enums";
 import { StartButton } from "../Buttons/StartButton/StartButton";
+import { AuthContext } from "@/app/store/auth-context";
 
 export const InviteForm = () => {
   const [inviteWho, setInviteWho] = useState("");
   const [submitBtnState, setSubmitBtnState] = useState(true);
   const [email, setEmail] = useState();
+  const authCtx = useContext(AuthContext);
 
   const changeInviteState = (who) => {
     setInviteWho(who);
@@ -24,9 +26,17 @@ export const InviteForm = () => {
     setEmail(event.target.value);
   };
 
-  const onEmailSubmit = async (event, who) => {
+  const onEmailSubmit = async (event, role) => {
     event.preventDefault();
-    console.log(email, who);
+    console.log(email, role);
+    authCtx
+      .invite(email, role)
+      .then((r) => {
+        alert(r);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
