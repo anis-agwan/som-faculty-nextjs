@@ -1,6 +1,7 @@
 import React from "react";
 import { BICard } from "../BICard/BICard";
 import { BI_SECTION } from "@/app/enums/bi_section_enums";
+import Link from "next/link";
 
 const cardInfo = [
   {
@@ -43,14 +44,30 @@ const cardInfo = [
 
 export const BISection = () => {
   return (
-    <div className="flex w-full justify-evenly gap-8 pt-5 px-8">
-      {cardInfo.map((elem, idx) => {
-        return (
-          <div key={idx}>
-            <BICard cardInfo={elem} />
-          </div>
-        );
-      })}
+    <div className="flex flex-col items-center p-4 divide-y-2 gap-2">
+      <div>
+        <p>Please read the guide before starting the interview</p>
+        <div className="rounded-lg bg-binghamton-green hover:bg-black text-white justify-center flex">
+          {/* <button className="w-full h-full p-4">
+            Assessor Guide Interview Script
+          </button> */}
+          <Link
+            href="BIGuide"
+            className="w-full h-full p-4 justify-center flex"
+          >
+            Assessor Guide Interview Script
+          </Link>
+        </div>
+      </div>
+      <div className="flex w-full justify-evenly gap-8 pt-5 px-8">
+        {cardInfo.map((elem, idx) => {
+          return (
+            <div key={idx}>
+              <BICard cardInfo={elem} />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
