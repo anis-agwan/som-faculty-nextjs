@@ -48,22 +48,22 @@ export const Section2 = () => {
                     </h1>
                     <br />
                     <p className="instructionText ">
-                      You've just been selected as the production manager for a
-                      new manufacturing firm. The firm will be operating in a
-                      team-based format although there is currently very little
-                      structure. You have 5 group leaders that report to you.
-                      Each group leader oversees 3 - 5 teams, each consisting of
-                      4 - 8 team members. Currently, there are no team leaders
-                      in place for the teams; in fact, the team members are
-                      currently being selected and will not be 3Center for
-                      Leadership Studies Page in the facility for about two
-                      weeks. Manufacturing machinery has been delivered and
-                      final installations are ongoing now. Plans are to begin
-                      production within three weeks.
+                      You&#39;ve just been selected as the production manager
+                      for a new manufacturing firm. The firm will be operating
+                      in a team-based format although there is currently very
+                      little structure. You have 5 group leaders that report to
+                      you. Each group leader oversees 3 – 5 teams, each
+                      consisting of 4 – 8 team members. Currently, there are no
+                      team leaders in place for the teams; in fact, the team
+                      members are currently being selected and will not be
+                      3Center for Leadership Studies Page in the facility for
+                      about two weeks. Manufacturing machinery has been
+                      delivered and final installations are ongoing now. Plans
+                      are to begin production within three weeks.
                     </p>
                     <br />
                     <p className="instructionText ">
-                      You have never met your group leaders although you've
+                      You have never met your group leaders although you&#39;ve
                       heard that they are technically competent with at least
                       some supervisory experience. This is a brand new facility
                       and as yet there are no clear vision and strategies to
@@ -130,15 +130,15 @@ export const Section2 = () => {
                             what he/she has to say.
                           </li>
                           <li>
-                            Background Information. Don't offer this information
-                            to the participant, but if he/she probes, then
-                            provide as needed.
+                            Background Information. Don&#39;t offer this
+                            information to the participant, but if he/she
+                            probes, then provide as needed.
                             <ol className="px-10">
                               <li>
                                 You were just hired into your current position.
-                                You're not sure which area you'll be in charge
-                                of yet; all you know is that you will be one of
-                                the group leaders.
+                                You&#39;re not sure which area you&#39;ll be in
+                                charge of yet; all you know is that you will be
+                                one of the group leaders.
                               </li>
                               <li>
                                 You have 3 years of experience working as a
@@ -147,16 +147,16 @@ export const Section2 = () => {
                               </li>
                               <li>
                                 You enjoyed working at the other facility; but
-                                because the management team wasn't very
+                                because the management team wasn&#39;t very
                                 committed to the process, it was really
                                 frustrating, e.g., lack of empowerment to make
                                 decisions, poor team structure and
-                                communication, etc. You're interested in this
-                                opportunity because it's a clean slate.
+                                communication, etc. You&#39;re interested in
+                                this opportunity because it&#39;s a clean slate.
                               </li>
                               <li>
                                 You have 5 years general manufacturing
-                                experience and have an associate's degree in
+                                experience and have an associate&#39;s degree in
                                 industrial engineering.
                               </li>
                               <li>
@@ -178,42 +178,44 @@ export const Section2 = () => {
                           The following are some concerns/problems/objections
                           that you will need to pose to the participant whenever
                           you feel it appropriate, i.e., when it seems natural.
-                          You don't need to pose all of these objectives but
+                          You don&#39;t need to pose all of these objectives but
                           should pose at least 2 that seem relevant based on the
-                          participant's approach to the facility.
+                          participant&#39;s approach to the facility.
                         </p>
                         <ul className="instructionText px-6">
                           <li>
-                            You've been talking with some of the other new group
-                            leaders and you think that a few of them are very
-                            traditional in their beliefs about how employees and
-                            managers should interact and you're sure that it's
-                            going to create some big problems.
+                            You&#39;ve been talking with some of the other new
+                            group leaders and you think that a few of them are
+                            very traditional in their beliefs about how
+                            employees and managers should interact and
+                            you&#39;re sure that it&#39;s going to create some
+                            big problems.
                           </li>
                           <li>
                             If the participant presents a structure that is very
                             open in terms of lines of authority, strictness,
                             etc., say that you think that one of the biggest
-                            problems you've seen is when people's roles weren't
-                            clearly defined and there was too much ambiguity.
-                            You think there may be some real problems.
+                            problems you&#39;ve seen is when people&#39;s roles
+                            weren&#39;t clearly defined and there was too much
+                            ambiguity. You think there may be some real
+                            problems.
                           </li>
                           <li>
                             If the participant presents a structure that is very
                             tight (strict) in terms of lines of authority,
                             strictness, etc., say that you think that one of the
-                            biggest problems you've seen is when managers
+                            biggest problems you&#39;ve seen is when managers
                             created structures that were too confining and
-                            dramatically reduced people's ability to make
+                            dramatically reduced people&#39;s ability to make
                             decisions. You think there may be some real
                             problems.
                             <li>
-                              You're concerned that the participant's ideas
-                              sound real good but you've got doubts about how
-                              well the team members are going to react to it
-                              because (a) it's too new, too much for them at
-                              once, or (b) it's too traditional, it's not open
-                              enough.
+                              You&#39;re concerned that the participant&#39;s
+                              ideas sound real good but you&#39;ve got doubts
+                              about how well the team members are going to react
+                              to it because (a) it&#39;s too new, too much for
+                              them at once, or (b) it&#39;s too traditional,
+                              it&#39;s not open enough.
                             </li>
                           </li>
                         </ul>
@@ -242,10 +244,11 @@ export const Section2 = () => {
                             </div>
                             <div className="w-4/5">
                               <p className="instructionText ">
-                                Assume that you've been able to implement your
-                                plan. Tell me about where you see the facility,
-                                the group, etc., in 3 - 5 years. In other words,
-                                what will be the result of your plan?
+                                Assume that you&#39;ve been able to implement
+                                your plan. Tell me about where you see the
+                                facility, the group, etc., in 3 – 5 years. In
+                                other words, what will be the result of your
+                                plan?
                               </p>
                             </div>
                           </div>
@@ -259,9 +262,9 @@ export const Section2 = () => {
             <div className="bg-white p-6 rounded-md border-2 w-fullshadow-sm ">
               <div>
                 <p className="instructionTextItalic ">
-                  Transition to the next section. "I would like to ask you a few
-                  questions now about your work experiences." [Adapting to
-                  Change]
+                  Transition to the next section. &quot;I would like to ask you
+                  a few questions now about your work experiences.&quot;
+                  [Adapting to Change]
                 </p>
               </div>
             </div>

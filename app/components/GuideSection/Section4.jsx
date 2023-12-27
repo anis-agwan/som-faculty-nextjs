@@ -39,11 +39,11 @@ export const Section4 = () => {
                     </h1>
                     <br />
                     <p className="instructionText ">
-                      You work as an area manager at one of your company's
+                      You work as an area manager at one of your company&#39;s
                       largest call centers. Your direct line of reports is shown
                       in the diagram below.
                     </p>
-                    <Image src={diagram} className="w-5/6" />
+                    <Image src={diagram} className="w-5/6" alt="diagram" />
                     <br />
                     <p className="instructionText ">
                       As you can see from the diagram, you have 6 group leaders
@@ -58,11 +58,11 @@ export const Section4 = () => {
                       One of your group leaders, Kerri, has been having a lot of
                       problems with the teams that report to him/her, and
                       especially with 3 of them. Overall, the performance of
-                      Kerri's group (approximately 150 employees) has been less
-                      than acceptable for the past two months. You mentioned
-                      your concern with him/her once about 4 weeks ago. Kerri
-                      assured you that (s)he would take care of the problems.
-                      Unfortunately, nothing has changed since then.
+                      Kerri&#39;s group (approximately 150 employees) has been
+                      less than acceptable for the past two months. You
+                      mentioned your concern with him/her once about 4 weeks
+                      ago. Kerri assured you that (s)he would take care of the
+                      problems. Unfortunately, nothing has changed since then.
                     </p>
                     <br />
                     <div className="bg-lime-300 px-8 py-4 rounded-md">
@@ -77,15 +77,16 @@ export const Section4 = () => {
                           past month it was much higher. Team members are
                           allowed 5 personal health days during the year in
                           addition to vacation days and medical leave days for
-                          serious problems. Most team members don't use these
-                          personal leave days, but it's common knowledge that
-                          some team members "work the system" and use up Group
-                          Leaders (2) Team Leaders (10) Group Leaders (2) Group
-                          Leaders (2) Team Leaders (10) Team Leaders (10) Area
-                          Manager YOU 7Center for Leadership Studies Page all 5
-                          days. Over the past month there has been a high amount
-                          of personal leave days on these 3 teams causing them
-                          to use temporary employees as replacements.
+                          serious problems. Most team members don&#39;t use
+                          these personal leave days, but it&#39;s common
+                          knowledge that some team members &quot;work the
+                          system&quot; and use up Group Leaders (2) Team Leaders
+                          (10) Group Leaders (2) Group Leaders (2) Team Leaders
+                          (10) Team Leaders (10) Area Manager YOU 7Center for
+                          Leadership Studies Page all 5 days. Over the past
+                          month there has been a high amount of personal leave
+                          days on these 3 teams causing them to use temporary
+                          employees as replacements.
                         </li>
                         <li>
                           In addition to the absenteeism, these three teams have
@@ -101,7 +102,7 @@ export const Section4 = () => {
                     </div>
                     <br />
                     <p className="instructionText ">
-                      Kerri's a young leader who you feel has a lot of
+                      Kerri&#39;s a young leader who you feel has a lot of
                       potential. At the same time, (s)he has a lot of problems
                       relating to others because (s)he is such a perfectionist
                       and tough disciplinarian. (S)he expects a lot of
@@ -111,11 +112,11 @@ export const Section4 = () => {
                       member. You feel that Kerri needs to develop skills in
                       effectively demanding high standards of others without
                       alienating them. You asked Kerri to stop by and talk about
-                      what's happening on his/her team and what to do about it
-                      to get things turned around. Your schedule is pretty busy
-                      and you only have about 15 minutes to talk with Kerri.
-                      Also, you're going to be out of the plant for the next 3
-                      days at a training seminar.
+                      what&#39;s happening on his/her team and what to do about
+                      it to get things turned around. Your schedule is pretty
+                      busy and you only have about 15 minutes to talk with
+                      Kerri. Also, you&#39;re going to be out of the plant for
+                      the next 3 days at a training seminar.
                     </p>
                   </div>
                 </div>
@@ -146,9 +147,10 @@ export const Section4 = () => {
                           </li>
                           <li>
                             You are a person who sets high standards for
-                            yourself and expects the same from others. You don't
-                            tolerate people being lazy or doing sloppy work.
-                            You've made that clear to all of your team leaders.
+                            yourself and expects the same from others. You
+                            don&#39;t tolerate people being lazy or doing sloppy
+                            work. You&#39;ve made that clear to all of your team
+                            leaders.
                           </li>
                           <li>
                             You are usually the first person to work and the
@@ -163,39 +165,40 @@ export const Section4 = () => {
                             You have been very frustrated since taking over as
                             group leader because 3 of the teams that report to
                             you have been performing poorly and not even coming
-                            close to meeting your expectations. You've talked to
-                            the team leaders for these teams many times and told
-                            them that you won't tolerate this level of
-                            mediocrity from your teams.
+                            close to meeting your expectations. You&#39;ve
+                            talked to the team leaders for these teams many
+                            times and told them that you won&#39;t tolerate this
+                            level of mediocrity from your teams.
                           </li>
 
                           <li>
-                            Occasionally, you've even gone down on the floor and
-                            pulled the teams aside during a break and explained
-                            to them that you expect more from them and are not
-                            satisfied. 8Center for Leadership Studies Page You
-                            told them that they couldn't use the excuse that you
-                            don't know the job because you know it as well or
-                            better than any of them, including the team leader.
+                            Occasionally, you&#39;ve even gone down on the floor
+                            and pulled the teams aside during a break and
+                            explained to them that you expect more from them and
+                            are not satisfied. 8Center for Leadership Studies
+                            Page You told them that they couldn&#39;t use the
+                            excuse that you don&#39;t know the job because you
+                            know it as well or better than any of them,
+                            including the team leader.
                           </li>
 
                           <li>
-                            Occasionally, you've told the team members that you
-                            don't care what the team leader says; you have
-                            certain expectations of them and they need to meet
-                            those standards.
+                            Occasionally, you&#39;ve told the team members that
+                            you don&#39;t care what the team leader says; you
+                            have certain expectations of them and they need to
+                            meet those standards.
                           </li>
 
                           <li>
-                            You're a firm believer in goal setting and have sat
-                            down with each of your team leaders over the past 6
-                            months and set goals for them to achieve. Since
-                            you're still not that familiar with the specific
-                            weaknesses and strengths of each team, you've
-                            decided to set the same goals for each team. These
-                            are the same goals you set for your team when you
-                            were a team leader and you expect nothing less of
-                            the other teams.
+                            You&#39;re a firm believer in goal setting and have
+                            sat down with each of your team leaders over the
+                            past 6 months and set goals for them to achieve.
+                            Since you&#39;re still not that familiar with the
+                            specific weaknesses and strengths of each team,
+                            you&#39;ve decided to set the same goals for each
+                            team. These are the same goals you set for your team
+                            when you were a team leader and you expect nothing
+                            less of the other teams.
                             <ol className="px-10">
                               <li>
                                 Each team should have an outstanding customer
@@ -224,24 +227,27 @@ export const Section4 = () => {
                             Remember that you are a very strong-willed,
                             self-confident, driven individual who sets extremely
                             high standards. You are frustrated with people who
-                            "can't keep up", and view them as weak and lazy.
+                            &quot;can&#39;t keep up&quot;, and view them as weak
+                            and lazy.
                           </li>
 
                           <li>
-                            You're more than willing to help people achieve
+                            You&#39;re more than willing to help people achieve
                             their goals, but you are very impatient with people
-                            who aren't willing to try.
+                            who aren&#39;t willing to try.
                           </li>
 
                           <li>
                             You feel that the basic problem with your teams is
-                            that your team leaders aren't pushing hard enough
-                            and haven't truly adopted your philosophy of work.
+                            that your team leaders aren&#39;t pushing hard
+                            enough and haven&#39;t truly adopted your philosophy
+                            of work.
                           </li>
                           <li>
-                            You feel very frustrated with the results you've
+                            You feel very frustrated with the results you&#39;ve
                             been getting and feel that the way to solve it is to
-                            push harder. You don't want to lower your standards.
+                            push harder. You don&#39;t want to lower your
+                            standards.
                           </li>
                         </ul>
                       </div>
@@ -257,7 +263,7 @@ export const Section4 = () => {
                             you feel is necessary.
                           </li>
                           <li>
-                            Be open to the participant's
+                            Be open to the participant&#39;s
                             suggestions/recommendations, but say that you are
                             reluctant to lower your standards.
                           </li>

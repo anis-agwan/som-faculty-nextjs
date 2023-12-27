@@ -43,11 +43,11 @@ export const Section1 = () => {
               <div>
                 <br />
                 <p className="instructionText ">
-                  Tell the candidate, "I'd like you to take about 3 - 5 minutes
-                  and tell me a little bit about you. Let me know anything that
-                  you feel would help me get to know you better. If possible,
-                  however, please avoid topics such as politics and religion. I
-                  may ask you some follow-up questions.";
+                  Tell the candidate, &quot;I&#39;d like you to take about 3 – 5
+                  minutes and tell me a little bit about you. Let me know
+                  anything that you feel would help me get to know you better.
+                  If possible, however, please avoid topics such as politics and
+                  religion. I may ask you some follow-up questions.&quot;
                 </p>
                 <br />
                 <p className="instructionText ">
