@@ -785,6 +785,63 @@ export const Pdfcreate = ({ studentData }) => {
 
             {/* Behavioral Interview */}
             <Text>{"      "}</Text>
+            <Text>{"      "}</Text>
+            <Text>{"      "}</Text>
+            <Text>{"      "}</Text>
+            <Text>{"      "}</Text>
+            <Text>{"      "}</Text>
+            <Text>{"      "}</Text>
+            <Text>{"      "}</Text>
+            <Text style={styles.Score}>
+              {Math.floor(studentData.BI.biScoreCR / 10) === 0
+                ? `0${studentData.BI.biScoreCR}`
+                : studentData.BI.biScoreCR}
+            </Text>
+            <Text style={styles.text}>Contingent Reward</Text>
+            <Text style={styles.comment}>{studentData.BI.biCommentCR}</Text>
+
+            <Text style={styles.needsImprov}>Needs Improvement</Text>
+            <Svg style={styles.startLine}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg style={styles.barBg} width={"85%"}>
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Svg
+              style={
+                widthCalculator(studentData.BI.biScoreCR) > 60
+                  ? styles.greenBarLine
+                  : widthCalculator(studentData.BI.biScoreCR) > 30
+                  ? styles.yellowBarLine
+                  : styles.redBarLine
+              }
+              width={`${widthCalculator(studentData.BI.biScoreCR)}%`}
+            >
+              <Line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="3"
+                strokeWidth={10}
+                stroke="rgb(0,0,0)"
+              />
+            </Svg>
+            <Text style={styles.excellent}>Excellent</Text>
+
             <Text style={styles.Score}>
               {Math.floor(studentData.BI.biScoreIII / 10) === 0
                 ? `0${studentData.BI.biScoreIII}`
@@ -887,6 +944,14 @@ export const Pdfcreate = ({ studentData }) => {
             </Svg>
             <Text style={styles.excellent}>Excellent</Text>
 
+            <Text>{"      "}</Text>
+            <Text>{"      "}</Text>
+            <Text>{"      "}</Text>
+            <Text>{"      "}</Text>
+            <Text>{"      "}</Text>
+            <Text>{"      "}</Text>
+            <Text>{"      "}</Text>
+            <Text>{"      "}</Text>
             <Text style={styles.Score}>
               {Math.floor(studentData.BI.biScoreIC / 10) === 0
                 ? `0${studentData.BI.biScoreIC}`
@@ -992,6 +1057,7 @@ export const Pdfcreate = ({ studentData }) => {
                 ? `0${studentData.BI.biScoreSMI}`
                 : studentData.BI.biScoreSMI}
             </Text>
+
             <Text style={styles.text}>Seeking More Information </Text>
             <Text style={styles.comment}>{studentData.BI.biCommentSMI}</Text>
 

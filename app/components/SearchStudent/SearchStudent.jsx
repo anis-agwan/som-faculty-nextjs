@@ -70,7 +70,7 @@ export const SearchStudent = ({
         sData["DD"] = r;
       });
       await reportCtx.getBIGraphData(bNum).then((r) => {
-        // console.log("BI: ", r);
+        console.log("BI: ", r);
         sData["BI"] = r;
       });
       console.log(sData);
