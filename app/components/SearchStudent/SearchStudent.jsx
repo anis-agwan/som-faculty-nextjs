@@ -44,8 +44,6 @@ export const SearchStudent = ({
       let whatit = await authCtx.didStudentComplete(bNum).then((r) => {
         console.log("DBDB", r);
         if (!r) {
-          console.log("TRUE HAI");
-
           alert(
             "Student has not completed all the assessment quizes and interview."
           );
@@ -56,6 +54,7 @@ export const SearchStudent = ({
       });
 
       if (!whatit) {
+        console.log(whatit);
         setHasStudComp(whatit);
         return;
       }

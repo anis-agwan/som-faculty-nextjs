@@ -584,13 +584,15 @@ export const AuthContextProvider = ({ children }) => {
 
   const studentDidComplete = async (bNum) => {
     const url = `http://localhost:8080/login-register/login/getstudcomplete`;
+    const temp = `${baseURL}login/getstudcomplete`;
+    console.log(temp);
     let user = {
       bnumber: bNum,
     };
 
     let data = null;
     try {
-      const res = await fetch(url, {
+      const res = await fetch(temp, {
         method: "POST",
         body: JSON.stringify(user),
         headers: {
