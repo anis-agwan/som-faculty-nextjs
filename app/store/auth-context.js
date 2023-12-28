@@ -22,6 +22,7 @@ export const AuthContext = createContext({
   pdfStudentInfo: () => {},
   studentInfo: {},
   getAllStudents: () => {},
+  didStudentComplete: () => {},
   allStudents: [],
   pbStudents: [],
   ctStudents: [],
@@ -581,6 +582,33 @@ export const AuthContextProvider = ({ children }) => {
     return data;
   };
 
+  const studentDidComplete = async (bNum) => {
+    const url = `http://localhost:8080/login-register/login/getstudcomplete`;
+    let user = {
+      bnumber: bNum,
+    };
+
+    let data = null;
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(user),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      data = await res.json().then((r) => {
+        return r;
+      });
+    } catch (err) {
+      console.log(err);
+      data = false;
+    }
+    console.log(data);
+    return data;
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -601,6 +629,7 @@ export const AuthContextProvider = ({ children }) => {
         pdfStudentInfo: pdfStudentInfo,
         studentInfo: studInfo,
         getAllStudents: getiingAllStudents,
+        didStudentComplete: studentDidComplete,
         allOfThem: allOfThemAll,
         allStudents: allStudentsData,
         pbStudents: pbStudentsData,

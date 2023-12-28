@@ -20,6 +20,7 @@ export const SearchStudent = ({
   const [completeStudentData, setCompStudentData] = useState({});
 
   const [isDataLoaded, setDataLoaded] = useState(validBnum);
+  const [hasStudentCompleted, setHasStudComp] = useState(false);
   // const getStudentInfo = async () => {
   //   let sData = {};
   //   await authCtx.pdfStudentInfo(bNum).then((r) => {
@@ -39,11 +40,31 @@ export const SearchStudent = ({
   const checkUser = async (bNum) => {
     if (dashCtx.viewState === SECTION.DASH) {
       let data = {};
+
+      let whatit = await authCtx.didStudentComplete(bNum).then((r) => {
+        console.log("DBDB", r);
+        if (!r) {
+          console.log("TRUE HAI");
+
+          alert(
+            "Student has not completed all the assessment quizes and interview."
+          );
+          // return;
+        }
+
+        return r;
+      });
+
+      if (!whatit) {
+        setHasStudComp(whatit);
+        return;
+      }
+
       await authCtx.pdfStudentInfo(bNum).then((r) => {
         // console.log(r);
         data = r;
       });
-      console.log(data);
+      console.log("HERE: ", data);
       return data;
     }
   };
@@ -161,7 +182,11 @@ export const SearchStudent = ({
                   if (validBnum) {
                     let dd = await checkUser(bNum);
                     console.log(dd);
+                    if (dd === undefined) {
+                      return;
+                    }
                     if (dd && Object.keys(dd).length === 0) {
+                      console.log("NONONONO");
                       return;
                     }
                     await pdfLoadHandler(bNum);
