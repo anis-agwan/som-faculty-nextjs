@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     width: "100%",
     fontSize: 10,
     textAlign: "right",
-    color: "#FA8D33",
+    color: "green",
   },
 });
 
@@ -210,6 +210,7 @@ export const Pdfcreate = ({ studentData }) => {
                 ({studentData.info.bingNumber})
               </Text>
             </Text>
+            <Text style={styles.bNumber}>{studentData.info.emailId}</Text>
 
             <Text style={styles.date}>
               {`${monthName} ${todayDate.getDate()}, ${todayDate.getFullYear()}`}

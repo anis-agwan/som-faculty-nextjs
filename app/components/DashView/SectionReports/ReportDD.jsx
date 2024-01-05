@@ -37,7 +37,7 @@ export const ReportDD = ({ bingNumber }) => {
       console.log(res);
       let data = {
         Data: {
-          labels: ["Rank Score", "Rate Score"],
+          labels: ["Rank Score\nJudgement", "Rate Score"],
           datasets: [
             {
               backgroundColor: [
@@ -108,6 +108,10 @@ export const ReportDD = ({ bingNumber }) => {
           },
           align: "center",
         },
+      },
+      secondXAxis: {
+        axis: "x",
+        labels: ["Judgement", "Consideration of Alternatives"],
       },
     },
   };

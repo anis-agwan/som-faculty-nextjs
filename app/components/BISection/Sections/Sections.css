@@ -51,6 +51,17 @@
   text-align: center;
 }
 
+.evalOptionsBtnSelect {
+  background: #00b887;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 19px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 1.2vw;
+  text-align: center;
+}
+
 .selected {
   background-color: #005941;
   color: #f9f9f9;
