@@ -5,6 +5,7 @@ import React, { useContext, useEffect, useState } from "react";
 import "./Sections.css";
 import { StartButton } from "../../Buttons/StartButton/StartButton";
 import { BI_SECTION } from "@/app/enums/bi_section_enums";
+import { QNumberGrid } from "../../QuestionNumberGrid/QNumberGrid";
 
 export const Evaluation = ({ e1Data }) => {
   const router = useRouter();
@@ -94,139 +95,149 @@ export const Evaluation = ({ e1Data }) => {
   }, [biQctx.e1CompleteStatus, biQctx.e2CompleteStatus]);
 
   return (
-    <div className="flex flex-col h-full w-full p-8 gap-8">
-      {optionsArr.length > 0 ? (
-        <>
-          <div className="flex flex-col gap-6">
-            <div>
-              <h1 className="sectionTitle">{e1Data[0].Q}</h1>
-            </div>
-          </div>
-          <div className="flex flex-col gap-3">
-            <h3 className="evalQuestion">
-              {/* {Evaluation2Data[currentQuestion].question1} */}
-              {optionsArr[currTopic].idNameNum}
-            </h3>
-            <div className="flex flex-col w-full gap-3">
-              {optionsArr[currTopic].options.map((opt, idx) => {
-                return (
-                  <div key={idx}>
-                    <div>
-                      <button
-                        className={` w-full h-full flex  ${
-                          answersArr1[idx] == 1
-                            ? "evalOptionsBtnSelect"
-                            : "evalOptionsBtn"
-                        } px-12 py-6 items-center`}
-                        onClick={() => {
-                          handleAnswer(0, idx + 1);
-                          //   highlightSelect(idx, id);
-                        }}
-                      >
-                        {idx + 1}. {opt.idx}
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          <div className="flex flex-col w-full gap-3">
-            <h3 className="evalQuestion">
-              {/* {Evaluation2Data[currentQuestion].question1} */}
-              {optionsArr[currTopic + 1].idNameNum}
-            </h3>
-            <div className="flex flex-col w-full gap-3">
-              {optionsArr[currTopic + 1].options.map((opt, idx) => {
-                return (
-                  <div key={idx}>
-                    <div>
-                      <button
-                        className={` w-full h-full flex ${
-                          answersArr2[idx] == 1
-                            ? "evalOptionsBtnSelect"
-                            : "evalOptionsBtn"
-                        } px-12 py-6 items-center`}
-                        onClick={() => {
-                          handleAnswer(1, idx + 1);
-                          //   highlightSelect(idx, id);
-                        }}
-                      >
-                        {idx + 1}. {opt.idx}
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          <div className="flex flex-col w-full">
-            <div>
-              <h3 className="questionTitle">Observations</h3>
-            </div>
-            <div className="h-1/4">
-              <textarea
-                className="observationTxtBox w-full ps-4 pt-2"
-                id="observationTxtBox"
-                cols="40"
-                rows="10"
-                placeholder="Observation is required. If there are no observations, Please just write a."
-                onChange={() => {
-                  handleObservations(event, 2);
-                }}
-              ></textarea>
-            </div>
-          </div>
-          <div className="flex flex-col gap-5 w-1/2">
-            <div>
-              <div className="flex justify-between">
-                <h3 className="questionTitle">{e1Data[0].SeekingMoreInfo}</h3>
-                <input
-                  className="numInput ps-4"
-                  type="Number"
-                  min={0}
-                  max={10}
-                  required
-                  onChange={() => {
-                    handleObservations(event, 3);
-                  }}
-                ></input>
+    <div className="flex h-full w-full">
+      <div className="flex flex-col h-full w-4/5 p-8 gap-8">
+        {optionsArr.length > 0 ? (
+          <>
+            <div className="flex flex-col gap-6">
+              <div>
+                <h1 className="sectionTitle">{e1Data[0].Q}</h1>
               </div>
-              <h4>Scale 1 - 10: 1=Seeking lowest, 10=Seeking highest</h4>
             </div>
-            <div>
-              <div className="flex justify-between">
-                <h3 className="questionTitle">
-                  {e1Data[0].SharingResponsibility}
-                </h3>
-                <input
-                  className="numInput ps-4"
-                  type="Number"
-                  min={0}
-                  max={10}
-                  required
-                  onChange={() => {
-                    handleObservations(event, 4);
-                  }}
-                ></input>
+            <div className="flex flex-col gap-3">
+              <h3 className="evalQuestion">
+                {/* {Evaluation2Data[currentQuestion].question1} */}
+                {optionsArr[currTopic].idNameNum}
+              </h3>
+              <div className="flex flex-col w-full gap-3">
+                {optionsArr[currTopic].options.map((opt, idx) => {
+                  return (
+                    <div key={idx}>
+                      <div>
+                        <button
+                          className={` w-full h-full flex  ${
+                            answersArr1[idx] == 1
+                              ? "evalOptionsBtnSelect"
+                              : "evalOptionsBtn"
+                          } px-12 py-6 items-center`}
+                          onClick={() => {
+                            handleAnswer(0, idx + 1);
+                            //   highlightSelect(idx, id);
+                          }}
+                        >
+                          {idx + 1}. {opt.idx}
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-              <h4>Scale 1 - 10: 1=Sharing lowest, 10=Sharing highest</h4>
             </div>
-          </div>
-          <div className="w-full flex justify-center pt-12 pb-8">
-            <div className="w-1/6" onClick={onSubmitHandler}>
-              <StartButton
-                buttonText={"Submit"}
-                isBtnDisabled={isSubmitBtnDisabled}
-              />
+            <div className="flex flex-col w-full gap-3">
+              <h3 className="evalQuestion">
+                {/* {Evaluation2Data[currentQuestion].question1} */}
+                {optionsArr[currTopic + 1].idNameNum}
+              </h3>
+              <div className="flex flex-col w-full gap-3">
+                {optionsArr[currTopic + 1].options.map((opt, idx) => {
+                  return (
+                    <div key={idx}>
+                      <div>
+                        <button
+                          className={` w-full h-full flex ${
+                            answersArr2[idx] == 1
+                              ? "evalOptionsBtnSelect"
+                              : "evalOptionsBtn"
+                          } px-12 py-6 items-center`}
+                          onClick={() => {
+                            handleAnswer(1, idx + 1);
+                            //   highlightSelect(idx, id);
+                          }}
+                        >
+                          {idx + 1}. {opt.idx}
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="flex justify-center items-center">Loading...</div>
-        </>
-      )}
+            <div className="flex flex-col w-full">
+              <div>
+                <h3 className="questionTitle">Observations</h3>
+              </div>
+              <div className="h-1/4">
+                <textarea
+                  className="observationTxtBox w-full ps-4 pt-2"
+                  id="observationTxtBox"
+                  cols="40"
+                  rows="10"
+                  placeholder="Observation is required. If there are no observations, Please just write a."
+                  onChange={() => {
+                    handleObservations(event, 2);
+                  }}
+                ></textarea>
+              </div>
+            </div>
+            <div className="flex flex-col gap-5 w-1/2">
+              <div>
+                <div className="flex justify-between">
+                  <h3 className="questionTitle">{e1Data[0].SeekingMoreInfo}</h3>
+                  <input
+                    className="numInput ps-4"
+                    type="Number"
+                    min={0}
+                    max={10}
+                    required
+                    onChange={() => {
+                      handleObservations(event, 3);
+                    }}
+                  ></input>
+                </div>
+                <h4>Scale 1 - 10: 1=Seeking lowest, 10=Seeking highest</h4>
+              </div>
+              <div>
+                <div className="flex justify-between">
+                  <h3 className="questionTitle">
+                    {e1Data[0].SharingResponsibility}
+                  </h3>
+                  <input
+                    className="numInput ps-4"
+                    type="Number"
+                    min={0}
+                    max={10}
+                    required
+                    onChange={() => {
+                      handleObservations(event, 4);
+                    }}
+                  ></input>
+                </div>
+                <h4>Scale 1 - 10: 1=Sharing lowest, 10=Sharing highest</h4>
+              </div>
+            </div>
+            <div className="w-full flex justify-center pt-12 pb-8">
+              <div className="w-1/6" onClick={onSubmitHandler}>
+                <StartButton
+                  buttonText={"Submit"}
+                  isBtnDisabled={isSubmitBtnDisabled}
+                />
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="flex justify-center items-center">Loading...</div>
+          </>
+        )}
+      </div>
+      <div className="w-1/5 p-8">
+        <QNumberGrid
+          noOfQuestions={2}
+          whichMinQues={0}
+          whichQues={1}
+          isSubmitBtnDisabled={true}
+        />
+      </div>
     </div>
   );
 };

@@ -26,11 +26,14 @@ export const DashView = ({ validBnum, completeStudentData }) => {
   const formSubmit = async (event, bNum) => {
     event.preventDefault();
     console.log(bNum);
+    console.log(dashCtx.isInterviewState);
     authCtx.getStudentInfo(bNum).then((r) => {
       if (r) {
         setIsInterview(true);
+        dashCtx.changeInterviewState(true);
       } else {
         setIsInterview(false);
+        dashCtx.changeInterviewState(false);
       }
 
       console.log(authCtx.studentInfo);
@@ -134,7 +137,7 @@ export const DashView = ({ validBnum, completeStudentData }) => {
               </>
             ) : (
               <>
-                {isInterview ? (
+                {dashCtx.isInterviewState ? (
                   <>
                     <div className="bg-white h-full  w-full">
                       <BISection />

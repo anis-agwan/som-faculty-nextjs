@@ -88,6 +88,7 @@ export const Navbar = () => {
   };
 
   const imgClick = () => {
+    console.log(authCtx.isLoggedIn);
     if (authCtx.isLoggedIn) {
       router.push("/Dashboard");
     } else {

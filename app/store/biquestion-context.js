@@ -18,9 +18,14 @@ export const BIQuestionContext = createContext({
   e1CompleteStatus: null,
   e2CompleteStatus: null,
   changeS1CompStatus: () => {},
+  changeS1Obs: () => {},
   e1Data: [],
   submitS1: () => {},
   submitS2: () => {},
+  highlightSim: [],
+  highlightingSimAns: () => {},
+  arrSim1AnsStats: [],
+  arrSim1Observ: [],
 });
 
 export const BIQuestionContextProvider = ({ children }) => {
@@ -601,6 +606,7 @@ export const BIQuestionContextProvider = ({ children }) => {
   const [sim1Answers, setSim1Answers] = useState({});
   const [sim2Answers, setSim2Answers] = useState({});
   const [arrSim1AnsStatus, setArrSim1Status] = useState(Array(20).fill(0));
+  const [arrSim1ObsStatus, setArrSim1Obs] = useState(Array(5).fill(0));
   const [arrSim2AnsStatus, setArrSim2Status] = useState(Array(20).fill(0));
   const [arrEval1AnsStatus, setArrEval1Status] = useState(Array(5).fill(0));
   const [arrEval2AnsStatus, setArrEval2Status] = useState(Array(5).fill(0));
@@ -608,6 +614,7 @@ export const BIQuestionContextProvider = ({ children }) => {
   const [sim2Complete, setSim2Complete] = useState(false);
   const [eval1Complete, setEval1Complete] = useState(false);
   const [eval2Complete, setEval2Complete] = useState(false);
+  const [highlightSim, setHighSim] = useState(Array(20).fill(-1));
 
   const gettingS1Options = async () => {
     const url = `${baseBI}getQuestions`;
@@ -748,6 +755,15 @@ export const BIQuestionContextProvider = ({ children }) => {
     setSim2Answers(prevSim2);
   };
 
+  const highlightingSimAnswers = (idx, section, ans) => {
+    if (section === BI_SECTION.SIMULTAION1) {
+      let prev = highlightSim;
+      highlightSim[idx] = ans;
+      console.log(highlightSim);
+      setHighSim(highlightSim);
+    }
+  };
+
   const changingS1CompState = (idx, section) => {
     if (section === BI_SECTION.SIMULTAION1) {
       let prev = arrSim1AnsStatus;
@@ -777,6 +793,14 @@ export const BIQuestionContextProvider = ({ children }) => {
       console.log(arrEval2AnsStatus);
       setEval2Complete(!arrEval2AnsStatus.includes(0));
       console.log(eval2Complete);
+    }
+  };
+
+  const changingS1ObsStats = (idx, section) => {
+    if (section === BI_SECTION.SIMULTAION1) {
+      arrSim1ObsStatus[idx] = 1;
+      setArrSim1Obs(arrSim1ObsStatus);
+      console.log(arrSim1ObsStatus);
     }
   };
 
@@ -844,9 +868,14 @@ export const BIQuestionContextProvider = ({ children }) => {
         e1CompleteStatus: eval1Complete,
         e2CompleteStatus: eval2Complete,
         changeS1CompStatus: changingS1CompState,
+        changeS1Obs: changingS1ObsStats,
         e1Data: Evaluation1Data,
         submitS1: submitS1Answers,
         submitS2: submitS2Answers,
+        highlightSim: highlightSim,
+        highlightingSimAns: highlightingSimAnswers,
+        arrSim1AnsStats: arrSim1AnsStatus,
+        arrSim1Observ: arrSim1ObsStatus,
       }}
     >
       {children}

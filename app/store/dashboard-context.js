@@ -8,6 +8,9 @@ import { SECTION } from "../enums/section_enums";
 export const DashboardContext = createContext({
   viewState: null,
   changeViewState: (section) => {},
+  isInterviewState: null,
+  interviewStudent: {},
+  changeInterviewState: () => {},
   studentBNum: null,
   changeBNum: (bnum) => {},
   studentDetails: null,
@@ -17,11 +20,18 @@ export const DashboardContext = createContext({
 export const DashboardContextProvider = ({ children }) => {
   const baseLogInUrl = "http://3.13.110.40:8080/login-register/login/getUser";
   const [currentViewState, setCurrViewState] = useState(SECTION.DASH);
+  const [isInterviewState, setIsInterviewState] = useState(false);
+  const [interviewStudent, setInterviewStudent] = useState({});
   const [bNum, setBNum] = useState(null);
   const [details, setStudentDetails] = useState(null);
 
   const changingViewState = (section) => {
     setCurrViewState(section);
+  };
+
+  const changeInterviewState = (state) => {
+    console.log("FFF: ", state);
+    setIsInterviewState(state);
   };
 
   const changingBNum = (bnum) => {
@@ -64,6 +74,9 @@ export const DashboardContextProvider = ({ children }) => {
       value={{
         viewState: currentViewState,
         changeViewState: changingViewState,
+        isInterviewState: isInterviewState,
+        interviewStudent: interviewStudent,
+        changeInterviewState: changeInterviewState,
         studentBNum: bNum,
         changeBNum: changingBNum,
         studentDetails: details,

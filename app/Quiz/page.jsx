@@ -20,7 +20,7 @@ export default function Quiz() {
   });
 
   return (
-    <div className="flex  text-black min-h-screen w-full pt-16 ">
+    <div className="flex text-black min-h-screen w-full pt-16 ">
       {section === BI_SECTION.SIMULTAION1 && (
         <>
           <div className="h-full w-full">
@@ -30,14 +30,14 @@ export default function Quiz() {
       )}
       {section === BI_SECTION.SIMULATION2 && (
         <>
-          <div>
+          <div className="h-full w-full">
             <Simulation s1Data={s1Data} />
           </div>
         </>
       )}
       {section === BI_SECTION.EVALUATION1 && (
         <>
-          <div>
+          <div className="h-full w-full">
             <Evaluation e1Data={e1Data} />
           </div>
         </>

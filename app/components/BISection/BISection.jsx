@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { BICard } from "../BICard/BICard";
 import { BI_SECTION } from "@/app/enums/bi_section_enums";
 import Link from "next/link";
+import { DashboardContext } from "@/app/store/dashboard-context";
+import { AuthContext } from "@/app/store/auth-context";
 
 const cardInfo = [
   {
@@ -43,8 +45,19 @@ const cardInfo = [
 ];
 
 export const BISection = () => {
+  const authCtx = useContext(AuthContext);
+  const dashCtx = useContext(DashboardContext);
+
+  const handleReset = () => {
+    dashCtx.changeInterviewState(false);
+  };
+
+  useEffect(() => {
+    console.log(authCtx.studentInfo);
+  }, []);
+
   return (
-    <div className="flex flex-col items-center p-4 divide-y-2 gap-2">
+    <div className="flex flex-col items-center h-full p-4 divide-y-2 gap-2">
       <div>
         <p>Please read the guide before starting the interview</p>
         <div className="rounded-lg bg-binghamton-green hover:bg-black text-white justify-center flex">
@@ -67,6 +80,17 @@ export const BISection = () => {
             </div>
           );
         })}
+      </div>
+      <div className="flex w-full h-full justify-end items-end ">
+        <div
+          className="rounded-lg bg-binghamton-green hover:bg-black text-white justify-center flex py-4 px-8"
+          onClick={() => {
+            console.log("RESET");
+            handleReset();
+          }}
+        >
+          Reset
+        </div>
       </div>
     </div>
   );
