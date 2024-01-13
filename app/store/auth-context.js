@@ -16,6 +16,7 @@ export const AuthContext = createContext({
   onRegisterNewPassword: (email, newPass) => {},
   onUpdateStats: (email, section) => {},
   invite: (email, role) => {},
+  delete: (email, role) => {},
   signUpStudentData: {},
   passStudentData: (student) => {},
   getStudentInfo: () => {},
@@ -458,6 +459,43 @@ export const AuthContextProvider = ({ children }) => {
     return message;
   };
 
+  const deleteHandler = async (email, role) => {
+    const basicURL = `${baseURL}login`;
+    let url = "";
+    if (role === USER_ROLE.STUDENT) {
+      // url = `${basicURL}/deletestudent`
+      url = "http://localhost:8080/login-register/login/deletestudent";
+    } else if (role === USER_ROLE.FACULTY) {
+      url = "http://localhost:8080/login-register/login/deletefaculty";
+    }
+
+    const user = {
+      email: email,
+    };
+
+    let message = "";
+    let data = {};
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(user),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      data = await res.json().then((r) => {
+        return r;
+      });
+
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+      message = err;
+    }
+
+    return data;
+  };
+
   const studentDataHandler = (student) => {
     console.log(student);
     setSignUpStudentData(student);
@@ -625,6 +663,7 @@ export const AuthContextProvider = ({ children }) => {
         onRegisterNewPassword: registerNewPassword,
         onUpdateStats: updateStats,
         invite: inviteHandler,
+        delete: deleteHandler,
         signUpStudentData: signUpStuData,
         passStudentData: studentDataHandler,
         getStudentInfo: gettingStudentInfo,

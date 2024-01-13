@@ -82,7 +82,7 @@ export const SidePanel = () => {
             changeState(SECTION.INVITE);
           }}
         >
-          Invite
+          Manage Users
         </button>
       </div>
     </div>
