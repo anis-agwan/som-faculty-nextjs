@@ -11,7 +11,6 @@ import { redirect } from "next/navigation";
 
 export default function Dashboard() {
   const dashCtx = useContext(DashboardContext);
-  const authCtx = useContext(AuthContext);
   const [bNum, setBNum] = useState("");
   const [isBNumValid, setBNumValid] = useState(false);
 

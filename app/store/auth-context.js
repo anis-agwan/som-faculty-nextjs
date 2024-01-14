@@ -30,6 +30,7 @@ export const AuthContext = createContext({
   ddStudents: [],
   biStudents: [],
   allOfThem: [],
+  getAllFaculties: () => {},
 });
 
 export const AuthContextProvider = ({ children }) => {
@@ -45,10 +46,11 @@ export const AuthContextProvider = ({ children }) => {
   const [ddStudentsData, setDDStudentsData] = useState([]);
   const [biStudentsData, setBIStudentsData] = useState([]);
   const [allOfThemAll, setThemAll] = useState([]);
+  const [allFaculties, setAllFaculties] = useState([]);
 
   useEffect(() => {
     const storedUserLoggedInInfo = localStorage.getItem("isLoggedIn");
-
+    console.log(storedUserLoggedInInfo);
     if (storedUserLoggedInInfo) {
       if (typeof window !== undefined) {
         localStorage.clear();
@@ -649,6 +651,35 @@ export const AuthContextProvider = ({ children }) => {
     return data;
   };
 
+  const gettingAllFaculties = async (email) => {
+    const url = `http://localhost:8080/login-register/login/getfaculty`;
+    const temp = `${baseURL}login/getfaculty`;
+    let user = {
+      email: email,
+    };
+    let data = null;
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(user),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      data = await res.json().then((r) => {
+        // console.log(r);
+        setAllFaculties(r);
+        return r;
+      });
+    } catch (err) {
+      console.log(err);
+      data = false;
+    }
+    // console.log(data);
+    return data;
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -677,6 +708,7 @@ export const AuthContextProvider = ({ children }) => {
         ctStudents: ctStudentsData,
         ddStudents: ddStudentsData,
         biStudents: biStudentsData,
+        getAllFaculties: gettingAllFaculties,
       }}
     >
       {children}
