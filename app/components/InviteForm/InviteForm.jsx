@@ -78,7 +78,7 @@ export const InviteForm = () => {
 
   const getAllFaculty = async () => {
     await authCtx.getAllFaculties(authCtx.user.emailId).then((r) => {
-      // console.log(r);
+      console.log(r);
       let data = [];
       r.map((e) => {
         console.log(e);
@@ -97,7 +97,9 @@ export const InviteForm = () => {
   };
 
   useEffect(() => {
-    getAllFaculty();
+    if (authCtx.user.role === USER_ROLE.ADMIN) {
+      getAllFaculty();
+    }
   }, []);
 
   return (

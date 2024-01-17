@@ -659,7 +659,7 @@ export const AuthContextProvider = ({ children }) => {
     };
     let data = null;
     try {
-      const res = await fetch(url, {
+      const res = await fetch(temp, {
         method: "POST",
         body: JSON.stringify(user),
         headers: {

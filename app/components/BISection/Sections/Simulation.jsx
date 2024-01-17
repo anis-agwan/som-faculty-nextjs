@@ -189,9 +189,9 @@ export const Simulation = ({ s1Data }) => {
                           {optionsArr[currOptRange + idx].options.map(
                             (opt, id) => {
                               return (
-                                <div key={id}>
+                                <div key={id} className="w-full bg-green">
                                   {opt.idx !== "None" && (
-                                    <div>
+                                    <div className="w-full ">
                                       <button
                                         className={` w-full h-full flex optionsBtn px-12 py-6 justify-center items-center`}
                                         onClick={() => {
