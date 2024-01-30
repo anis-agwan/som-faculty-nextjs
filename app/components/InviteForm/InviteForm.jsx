@@ -231,9 +231,11 @@ export const InviteForm = () => {
                   <div onClick={() => changeInviteState(USER_ROLE.STUDENT)}>
                     <InviteButton buttonTxt={"Invite Student"} />
                   </div>
-                  <div onClick={() => changeInviteState(USER_ROLE.FACULTY)}>
-                    <InviteButton buttonTxt={"Invite Faculty"} />
-                  </div>
+                  {authCtx.user.role === "admin" && (
+                    <div onClick={() => changeInviteState(USER_ROLE.FACULTY)}>
+                      <InviteButton buttonTxt={"Invite Faculty"} />
+                    </div>
+                  )}
                 </div>
 
                 {inviteWho !== "" && (

@@ -85,11 +85,11 @@ export const BISection = () => {
         <div
           className="rounded-lg bg-binghamton-green hover:bg-black text-white justify-center flex py-4 px-8"
           onClick={() => {
-            console.log("RESET");
+            console.log("Continue to next participant");
             handleReset();
           }}
         >
-          Reset
+          Continue to next participant
         </div>
       </div>
     </div>

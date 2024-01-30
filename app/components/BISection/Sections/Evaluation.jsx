@@ -172,7 +172,7 @@ export const Evaluation = ({ e1Data }) => {
                   id="observationTxtBox"
                   cols="40"
                   rows="10"
-                  placeholder="Observation is required. If there are no observations, Please just write a."
+                  placeholder="Observation is required. If there are no observations, Please just write NA."
                   onChange={() => {
                     handleObservations(event, 2);
                   }}

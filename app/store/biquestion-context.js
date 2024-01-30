@@ -625,7 +625,7 @@ export const BIQuestionContextProvider = ({ children }) => {
       await res
         .json()
         .then((r) => {
-          console.log(r);
+          // console.log(r);
           data = r;
         })
         .catch((rr) => {
@@ -691,7 +691,7 @@ export const BIQuestionContextProvider = ({ children }) => {
   const updatingSim1Observations = (idx, value, section) => {
     let prevSim1 = sim1Answers;
     let prevSim2 = sim2Answers;
-    console.log(section);
+    // console.log(section);
     if (section === BI_SECTION.SIMULTAION1) {
       console.log("S1");
       if (idx === 0) {
@@ -759,7 +759,7 @@ export const BIQuestionContextProvider = ({ children }) => {
     if (section === BI_SECTION.SIMULTAION1) {
       let prev = highlightSim;
       highlightSim[idx] = ans;
-      console.log(highlightSim);
+      // console.log(highlightSim);
       setHighSim(highlightSim);
     }
   };
@@ -771,7 +771,7 @@ export const BIQuestionContextProvider = ({ children }) => {
       setArrSim1Status(arrSim1AnsStatus);
       console.log(arrSim1AnsStatus);
       setSim1Complete(!arrSim1AnsStatus.includes(0));
-      console.log(sim1Complete);
+      // console.log(sim1Complete);
     } else if (section === BI_SECTION.SIMULATION2) {
       let prev = arrSim2AnsStatus;
       arrSim2AnsStatus[idx] = 1;

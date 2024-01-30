@@ -27,6 +27,7 @@ export const Simulation = ({ s1Data }) => {
   const [optAnswerArr, setOptAnswerArr] = useState([-10, -10, -10, -10, -10]);
 
   const handleAnswer = (qidx, idx, value) => {
+    console.log("QIDX: ", qidx, " IDX: ", idx, " VALUE: ", value);
     let prev = optAnswerArr;
     prev[idx - 1] = value;
     setOptAnswerArr(prev);
@@ -62,7 +63,7 @@ export const Simulation = ({ s1Data }) => {
     await biQctx
       .getS1Options()
       .then((r) => {
-        console.log(r);
+        // console.log(r);
         setOptionsArr(r);
       })
       .catch((err) => {
@@ -87,6 +88,8 @@ export const Simulation = ({ s1Data }) => {
       setCurrTopic(newT);
       await setNextBtnDisabled(false);
       window.scrollTo(0, 0);
+      setQGridMaxRange(qgridMaxRange - 4);
+      setQGridMinRange(qgridMinRange - 4);
       setOptAnswerArr([-10, -10, -10, -10]);
       eraseText();
     }
