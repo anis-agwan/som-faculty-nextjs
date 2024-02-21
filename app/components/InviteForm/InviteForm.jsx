@@ -22,15 +22,26 @@ const columns = [
   { key: "role", name: "Role" },
 ];
 
+const newCols = [
+  { key: "name", name: "Name" },
+  { key: "email", name: "Email" },
+  { key: "bnumber", name: "B#" },
+  { key: "pbcompleted", name: "PB Quiz" },
+  { key: "cacompleted", name: "CA Quiz" },
+  { key: "ddcompleted", name: "DD Quiz" },
+];
+
 export const InviteForm = () => {
   const [inviteWho, setInviteWho] = useState("");
   const [listAllFaculties, setListAllFaculties] = useState(false);
+  const [listAllStudents, setListAllStudents] = useState(false);
   const [submitBtnState, setSubmitBtnState] = useState(true);
   const [email, setEmail] = useState();
   const [allFaculties, setAllFaculties] = useState([]);
+  const [allStudents, setAllStudents] = useState([]);
   const authCtx = useContext(AuthContext);
 
-  console.log(authCtx.user.role);
+  // console.log(authCtx.letsTestAllstuds);
 
   const [isDeleteState, setIsDeleteState] = useState(false);
 
@@ -38,6 +49,7 @@ export const InviteForm = () => {
     setInviteWho(who);
     setEmail("");
     setListAllFaculties(false);
+    setListAllStudents(false);
     setSubmitBtnState(true);
   };
 
@@ -99,6 +111,7 @@ export const InviteForm = () => {
   useEffect(() => {
     if (authCtx.user.role === USER_ROLE.ADMIN) {
       getAllFaculty();
+      setAllStudents(authCtx.letsTestAllstuds);
     }
   }, []);
 
@@ -114,8 +127,21 @@ export const InviteForm = () => {
               <div onClick={() => changeInviteState(USER_ROLE.FACULTY)}>
                 <InviteButton buttonTxt={"Delete Faculty"} />
               </div>
-              <div onClick={() => setListAllFaculties(true)}>
+              <div
+                onClick={() => {
+                  setListAllFaculties(true);
+                  setListAllStudents(false);
+                }}
+              >
                 <InviteButton buttonTxt={"List Faculties"} />
+              </div>
+              <div
+                onClick={() => {
+                  setListAllStudents(true);
+                  setListAllFaculties(false);
+                }}
+              >
+                <InviteButton buttonTxt={"List Students"} />
               </div>
             </div>
             {allFaculties.length > 0 && (
@@ -123,6 +149,34 @@ export const InviteForm = () => {
                 <DataGrid
                   columns={columns}
                   rows={allFaculties}
+                  className=" h-full w-full"
+                />
+              </div>
+            )}
+          </div>
+        </>
+      ) : listAllStudents ? (
+        <>
+          <div className="flex flex-col bg-white w-full h-full pt-4 gap-6">
+            <div className="flex gap-5 justify-center ">
+              <div onClick={() => changeInviteState(USER_ROLE.STUDENT)}>
+                <InviteButton buttonTxt={"Delete Student"} />
+              </div>
+              <div onClick={() => changeInviteState(USER_ROLE.FACULTY)}>
+                <InviteButton buttonTxt={"Delete Faculty"} />
+              </div>
+              <div onClick={() => setListAllFaculties(true)}>
+                <InviteButton buttonTxt={"List Faculties"} />
+              </div>
+              <div onClick={() => setListAllStudents(true)}>
+                <InviteButton buttonTxt={"List Students"} />
+              </div>
+            </div>
+            {allStudents.length > 0 && (
+              <div className="flex w-full h-full pb-2 px-4">
+                <DataGrid
+                  columns={newCols}
+                  rows={allStudents}
                   className=" h-full w-full"
                 />
               </div>
@@ -145,14 +199,27 @@ export const InviteForm = () => {
             {isDeleteState ? (
               <>
                 <div className="flex gap-5 justify-center ">
+                  <div
+                    onClick={() => {
+                      setListAllStudents(true);
+                      setListAllFaculties(false);
+                    }}
+                  >
+                    <InviteButton buttonTxt={"List Students"} />
+                  </div>
+                  <div
+                    onClick={() => {
+                      setListAllFaculties(true);
+                      setListAllStudents(false);
+                    }}
+                  >
+                    <InviteButton buttonTxt={"List Faculties"} />
+                  </div>
                   <div onClick={() => changeInviteState(USER_ROLE.STUDENT)}>
                     <InviteButton buttonTxt={"Delete Student"} />
                   </div>
                   <div onClick={() => changeInviteState(USER_ROLE.FACULTY)}>
                     <InviteButton buttonTxt={"Delete Faculty"} />
-                  </div>
-                  <div onClick={() => setListAllFaculties(true)}>
-                    <InviteButton buttonTxt={"List Faculties"} />
                   </div>
                 </div>
 

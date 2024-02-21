@@ -30,6 +30,7 @@ export const AuthContext = createContext({
   ddStudents: [],
   biStudents: [],
   allOfThem: [],
+  letsTestAllstuds: [],
   getAllFaculties: () => {},
 });
 
@@ -47,6 +48,7 @@ export const AuthContextProvider = ({ children }) => {
   const [biStudentsData, setBIStudentsData] = useState([]);
   const [allOfThemAll, setThemAll] = useState([]);
   const [allFaculties, setAllFaculties] = useState([]);
+  const [letsTestAllstudents, setLetsTestStudents] = useState([]);
 
   useEffect(() => {
     const storedUserLoggedInInfo = localStorage.getItem("isLoggedIn");
@@ -465,10 +467,11 @@ export const AuthContextProvider = ({ children }) => {
     const basicURL = `${baseURL}login`;
     let url = "";
     if (role === USER_ROLE.STUDENT) {
-      // url = `${basicURL}/deletestudent`
+      // url = `${basicURL}/deletestudent`;
       url = "http://localhost:8080/login-register/login/deletestudent";
     } else if (role === USER_ROLE.FACULTY) {
-      url = "http://localhost:8080/login-register/login/deletefaculty";
+      url = `${basicURL}/deletefaculty`;
+      // url = "http://localhost:8080/login-register/login/deletefaculty";
     }
 
     const user = {
@@ -486,6 +489,8 @@ export const AuthContextProvider = ({ children }) => {
         },
       });
       data = await res.json().then((r) => {
+        console.log(r);
+        getiingAllStudents();
         return r;
       });
 
@@ -509,8 +514,23 @@ export const AuthContextProvider = ({ children }) => {
     try {
       const res = await fetch(url);
       await res.json().then((r) => {
-        // console.log(r);
+        console.log(r);
         data = r;
+
+        let testAll = data.map((student, idx) => {
+          let st = {
+            name: `${student.firstName} ${student.lastName}`,
+            email: student.emailId,
+            bnumber: student.bingNumber,
+            pbcompleted: student.pbComplete ? "YES" : "NO",
+            cacompleted: student.ctComplete ? "YES" : "NO",
+            ddcompleted: student.ddComplete ? "YES" : "NO",
+          };
+          return st;
+        });
+
+        // console.log(testAll);
+        setLetsTestStudents(testAll);
         // setThemAll(r);
         // console.log(data);
         let mC = data.map((student, idx) => {
@@ -555,7 +575,9 @@ export const AuthContextProvider = ({ children }) => {
             name: `${student.firstName} ${student.lastName}`,
             email: student.emailId,
             bnumber: student.bingNumber,
-            completed: "Yes",
+            pbcompleted: student.pbComplete ? "YES" : "NO",
+            cacompleted: student.ctComplete ? "YES" : "NO",
+            ddcompleted: student.ddComplete ? "YES" : "NO",
           };
           //   console.log(st);
           return st;
@@ -572,7 +594,9 @@ export const AuthContextProvider = ({ children }) => {
             name: `${student.firstName} ${student.lastName}`,
             email: student.emailId,
             bnumber: student.bingNumber,
-            completed: "Yes",
+            pbcompleted: student.pbComplete ? "YES" : "NO",
+            cacompleted: student.ctComplete ? "YES" : "NO",
+            ddcompleted: student.ddComplete ? "YES" : "NO",
           };
           //   console.log(st);
           return st;
@@ -590,7 +614,9 @@ export const AuthContextProvider = ({ children }) => {
             name: `${student.firstName} ${student.lastName}`,
             email: student.emailId,
             bnumber: student.bingNumber,
-            completed: "Yes",
+            pbcompleted: student.pbComplete ? "YES" : "NO",
+            cacompleted: student.ctComplete ? "YES" : "NO",
+            ddcompleted: student.ddComplete ? "YES" : "NO",
           };
           //   console.log(st);
           return st;
@@ -709,6 +735,7 @@ export const AuthContextProvider = ({ children }) => {
         ddStudents: ddStudentsData,
         biStudents: biStudentsData,
         getAllFaculties: gettingAllFaculties,
+        letsTestAllstuds: letsTestAllstudents,
       }}
     >
       {children}

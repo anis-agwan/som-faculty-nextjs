@@ -26,20 +26,28 @@ export const SidePanel = () => {
         <div>
           <h4 className="portalTitle">ADMIN PANEL</h4>
         </div>
-        <div>
-          <h2 className="userTitle">Reema Devi</h2>
-        </div>
+        <div>{/* <h2 className="userTitle">Reema Devi</h2> */}</div>
+      </div>
+      <div>
+        <button
+          className="portalBtn"
+          onClick={() => {
+            changeState(SECTION.DASH);
+          }}
+        >
+          Dashboard
+        </button>
       </div>
       <div>
         <div className="flex flex-col gap-4">
-          <button
+          {/* <button
             className="portalBtn"
             onClick={() => {
               changeState(SECTION.DASH);
             }}
           >
             Dashboard
-          </button>
+          </button> */}
           <button
             className="portalBtn"
             onClick={() => {
