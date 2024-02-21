@@ -230,7 +230,7 @@ export const Evaluation = ({ e1Data }) => {
           </>
         )}
       </div>
-      <div className="w-1/5 p-8">
+      <div className="h-full w-1/5 px-3 py-8 fixed top-15 right-0">
         <QNumberGrid
           noOfQuestions={2}
           whichMinQues={0}

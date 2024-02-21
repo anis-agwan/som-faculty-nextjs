@@ -265,7 +265,7 @@ export const Simulation = ({ s1Data }) => {
           </>
         )}
       </div>
-      <div className="h-full w-1/4 p-12">
+      <div className="h-full w-1/4 px-4 py-8 fixed top-15 right-0">
         <QNumberGrid
           noOfQuestions={20}
           whichMinQues={qgridMinRange}
