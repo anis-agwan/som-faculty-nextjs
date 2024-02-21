@@ -65,27 +65,33 @@ export const MTable = ({ allStudentsData }) => {
   if (dashCtx.viewState === SECTION.DASH) {
     rows = authCtx.allStudents;
     cols = columns;
-    tagLine =
-      "List of students who have completed all the quizes and behavioral interview";
+    tagLine = " all the quizes and behavioral interview.";
   } else if (dashCtx.viewState === SECTION.PB) {
     rows = authCtx.pbStudents;
     cols = newCols;
-    tagLine = "List of students who have completed Personal Belief Quiz";
+    tagLine = " Personal Belief Quiz";
   } else if (dashCtx.viewState === SECTION.CT) {
     rows = authCtx.ctStudents;
     cols = newCols;
-    tagLine = "List of students who have completed Critical Analysis Quiz";
+    tagLine = " Critical Analysis Quiz";
   } else if (dashCtx.viewState === SECTION.DD) {
     rows = authCtx.ddStudents;
     cols = newCols;
-    tagLine = "List of students who have completed Difficult Decisions Quiz";
+    tagLine = " Difficult Decisions Quiz";
   }
 
   return (
     <div className="flex w-full h-full">
       <div className="flex flex-col w-full gap-4">
         <div className="pt-2 flex flex-col justify-center w-full">
-          <h1 className=" px-6 ">{tagLine}</h1>
+          <h1 className=" px-6 ">
+            {" "}
+            List of students who have completed <b>{tagLine}</b>
+          </h1>
+          <h2 className="px-6">
+            (PB = Personal Beliefs, CA = Critical Analyses, DD = Difficult
+            Decisions)
+          </h2>
           <h2 className="px-6">
             (Yes = Quiz Completed & No = Quiz Not Completed)
           </h2>
