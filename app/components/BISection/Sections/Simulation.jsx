@@ -235,6 +235,7 @@ export const Simulation = ({ s1Data }) => {
                   onChange={() => {
                     handleObservations(event, currTopic);
                   }}
+                  placeholder="Observations are required. If there are no observations, please just type NA"
                 ></textarea>
               </div>
             </div>
