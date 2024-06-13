@@ -24,28 +24,28 @@ export default function Quiz() {
       {section === BI_SECTION.SIMULTAION1 && (
         <>
           <div className="h-full w-full">
-            <Simulation s1Data={s1Data} />
+            <Simulation />
           </div>
         </>
       )}
       {section === BI_SECTION.SIMULATION2 && (
         <>
           <div className="h-full w-full">
-            <Simulation s1Data={s1Data} />
+            <Simulation />
           </div>
         </>
       )}
       {section === BI_SECTION.EVALUATION1 && (
         <>
           <div className="h-full w-full">
-            <Evaluation e1Data={e1Data} />
+            <Evaluation />
           </div>
         </>
       )}
       {section === BI_SECTION.EVALUATION2 && (
         <>
           <div>
-            <Evaluation e1Data={e1Data} />
+            <Evaluation />
           </div>
         </>
       )}

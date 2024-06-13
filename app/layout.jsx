@@ -5,6 +5,7 @@ import { AuthContextProvider } from "./store/auth-context";
 import { DashboardContextProvider } from "./store/dashboard-context";
 import { ReportContextProvider } from "./store/reports-context";
 import { BIQuestionContextProvider } from "./store/biquestion-context";
+import { Providers } from "./provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +24,7 @@ export default function RootLayout({ children }) {
             <DashboardContextProvider>
               <ReportContextProvider>
                 <BIQuestionContextProvider>
-                  {children}
+                  <Providers>{children}</Providers>
                 </BIQuestionContextProvider>
               </ReportContextProvider>
             </DashboardContextProvider>

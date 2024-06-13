@@ -4,6 +4,8 @@ import { BI_SECTION } from "@/app/enums/bi_section_enums";
 import Link from "next/link";
 import { DashboardContext } from "@/app/store/dashboard-context";
 import { AuthContext } from "@/app/store/auth-context";
+import { useDispatch } from "react-redux";
+import { fetchBIQuestions } from "@/app/redux-store/biQuiz/bi-actions";
 
 const cardInfo = [
   {
@@ -47,6 +49,7 @@ const cardInfo = [
 export const BISection = () => {
   const authCtx = useContext(AuthContext);
   const dashCtx = useContext(DashboardContext);
+  const dispatch = useDispatch()
 
   const handleReset = () => {
     dashCtx.changeInterviewState(false);
@@ -54,6 +57,7 @@ export const BISection = () => {
 
   useEffect(() => {
     console.log(authCtx.studentInfo);
+    dispatch(fetchBIQuestions())
   }, []);
 
   return (

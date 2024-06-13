@@ -6,13 +6,14 @@ import "./Sections.css";
 import { StartButton } from "../../Buttons/StartButton/StartButton";
 import { BI_SECTION } from "@/app/enums/bi_section_enums";
 import { QNumberGrid } from "../../QuestionNumberGrid/QNumberGrid";
+import { useSelector } from "react-redux";
 
-export const Evaluation = ({ e1Data }) => {
+export const Evaluation = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const section = searchParams.get("section");
   const biQctx = useContext(BIQuestionContext);
-  const [optionsArr, setOptionsArr] = useState([]);
+  // const [optionsArr, setOptionsArr] = useState([]);
 
   const [isSubmitBtnDisabled, setSubmitBtnDisabled] = useState(true);
 
@@ -22,6 +23,9 @@ export const Evaluation = ({ e1Data }) => {
 
   const [answersArr1, setAnsArr1] = useState([]);
   const [answersArr2, setAnsArr2] = useState([]);
+
+  const evalOptions = useSelector((state) => state.bi.sim1Options);
+  const eval1Data = useSelector((state) => state.bi.evaluation1Data);
 
   const handleAnswer = (qidx, idx) => {
     console.log(qidx, idx);
@@ -57,21 +61,21 @@ export const Evaluation = ({ e1Data }) => {
     biQctx.updateSim1Observations(idx, event.target.value, section);
   };
 
-  const getOptions = async () => {
-    await biQctx
-      .getS1Options()
-      .then(async (r) => {
-        console.log(r);
-        await setOptionsArr(r);
-        let narr = new Array(r[currTopic].options.length).fill(0);
-        console.log(narr);
-        await setAnsArr1(narr);
-        await setAnsArr2(narr);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const getOptions = async () => {
+  //   await biQctx
+  //     .getS1Options()
+  //     .then(async (r) => {
+  //       console.log(r);
+  //       await setOptionsArr(r);
+  //       let narr = new Array(r[currTopic].options.length).fill(0);
+  //       console.log(narr);
+  //       await setAnsArr1(narr);
+  //       await setAnsArr2(narr);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   const onSubmitHandler = async () => {
     router.push(`/Quiz/section-complete?section=${section}`);
@@ -79,9 +83,11 @@ export const Evaluation = ({ e1Data }) => {
 
   useEffect(() => {
     // biQctx.getS1Options();
-    if (optionsArr.length <= 0) {
-      getOptions();
-    }
+    // console.log(optionsArr)
+    console.log(evalOptions)
+    // if (optionsArr.length <= 0) {
+    //   getOptions();
+    // }
 
     if (biQctx.e1CompleteStatus) {
       setSubmitBtnDisabled(false);
@@ -91,26 +97,26 @@ export const Evaluation = ({ e1Data }) => {
       setSubmitBtnDisabled(false);
     }
 
-    console.log(e1Data);
+    // console.log(e1Data);
   }, [biQctx.e1CompleteStatus, biQctx.e2CompleteStatus]);
 
   return (
     <div className="flex h-full w-full">
       <div className="flex flex-col h-full w-4/5 p-8 gap-8">
-        {optionsArr.length > 0 ? (
+        {evalOptions.length > 0 ? (
           <>
             <div className="flex flex-col gap-6">
               <div>
-                <h1 className="sectionTitle">{e1Data[0].Q}</h1>
+                <h1 className="sectionTitle">{eval1Data[0].Q}</h1>
               </div>
             </div>
             <div className="flex flex-col gap-3">
               <h3 className="evalQuestion">
                 {/* {Evaluation2Data[currentQuestion].question1} */}
-                {optionsArr[currTopic].idNameNum}
+                {evalOptions[currTopic].idNameNum}
               </h3>
               <div className="flex flex-col w-full gap-3">
-                {optionsArr[currTopic].options.map((opt, idx) => {
+                {evalOptions[currTopic].options.map((opt, idx) => {
                   return (
                     <div key={idx}>
                       <div>
@@ -136,10 +142,10 @@ export const Evaluation = ({ e1Data }) => {
             <div className="flex flex-col w-full gap-3">
               <h3 className="evalQuestion">
                 {/* {Evaluation2Data[currentQuestion].question1} */}
-                {optionsArr[currTopic + 1].idNameNum}
+                {evalOptions[currTopic + 1].idNameNum}
               </h3>
               <div className="flex flex-col w-full gap-3">
-                {optionsArr[currTopic + 1].options.map((opt, idx) => {
+                {evalOptions[currTopic + 1].options.map((opt, idx) => {
                   return (
                     <div key={idx}>
                       <div>
@@ -182,7 +188,7 @@ export const Evaluation = ({ e1Data }) => {
             <div className="flex flex-col gap-5 w-1/2">
               <div>
                 <div className="flex justify-between">
-                  <h3 className="questionTitle">{e1Data[0].SeekingMoreInfo}</h3>
+                  <h3 className="questionTitle">{eval1Data[0].SeekingMoreInfo}</h3>
                   <input
                     className="numInput ps-4"
                     type="Number"
@@ -199,7 +205,7 @@ export const Evaluation = ({ e1Data }) => {
               <div>
                 <div className="flex justify-between">
                   <h3 className="questionTitle">
-                    {e1Data[0].SharingResponsibility}
+                    {eval1Data[0].SharingResponsibility}
                   </h3>
                   <input
                     className="numInput ps-4"
