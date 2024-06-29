@@ -455,7 +455,6 @@ const biSlice = createSlice({
             },
         ],
         sim1Options: {},
-        sim1QuestionLength: 0,
         sim1Answers: {},
 
         sim1QuestionIdxStatus: [],
@@ -591,6 +590,14 @@ const biSlice = createSlice({
         ],
 
         
+        eval1QuestionIdxStatus: [],
+        eval1CompleteStatus: false,
+
+        eval2QuestionIdxStatus: [],
+        eval2CompleteStatus: false,
+
+
+        
     },
     reducers: {
         rdsxSetBIQuestions(state, action) {
@@ -607,6 +614,9 @@ const biSlice = createSlice({
             console.log(outerArr);
             state.sim1QuestionIdxStatus = outerArr.slice()
             state.sim2QuestionIdxStatus = outerArr.slice()
+
+            state.eval1QuestionIdxStatus = Array(5).fill(0)
+            state.eval2QuestionIdxStatus = Array(5).fill(0)
 
         },
 
@@ -654,6 +664,38 @@ const biSlice = createSlice({
           }
         },
 
+        rdxChangeBIEvalIdxStatus(state, action) {
+          const idx = action.payload.idx;
+          console.log(idx)
+          
+          if(action.payload.section === BI_SECTION.EVALUATION1) {
+            let prev = state.eval1QuestionIdxStatus.slice()
+            prev[idx] = 1
+            console.log(prev)
+
+            if(!state.eval1QuestionIdxStatus.includes(0)) {
+              state.eval1CompleteStatus = true;
+            }
+
+            state.eval1QuestionIdxStatus = prev.slice();
+
+          } else if(action.payload.section === BI_SECTION.EVALUATION2) {
+            let prev = state.eval2QuestionIdxStatus.slice()
+            prev[idx] = 1
+            console.log(prev)
+
+            if(!state.eval2QuestionIdxStatus.includes(0)) {
+              state.eval2CompleteStatus = true;
+            }
+
+            state.eval2QuestionIdxStatus = prev.slice();
+            if(!state.eval2QuestionIdxStatus.includes(0)) {
+              state.eval2CompleteStatus = true;
+            }
+          }
+
+        },
+
         rdxUpdateSim1Answers(state, action) {
           let prevSim1 = {...state.sim1Answers}
           let prevSim2 = {...state.sim2Answers}
@@ -695,6 +737,28 @@ const biSlice = createSlice({
               prevSim2[`contingentReward2Score${idx}`] = value;
               console.log(prevSim2);
             }
+          }
+
+          state.sim1Answers = {...prevSim1}
+          state.sim2Answers = {...prevSim2}
+        },
+
+        rdxUpdateEval1Answers(state, action) {
+          let prevSim1 = {...state.sim1Answers}
+          let prevSim2 = {...state.sim2Answers}
+          const section = action.payload.section;
+          const qidx = action.payload.qidx
+          const idx = action.payload.idx
+          const value = action.payload.value;
+
+          console.log(idx)
+
+          if (section === BI_SECTION.EVALUATION1) {
+            prevSim1[`adaptToChange1Score${qidx + 1}`] = value;
+            console.log(prevSim1);
+          } else if (section === BI_SECTION.EVALUATION2) {
+            prevSim2[`adaptToChange2Score${qidx + 1}`] = value;
+            console.log(prevSim2);
           }
 
           state.sim1Answers = {...prevSim1}
@@ -749,6 +813,46 @@ const biSlice = createSlice({
           state.sim1Answers = {...prevSim1}
           state.sim2Answers = {...prevSim2}
           
+        },
+
+        rdxUpdateEval1Observations(state, action) {
+          let prevSim1 = {...state.sim1Answers}
+          let prevSim2 = {...state.sim2Answers}
+          const section = action.payload.section;
+          const idx = action.payload.idx
+          const value = action.payload.value;
+
+          console.log(idx)
+
+
+          if (section === BI_SECTION.EVALUATION1) {
+            if (idx === 2) {
+              prevSim1[`adaptToChange1Observation`] = value;
+              console.log(prevSim1);
+            } else if (idx === 3) {
+              prevSim1[`adaptToChange1SeekingMoreInformation`] = value;
+              console.log(prevSim1);
+            } else if (idx === 4) {
+              prevSim1[`adaptToChange1SharingResponsibility`] = value;
+              console.log(prevSim1);
+            }
+            console.log(prevSim1);
+          } else if (section === BI_SECTION.EVALUATION2) {
+            if (idx === 2) {
+              prevSim2[`adaptToChange1Observation`] = value;
+              console.log(prevSim2);
+            } else if (idx === 3) {
+              prevSim2[`adaptToChange2SeekingMoreInformation`] = value;
+              console.log(prevSim2);
+            } else if (idx === 4) {
+              prevSim2[`adaptToChange2SharingResponsibility`] = value;
+              console.log(prevSim2);
+            }
+            console.log(prevSim2);
+          }
+
+          state.sim1Answers = {...prevSim1}
+          state.sim2Answers = {...prevSim2}
         }
     }
 })

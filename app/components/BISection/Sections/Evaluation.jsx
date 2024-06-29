@@ -6,7 +6,8 @@ import "./Sections.css";
 import { StartButton } from "../../Buttons/StartButton/StartButton";
 import { BI_SECTION } from "@/app/enums/bi_section_enums";
 import { QNumberGrid } from "../../QuestionNumberGrid/QNumberGrid";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { biActions } from "@/app/redux-store/biQuiz/bi-slice";
 
 export const Evaluation = () => {
   const router = useRouter();
@@ -24,8 +25,17 @@ export const Evaluation = () => {
   const [answersArr1, setAnsArr1] = useState([]);
   const [answersArr2, setAnsArr2] = useState([]);
 
+  const dispatch = useDispatch();
+
   const evalOptions = useSelector((state) => state.bi.sim1Options);
   const eval1Data = useSelector((state) => state.bi.evaluation1Data);
+
+  const eval1QuestionIdxStatus = useSelector((state) => state.bi.eval1QuestionIdxStatus)
+  const eval2QuestionIdxStatus = useSelector((state) => state.bi.eval2QuestionIdxStatus)
+  const eval1CompleteStatus = useSelector((state) => state.bi.eval1CompleteStatus)
+
+  const eval2CompleteStatus = useSelector((state) => state.bi.eval2CompleteStatus)
+
 
   const handleAnswer = (qidx, idx) => {
     console.log(qidx, idx);
@@ -34,7 +44,24 @@ export const Evaluation = () => {
     setOptAnswerArr(prev);
     console.log(optAnswerArr);
     biQctx.changeS1CompStatus(qidx, section);
+
+    dispatch(
+      biActions.rdxChangeBIEvalIdxStatus({
+        idx: qidx,
+        section: section
+      })
+    )
+
     biQctx.updateS1Answers(qidx, idx, idx, section);
+
+    dispatch(
+      biActions.rdxUpdateEval1Answers({
+        section: section,
+        idx: idx,
+        qidx: qidx,
+        value: idx
+      })
+    )
 
     if (qidx == 0) {
       let pAr1 = new Array(answersArr1.length).fill(0);
@@ -59,23 +86,23 @@ export const Evaluation = () => {
     console.log(optAnswerArr);
     biQctx.changeS1CompStatus(idx, section);
     biQctx.updateSim1Observations(idx, event.target.value, section);
+
+    dispatch(
+      biActions.rdxChangeBIEvalIdxStatus({
+        idx: idx,
+        section: section
+      })
+    )
+
+    dispatch(
+      biActions.rdxUpdateEval1Observations({
+        idx:idx,
+        section,section,
+        value: event.target.value
+      })
+    )
   };
 
-  // const getOptions = async () => {
-  //   await biQctx
-  //     .getS1Options()
-  //     .then(async (r) => {
-  //       console.log(r);
-  //       await setOptionsArr(r);
-  //       let narr = new Array(r[currTopic].options.length).fill(0);
-  //       console.log(narr);
-  //       await setAnsArr1(narr);
-  //       await setAnsArr2(narr);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
 
   const onSubmitHandler = async () => {
     router.push(`/Quiz/section-complete?section=${section}`);
@@ -89,16 +116,16 @@ export const Evaluation = () => {
     //   getOptions();
     // }
 
-    if (biQctx.e1CompleteStatus) {
+    if (eval1CompleteStatus) {
       setSubmitBtnDisabled(false);
     }
 
-    if (biQctx.e2CompleteStatus) {
-      setSubmitBtnDisabled(false);
-    }
+    // if (biQctx.e2CompleteStatus) {
+    //   setSubmitBtnDisabled(false);
+    // }
 
     // console.log(e1Data);
-  }, [biQctx.e1CompleteStatus, biQctx.e2CompleteStatus]);
+  }, [eval1CompleteStatus]);
 
   return (
     <div className="flex h-full w-full">
@@ -225,7 +252,7 @@ export const Evaluation = () => {
               <div className="w-1/6" onClick={onSubmitHandler}>
                 <StartButton
                   buttonText={"Submit"}
-                  isBtnDisabled={isSubmitBtnDisabled}
+                  isBtnDisabled={section === BI_SECTION.EVALUATION1 ? (!eval1QuestionIdxStatus.includes(0) ? false: true) : (!eval2QuestionIdxStatus.includes(0) ? false: true)}
                 />
               </div>
             </div>
