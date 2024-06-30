@@ -13,7 +13,9 @@ export const BASEURL = {
 
 export const BI_ENDPOINTS = {
     BASE_ENDPOINT: "bbim/bi",
-    GET_QUESTIONS: "getQuestions"
+    GET_QUESTIONS: "getQuestions",
+    S1_ANSWER: "biEvaluation1Data",
+    S2_ANSWER: "biEvaluation2Data"
 }
 
   

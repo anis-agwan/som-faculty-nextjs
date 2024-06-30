@@ -1,5 +1,6 @@
 export function splitStringAfterEightWords(str) {
   // Split the string into an array of words
+  console.log(str);
   const words = str.split(" ");
 
   // Initialize variables

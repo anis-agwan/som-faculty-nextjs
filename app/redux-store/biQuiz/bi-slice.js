@@ -830,10 +830,10 @@ const biSlice = createSlice({
               prevSim1[`adaptToChange1Observation`] = value;
               console.log(prevSim1);
             } else if (idx === 3) {
-              prevSim1[`adaptToChange1SeekingMoreInformation`] = value;
+              prevSim1[`adaptToChange1SeekingMoreInformation`] = Number(value);
               console.log(prevSim1);
             } else if (idx === 4) {
-              prevSim1[`adaptToChange1SharingResponsibility`] = value;
+              prevSim1[`adaptToChange1SharingResponsibility`] = Number(value);
               console.log(prevSim1);
             }
             console.log(prevSim1);
@@ -842,7 +842,7 @@ const biSlice = createSlice({
               prevSim2[`adaptToChange1Observation`] = value;
               console.log(prevSim2);
             } else if (idx === 3) {
-              prevSim2[`adaptToChange2SeekingMoreInformation`] = value;
+              prevSim2[`adaptToChange2SeekingMoreInformation`] = parseInt(value, 10);
               console.log(prevSim2);
             } else if (idx === 4) {
               prevSim2[`adaptToChange2SharingResponsibility`] = value;
@@ -853,6 +853,22 @@ const biSlice = createSlice({
 
           state.sim1Answers = {...prevSim1}
           state.sim2Answers = {...prevSim2}
+        },
+
+        rdxClearSim1Answers(state) {
+          state.sim1Answers = {}
+          state.sim1CompleteStatus = false
+          state.sim1QuestionIdxStatus = []
+          state.eval1CompleteStatus = false
+          state.eval1QuestionIdxStatus = []
+        },
+
+        rdxClearSim2Answers(state) {
+          state.sim2Answers = {}
+          state.sim2CompleteStatus = false
+          state.sim2QuestionIdxStatus = []
+          state.eval2CompleteStatus = false
+          state.eval2QuestionIdxStatus = []
         }
     }
 })

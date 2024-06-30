@@ -5,15 +5,26 @@ import "./SectionComplete.css";
 import { BI_SECTION } from "@/app/enums/bi_section_enums";
 import { useRouter } from "next/navigation";
 import { BIQuestionContext } from "@/app/store/biquestion-context";
+import { useDispatch, useSelector } from "react-redux";
+import { rdxSubmitS1Answers, rdxSubmitS2Answers, submitS1Answers } from "@/app/redux-store/biQuiz/bi-actions";
+import { AuthContext } from "@/app/store/auth-context";
 
 export default function SectionComplete() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const section = searchParams.get("section");
   const biQCtx = useContext(BIQuestionContext);
+  const authCtx = useContext(AuthContext);
+
+  const sim1Answers = useSelector((state) => state.bi.sim1Answers);
+  const sim2Answers = useSelector((state) => state.bi.sim2Answers);
+
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(biQCtx.s1Answers);
+    console.log(sim1Answers);
+    console.log(sim2Answers);
   }, []);
 
   return (
@@ -49,7 +60,7 @@ export default function SectionComplete() {
                 // router.push(`/Quiz?section=${BI_SECTION.SIMULATION2}`);
               }}
             >
-              Simulation 1
+              Simulation 2
             </button>
           </>
         )}
@@ -79,9 +90,11 @@ export default function SectionComplete() {
             <button
               className="completeBtn"
               onClick={() => {
-                biQCtx.submitS1();
-                biQCtx.submitS2();
-                router.push(`/Dashboard`);
+                // biQCtx.submitS1();
+                dispatch(rdxSubmitS1Answers(sim1Answers, authCtx.studentInfo.bingNumber))
+                // biQCtx.submitS2();
+                dispatch(rdxSubmitS2Answers(sim2Answers, authCtx.studentInfo.bingNumber))
+                // router.push(`/Dashboard`);
                 // router.push(`/Quiz?section=${BI_SECTION.SIMULATION2}`);
               }}
             >

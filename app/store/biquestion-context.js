@@ -806,7 +806,7 @@ export const BIQuestionContextProvider = ({ children }) => {
 
   const submitS1Answers = async () => {
     // await authCtx.onUpdateStats()
-
+    console.log(sim1Answers)
     try {
       const url = `${baseBI}biEvaluation1Data`;
       let data = {
