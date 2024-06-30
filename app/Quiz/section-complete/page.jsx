@@ -6,7 +6,7 @@ import { BI_SECTION } from "@/app/enums/bi_section_enums";
 import { useRouter } from "next/navigation";
 import { BIQuestionContext } from "@/app/store/biquestion-context";
 import { useDispatch, useSelector } from "react-redux";
-import { rdxSubmitS1Answers, rdxSubmitS2Answers, submitS1Answers } from "@/app/redux-store/biQuiz/bi-actions";
+import { rdxSubmitS1Answers, rdxSubmitS2Answers } from "@/app/redux-store/biQuiz/bi-actions";
 import { AuthContext } from "@/app/store/auth-context";
 
 export default function SectionComplete() {
@@ -33,7 +33,7 @@ export default function SectionComplete() {
         {section === BI_SECTION.SIMULTAION1 && (
           <>
             <div className="scoreTitle flex flex-col justify-center items-center px-2">
-              <h1>You Have completed Simulation1!</h1>
+              <h1>You Have completed Simulation 1!</h1>
               <h4>(1/4)</h4>
             </div>
             <button
@@ -67,7 +67,7 @@ export default function SectionComplete() {
         {section === BI_SECTION.SIMULATION2 && (
           <>
             <div className="scoreTitle flex flex-col justify-center items-center px-2">
-              <h1>You Have completed Simulation2!</h1>
+              <h1>You Have completed Simulation 2!</h1>
               <h4>(3/4)</h4>
             </div>
             <button
@@ -77,7 +77,7 @@ export default function SectionComplete() {
                 // router.push(`/Quiz?section=${BI_SECTION.SIMULATION2}`);
               }}
             >
-              Evaluation 1
+              Evaluation 2
             </button>
           </>
         )}
@@ -94,7 +94,7 @@ export default function SectionComplete() {
                 dispatch(rdxSubmitS1Answers(sim1Answers, authCtx.studentInfo.bingNumber))
                 // biQCtx.submitS2();
                 dispatch(rdxSubmitS2Answers(sim2Answers, authCtx.studentInfo.bingNumber))
-                // router.push(`/Dashboard`);
+                router.push(`/Dashboard`);
                 // router.push(`/Quiz?section=${BI_SECTION.SIMULATION2}`);
               }}
             >
