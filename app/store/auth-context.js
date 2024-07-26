@@ -467,8 +467,8 @@ export const AuthContextProvider = ({ children }) => {
     const basicURL = `${baseURL}login`;
     let url = "";
     if (role === USER_ROLE.STUDENT) {
-      // url = `${basicURL}/deletestudent`;
-      url = "http://localhost:8080/login-register/login/deletestudent";
+      url = `${basicURL}/deletestudent`;
+      // url = "http://localhost:8080/login-register/login/deletestudent";
     } else if (role === USER_ROLE.FACULTY) {
       url = `${basicURL}/deletefaculty`;
       // url = "http://localhost:8080/login-register/login/deletefaculty";
@@ -649,7 +649,7 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const studentDidComplete = async (bNum) => {
-    const url = `http://localhost:8080/login-register/login/getstudcomplete`;
+    // const url = `http://localhost:8080/login-register/login/getstudcomplete`;
     const temp = `${baseURL}login/getstudcomplete`;
     console.log(temp);
     let user = {
@@ -678,7 +678,7 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const gettingAllFaculties = async (email) => {
-    const url = `http://localhost:8080/login-register/login/getfaculty`;
+    // const url = `http://localhost:8080/login-register/login/getfaculty`;
     const temp = `${baseURL}login/getfaculty`;
     let user = {
       email: email,
