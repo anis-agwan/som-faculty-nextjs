@@ -5,6 +5,9 @@ import { USER_ROLE } from "@/app/enums/role_enums";
 import { StartButton } from "../Buttons/StartButton/StartButton";
 import { AuthContext } from "@/app/store/auth-context";
 import DataGrid from "react-data-grid";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteUser, fetchAllFaculties, fetchAllStudents } from "@/app/redux-store/manageUser/manageUser-actions";
+
 
 const data = [
   {
@@ -37,10 +40,13 @@ export const InviteForm = () => {
   const [listAllStudents, setListAllStudents] = useState(false);
   const [submitBtnState, setSubmitBtnState] = useState(true);
   const [email, setEmail] = useState();
-  const [allFaculties, setAllFaculties] = useState([]);
-  const [allStudents, setAllStudents] = useState([]);
+  // const [allFaculties, setAllFaculties] = useState([]);
+  // const [allStudents, setAllStudents] = useState([]);
   const authCtx = useContext(AuthContext);
+  const dispatch = useDispatch()
 
+  const allFaculties = useSelector((state) => state.manageUser.faculties);
+  const allStudents = useSelector((state) => state.manageUser.students);
   // console.log(authCtx.letsTestAllstuds);
 
   const [isDeleteState, setIsDeleteState] = useState(false);
@@ -78,17 +84,25 @@ export const InviteForm = () => {
   const onDeleteSubmit = async (event, role) => {
     event.preventDefault();
     console.log(email, role);
-    await authCtx.delete(email, role).then((r) => {
-      console.log(r);
-      if (r.isDeleted) {
-        alert(`${r.message}`);
-      } else {
-        alert(`${r.message}`);
-      }
-    });
+
+    dispatch(deleteUser(email, role));
+    // await getAllStudents();
+    // await authCtx.delete(email, role).then((r) => {
+    //   console.log(r);
+    //   if (r.isDeleted) {
+    //     alert(`${r.message}`);
+    //   } else {
+    //     alert(`${r.message}`);
+    //   }
+    // });
   };
 
   const getAllFaculty = async () => {
+    
+    dispatch(fetchAllFaculties(authCtx.user.emailId));
+
+    console.log(allFaculties);
+
     await authCtx.getAllFaculties(authCtx.user.emailId).then((r) => {
       console.log(r);
       let data = [];
@@ -108,10 +122,16 @@ export const InviteForm = () => {
     });
   };
 
+  const getAllStudents = async () => {
+    await dispatch(fetchAllStudents(authCtx.user.emailId));
+  };
+
   useEffect(() => {
     if (authCtx.user.role === USER_ROLE.ADMIN) {
       getAllFaculty();
-      setAllStudents(authCtx.letsTestAllstuds);
+      getAllStudents();
+      // console.log(allFaculties);
+      // setAllStudents(authCtx.letsTestAllstuds);
     }
   }, []);
 

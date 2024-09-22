@@ -149,6 +149,7 @@ export const Signup = ({ handleState, passStudentInfo }) => {
 
     const user = {
       emailId: userNameState.value,
+      bingNumber: "",
       firstName: fNameState.value,
       lastName: lNameState.value,
       password: passwordState.value,
@@ -158,11 +159,15 @@ export const Signup = ({ handleState, passStudentInfo }) => {
       authCtx.passStudentData(user);
       await authCtx
         .onGenerateToken(userNameState.value, TOKEN_ENUMS.REGISTER)
-        .then(() => {
-          alert("A temporary Token has been sent to your BU email address.");
+        .then(async (res) => {
+          if(res) {
+            alert("A temporary Token has been sent to your BU email address.");
+            await handleState(AUTHSTATE.TOKENSIGNUP);
+          } else {
+            // alert("User already exists")
+          }
         });
-
-      await handleState(AUTHSTATE.TOKENSIGNUP);
+      
     }
   };
 

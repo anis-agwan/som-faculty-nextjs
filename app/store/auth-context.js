@@ -206,25 +206,37 @@ export const AuthContextProvider = ({ children }) => {
     userRole
   ) => {
     let url = `${baseURL}register/user`;
+
+    let user = {
+
+    }
+
     if (userRole === USER_ROLE.ADMIN) {
       console.log("ADMIN Auth");
       url = url + `?role=${USER_ROLE.ADMIN}`;
     } else if (userRole === USER_ROLE.FACULTY) {
       console.log("Faculty Auth");
+      user = {
+        emailId: userName,
+        bingNumber: "F123",
+        firstName: fName,
+        lastName: lName,
+        password: password,
+      };
       url = url + `?role=${USER_ROLE.FACULTY}`;
     } else if (userRole === USER_ROLE.STUDENT) {
       console.log("STUD Auth");
       url = url + `?role=${USER_ROLE.STUDENT}`;
+      user = {
+        emailId: userName,
+        bingNumber: bNum,
+        firstName: fName,
+        lastName: lName,
+        password: password,
+      };
     }
 
-    const user = {
-      emailId: userName,
-      bingNumber: bNum,
-      firstName: fName,
-      lastName: lName,
-      password: password,
-    };
-
+    console.log(url);
     console.log(user);
 
     // console.log(user);
@@ -271,6 +283,8 @@ export const AuthContextProvider = ({ children }) => {
       url = `${baseURL}login/generatetoken`;
     }
 
+    let isTokenReady = false;
+
     const user = {
       email: email,
     };
@@ -295,21 +309,25 @@ export const AuthContextProvider = ({ children }) => {
             body === "No Such email found" ||
             body === "User already exists"
           ) {
+            isTokenReady = false
             throw new Error(body);
           } else {
             // console.log(res.data);
+            isTokenReady = true
             token = body;
           }
         })
         .catch((err) => {
           alert(err);
+          isTokenReady = false;
         });
     } catch (err) {
       console.log(err);
+      isTokenReady = false
       alert(err);
     }
 
-    return token;
+    return isTokenReady;
   };
 
   const tokenSubmitHandler = async (email, token, access) => {
