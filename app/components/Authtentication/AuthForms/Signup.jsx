@@ -21,10 +21,16 @@ import {
 
 //Store
 import { AuthContext } from "@/app/store/auth-context";
+import { useDispatch } from "react-redux";
+import { authActions } from "@/app/redux-store/authRdxStore/auth-slice";
+import { onRdxGenToken } from "@/app/redux-store/authRdxStore/auth-actions";
 
 export const Signup = ({ handleState, passStudentInfo }) => {
   const authCtx = useContext(AuthContext);
   const [formIsValid, setFormIsValid] = useState();
+
+  const dispatch = useDispatch();
+
 
   const [fNameState, dispatchFName] = useReducer(firstNameReducer, {
     value: "",
@@ -155,18 +161,46 @@ export const Signup = ({ handleState, passStudentInfo }) => {
       password: passwordState.value,
     };
 
+
     if (formIsValid) {
       authCtx.passStudentData(user);
-      await authCtx
-        .onGenerateToken(userNameState.value, TOKEN_ENUMS.REGISTER)
-        .then(async (res) => {
-          if(res) {
-            alert("A temporary Token has been sent to your BU email address.");
-            await handleState(AUTHSTATE.TOKENSIGNUP);
-          } else {
-            // alert("User already exists")
+
+      dispatch(authActions.rdxSavingSignUpInfo({
+        newUser: user
+      }))
+
+      dispatch(
+        onRdxGenToken(
+          {
+            email: user.emailId,
+            requestType: "Register"
           }
-        });
+        ) 
+      )
+      .then((res) => {
+        console.log(res);
+        if(res) {
+          alert("A temporary Token has been sent to your BU email address.");
+          handleState(AUTHSTATE.TOKENSIGNUP);
+        } 
+        // else {
+        //   // alert("User already exists")
+        // }
+
+      }).catch((err) => {
+        console.log(err);
+      })
+
+      // await authCtx
+      //   .onGenerateToken(userNameState.value, TOKEN_ENUMS.REGISTER)
+      //   .then(async (res) => {
+      //     if(res) {
+      //       alert("A temporary Token has been sent to your BU email address.");
+      //       await handleState(AUTHSTATE.TOKENSIGNUP);
+      //     } else {
+      //       // alert("User already exists")
+      //     }
+      //   });
       
     }
   };

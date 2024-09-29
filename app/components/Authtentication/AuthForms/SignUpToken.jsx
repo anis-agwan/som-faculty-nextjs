@@ -7,6 +7,8 @@ import { AuthContext } from "@/app/store/auth-context";
 import { tokenReducer } from "./AuthReducers";
 import { USER_ROLE } from "@/app/enums/role_enums";
 import { TOKEN_ENUMS } from "@/app/enums/token_enums";
+import { useDispatch, useSelector } from "react-redux";
+import { onRdxConfirmToken, onRdxSignUp } from "@/app/redux-store/authRdxStore/auth-actions";
 
 export const SignUpToken = ({ handleState }) => {
   const authCtx = useContext(AuthContext);
@@ -18,6 +20,9 @@ export const SignUpToken = ({ handleState }) => {
     isValid: null,
   });
   const { isValid: tokenIsValid } = tokenState;
+
+  const newUserState = useSelector((state) => state.auth.newUserState);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (tokenIsValid) {
@@ -44,34 +49,80 @@ export const SignUpToken = ({ handleState }) => {
     dispatchToken({ type: "INPUT_BLUR" });
   };
 
-  const onTokenSubmit = (event) => {
+  const onTokenSubmit = async (event) => {
     event.preventDefault();
     if (tokenFormIsValid) {
-      console.log(studentData);
-      authCtx
-        .onTokenSubmit(
-          studentData.emailId,
-          tokenState.value,
-          TOKEN_ENUMS.REGISTER
+      // console.log(studentData);
+
+      const confirmTokenRequest = {
+        emailId: newUserState.emailId,
+        token: tokenState.value,
+        requestType: "Register",
+      }
+
+      console.log(confirmTokenRequest);
+      
+      dispatch(
+        onRdxConfirmToken(
+          confirmTokenRequest
         )
-        .then((res) => {
-          console.log(res);
-          if (res) {
-            authCtx
-              .onSignup(
-                studentData.emailId,
-                studentData.bingNumber,
-                studentData.firstName,
-                studentData.lastName,
-                studentData.password,
-                USER_ROLE.FACULTY
-              )
-              .then((res) => {
-                alert("Successfully registered");
-                handleState(AUTHSTATE.LOGIN);
-              });
+      ).then(async (res) => {
+        console.log(res);
+        if(res) {
+          console.log("CAN SiGNUP");
+          const signUpUser = {
+            
           }
-        });
+          console.log(signUpUser);
+          await dispatch(
+            onRdxSignUp(
+              newUserState.emailId,
+              newUserState.bingNumber,
+              newUserState.firstName,
+              newUserState.lastName,
+              newUserState.password,
+              USER_ROLE.FACULTY
+            )
+          ).then((res) => {
+            if(res) {
+              console.log("SIGNUP SUCCESSFUL");
+              alert("Account created successfully, please login");
+              handleState(AUTHSTATE.LOGIN);
+            } else {
+              throw new Error("Some issue while creating the account");
+            }
+          }).catch((err) => {
+            console.log(err);
+            // alert(err.message);
+            handleState(AUTHSTATE.SIGNUP);
+          })
+        }
+      })
+
+      // authCtx
+      //   .onTokenSubmit(
+      //     studentData.emailId,
+      //     tokenState.value,
+      //     TOKEN_ENUMS.REGISTER
+      //   )
+      //   .then((res) => {
+      //     console.log(res);
+      //     if (res) {
+      //       authCtx
+      //         .onSignup(
+      //           studentData.emailId,
+      //           studentData.bingNumber,
+      //           studentData.firstName,
+      //           studentData.lastName,
+      //           studentData.password,
+      //           USER_ROLE.FACULTY
+      //         )
+      //         .then((res) => {
+      //           alert("Successfully registered");
+      //           handleState(AUTHSTATE.LOGIN);
+      //         });
+      //     }
+      //   });
     }
   };
 

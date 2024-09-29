@@ -44,6 +44,7 @@ export const InviteForm = () => {
   // const [allStudents, setAllStudents] = useState([]);
   const authCtx = useContext(AuthContext);
   const dispatch = useDispatch()
+  const rdxUser = useSelector((state) => state.auth.user)
 
   const allFaculties = useSelector((state) => state.manageUser.faculties);
   const allStudents = useSelector((state) => state.manageUser.students);
@@ -100,7 +101,7 @@ export const InviteForm = () => {
 
   const getAllFaculty = async () => {
     
-    dispatch(fetchAllFaculties(authCtx.user.emailId));
+    dispatch(fetchAllFaculties(rdxUser.emailId));
 
     console.log(allFaculties);
 
@@ -124,11 +125,11 @@ export const InviteForm = () => {
   };
 
   const getAllStudents = async () => {
-    dispatch(await fetchAllStudents(authCtx.user.emailId));
+    dispatch(await fetchAllStudents(rdxUser.emailId));
   };
 
   useEffect(() => {
-    if (authCtx.user.role === USER_ROLE.ADMIN) {
+    if (rdxUser.role === USER_ROLE.ADMIN) {
       getAllFaculty();
       getAllStudents();
       // console.log(allFaculties);
@@ -207,7 +208,7 @@ export const InviteForm = () => {
       ) : (
         <>
           <div className="flex flex-col formBox bg-white w-1/2 h-2/3 pt-8 gap-8">
-            {authCtx.user.role === "admin" && (
+            {rdxUser.role === "admin" && (
               <div className="flex gap-5 justify-center ">
                 <div onClick={() => setIsDeleteState(false)}>
                   <InviteButton buttonTxt={"Invite"} />
@@ -319,7 +320,7 @@ export const InviteForm = () => {
                   <div onClick={() => changeInviteState(USER_ROLE.STUDENT)}>
                     <InviteButton buttonTxt={"Invite Student"} />
                   </div>
-                  {authCtx.user.role === "admin" && (
+                  {rdxUser.role === "admin" && (
                     <div onClick={() => changeInviteState(USER_ROLE.FACULTY)}>
                       <InviteButton buttonTxt={"Invite Faculty"} />
                     </div>
