@@ -3,15 +3,17 @@ import { MTable } from "./MTable";
 import { AuthContext } from "@/app/store/auth-context";
 import { DashboardContext } from "@/app/store/dashboard-context";
 import { SECTION } from "@/app/enums/section_enums";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllStudents } from "@/app/redux-store/manageUser/manageUser-actions";
 
 export const Table = ({ section }) => {
   const [isLoading, setIsDataLoading] = useState(false);
   const authCtx = useContext(AuthContext);
-  const dashCtx = useContext(DashboardContext);
+  const dashCtx = useContext(DashboardContext);  
 
   useEffect(() => {
     setIsDataLoading(true);
-    authCtx.getAllStudents();
+    // authCtx.getAllStudents();
     setIsDataLoading(false);
   }, [dashCtx.viewState]);
 

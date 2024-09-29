@@ -5,6 +5,11 @@ const manageUserSlice = createSlice({
     initialState: {
         students: [],
         faculties: [],
+        allCompleteStudents: [],
+        pbStudents: [],
+        ctStudents: [],
+        ddStudents: [],
+        biStudents: [],
     },
     reducers: {
         setFaculties: (state, action) => {
@@ -13,7 +18,15 @@ const manageUserSlice = createSlice({
         },
 
         setSetudents: (state, action) => {
+            // console.log(action.payload);
             state.students = action.payload.students
+            state.allCompleteStudents = action.payload.allComp
+            state.pbStudents = action.payload.pbStudents
+            // state.pbStudents = action.payload.students.filter(student => student.role === "pb")
+            state.ctStudents = action.payload.ctStudents
+            state.ddStudents = action.payload.ddStudents
+            state.biStudents = action.payload.biStudents
+
         },
 
         updateDeleteStudent: (state, action) => {

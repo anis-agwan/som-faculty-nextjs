@@ -44,16 +44,16 @@ export const fetchAllFaculties = (email) => {
 
 }
 
-export const fetchAllStudents = (email) => {
+export const fetchAllStudents = async(email) => {
     return async (dispatch) => {
         const url = `${BASEURL.AUTH}:${URLPORT.AUTH}/${AUTH_ENDPOINTS.BASE_ENDPOINT}/${AUTH_ENDPOINTS.GETSTUDENTS}`;
-        console.log(url);
+        // console.log(url);
 
         try {
             const res = await fetch(url);
             
             const data = await res.json();
-            console.log(data);
+            // console.log(data);
             
             let testAll = data.map((student, idx) => {
                 let st = {
@@ -66,8 +66,94 @@ export const fetchAllStudents = (email) => {
                 };
                 return st;
               });
+            
+              let allComp = data.filter((stud) => {
+                  return (
+                    stud.pbComplete && stud.ctComplete && stud.ddComplete && stud.biComplete
+                  )
+              })
 
-            await dispatch(manageUserSlice.actions.setSetudents({students: testAll}));
+              let mapAllComp = allComp.map((student, idx) => {
+                let st = {
+                    name: `${student.firstName} ${student.lastName}`,
+                    email: student.emailId,
+                    bnumber: student.bingNumber,
+                    completed: "Yes",
+                  };
+                  //   console.log(st);
+                  return st; 
+              })
+
+              let pbComp = data.filter((student) => {
+                return student.pbComplete;
+              });
+      
+              let mappedPBComp = pbComp.map((student, idx) => {
+                let st = {
+                  name: `${student.firstName} ${student.lastName}`,
+                  email: student.emailId,
+                  bnumber: student.bingNumber,
+                  pbcompleted: student.pbComplete ? "YES" : "NO",
+                  cacompleted: student.ctComplete ? "YES" : "NO",
+                  ddcompleted: student.ddComplete ? "YES" : "NO",
+                };
+                //   console.log(st);
+                return st;
+              });
+
+              let ctComp = data.filter((student) => {
+                return student.ctComplete;
+              });
+      
+              let mappedCTComp = ctComp.map((student, idx) => {
+                let st = {
+                  name: `${student.firstName} ${student.lastName}`,
+                  email: student.emailId,
+                  bnumber: student.bingNumber,
+                  pbcompleted: student.pbComplete ? "YES" : "NO",
+                  cacompleted: student.ctComplete ? "YES" : "NO",
+                  ddcompleted: student.ddComplete ? "YES" : "NO",
+                };
+                //   console.log(st);
+                return st;
+              });
+
+              let ddComp = data.filter((student) => {
+                return student.ddComplete;
+              });
+      
+              let mappedDDComp = ddComp.map((student, idx) => {
+                let st = {
+                  name: `${student.firstName} ${student.lastName}`,
+                  email: student.emailId,
+                  bnumber: student.bingNumber,
+                  pbcompleted: student.pbComplete ? "YES" : "NO",
+                  cacompleted: student.ctComplete ? "YES" : "NO",
+                  ddcompleted: student.ddComplete ? "YES" : "NO",
+                };
+                //   console.log(st);
+                return st;
+              });
+
+                          
+            let biComp = data.filter((student) => {
+                return student.biComplete;
+              });
+      
+              let mappedBIComp = biComp.map((student, idx) => {
+                let st = {
+                  name: `${student.firstName} ${student.lastName}`,
+                  email: student.emailId,
+                  bnumber: student.bingNumber,
+                  completed: "Yes",
+                };
+                //   console.log(st);
+                return st;
+              });
+
+              console.log(mappedBIComp);
+
+            await dispatch(manageUserSlice.actions.setSetudents({students: testAll, allComp: mapAllComp, pbStudents: mappedPBComp, ctStudents: mappedCTComp, ddStudents: mappedDDComp, biStudents: mappedBIComp}));
             // dispatch(manageUserSlice.actions.setStudents({students: data}));
 
         } catch (error) {

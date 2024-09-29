@@ -7,6 +7,7 @@ import "react-data-grid/lib/styles.css";
 import DataGrid from "react-data-grid";
 import { DashboardContext } from "@/app/store/dashboard-context";
 import { SECTION } from "@/app/enums/section_enums";
+import { useSelector } from "react-redux";
 
 const data = [
   {
@@ -20,7 +21,11 @@ const data = [
 export const MTable = ({ allStudentsData }) => {
   const authCtx = useContext(AuthContext);
   const dashCtx = useContext(DashboardContext);
-
+  const allCompStudents = useSelector((state) => state.manageUser.allCompleteStudents);
+  const pbStudents = useSelector((state) => state.manageUser.pbStudents);
+  const ctStudents = useSelector((state) => state.manageUser.ctStudents);
+  const ddStudents = useSelector((state) => state.manageUser.ddStudents);
+  // console.log(allStudentsData);
   const columns = [
     { key: "name", name: "Name" },
     { key: "email", name: "Email" },
@@ -63,22 +68,27 @@ export const MTable = ({ allStudentsData }) => {
   let tagLine;
 
   if (dashCtx.viewState === SECTION.DASH) {
-    rows = authCtx.allStudents;
+    // console.log(allCompStudents);
+    rows = allCompStudents;
     cols = columns;
     tagLine = " all the quizes and behavioral interview.";
   } else if (dashCtx.viewState === SECTION.PB) {
-    rows = authCtx.pbStudents;
+    rows = pbStudents;
     cols = newCols;
     tagLine = " Personal Belief Quiz";
   } else if (dashCtx.viewState === SECTION.CT) {
-    rows = authCtx.ctStudents;
+    rows = ctStudents;
     cols = newCols;
     tagLine = " Critical Analysis Quiz";
   } else if (dashCtx.viewState === SECTION.DD) {
-    rows = authCtx.ddStudents;
+    rows = ddStudents;
     cols = newCols;
     tagLine = " Difficult Decisions Quiz";
   }
+
+  useEffect(() => {
+    
+  }, [allCompStudents]);
 
   return (
     <div className="flex w-full h-full">

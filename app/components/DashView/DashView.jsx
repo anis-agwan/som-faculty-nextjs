@@ -13,6 +13,8 @@ import { BIQuestionContext } from "@/app/store/biquestion-context";
 import { AuthContext } from "@/app/store/auth-context";
 import { Table } from "../Table/Table";
 import { InviteForm } from "../InviteForm/InviteForm";
+import { useDispatch } from "react-redux";
+import { fetchAllStudents } from "@/app/redux-store/manageUser/manageUser-actions";
 
 export const DashView = ({ validBnum, completeStudentData }) => {
   const dashCtx = useContext(DashboardContext);
@@ -22,6 +24,11 @@ export const DashView = ({ validBnum, completeStudentData }) => {
   const [isTable, setIsTable] = useState(false);
   const biQctx = useContext(BIQuestionContext);
   const authCtx = useContext(AuthContext);
+  const dispatch = useDispatch();
+
+  const getStudentData = async () => {
+    dispatch(await fetchAllStudents(authCtx.user.emailId));
+  };
 
   const formSubmit = async (event, bNum) => {
     event.preventDefault();
@@ -47,6 +54,7 @@ export const DashView = ({ validBnum, completeStudentData }) => {
     setIsInterview(false);
     setViewState(dashCtx.viewState);
     setIsStudentDets(dashCtx.studentDetails);
+    getStudentData();
   }, [dashCtx.viewState, dashCtx.studentDetails, validBnum]);
 
   return (

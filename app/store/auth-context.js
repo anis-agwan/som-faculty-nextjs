@@ -558,7 +558,7 @@ export const AuthContextProvider = ({ children }) => {
             bnumber: student.bingNumber,
             completed: "Yes",
           };
-          //   console.log(st);
+            console.log(st);
           return st;
         });
         setThemAll(mC);

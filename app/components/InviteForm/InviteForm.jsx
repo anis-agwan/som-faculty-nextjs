@@ -103,27 +103,27 @@ export const InviteForm = () => {
 
     console.log(allFaculties);
 
-    await authCtx.getAllFaculties(authCtx.user.emailId).then((r) => {
-      console.log(r);
-      let data = [];
-      r.map((e) => {
-        console.log(e);
-        let fac = {
-          email: e.emailId,
-          firstName: e.firstName,
-          lastName: e.lastName,
-          role: e.role,
-        };
-        data.push(fac);
-      });
+    // await authCtx.getAllFaculties(authCtx.user.emailId).then((r) => {
+    //   console.log(r);
+    //   let data = [];
+    //   r.map((e) => {
+    //     console.log(e);
+    //     let fac = {
+    //       email: e.emailId,
+    //       firstName: e.firstName,
+    //       lastName: e.lastName,
+    //       role: e.role,
+    //     };
+    //     data.push(fac);
+    //   });
 
-      // console.log(data);
-      setAllFaculties(data);
-    });
+    //   // console.log(data);
+    //   setAllFaculties(data);
+    // });
   };
 
   const getAllStudents = async () => {
-    await dispatch(fetchAllStudents(authCtx.user.emailId));
+    dispatch(await fetchAllStudents(authCtx.user.emailId));
   };
 
   useEffect(() => {
