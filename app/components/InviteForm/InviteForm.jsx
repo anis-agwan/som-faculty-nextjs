@@ -6,7 +6,7 @@ import { StartButton } from "../Buttons/StartButton/StartButton";
 import { AuthContext } from "@/app/store/auth-context";
 import DataGrid from "react-data-grid";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteUser, fetchAllFaculties, fetchAllStudents } from "@/app/redux-store/manageUser/manageUser-actions";
+import { deleteUser, fetchAllFaculties, fetchAllStudents, inviteUser } from "@/app/redux-store/manageUser/manageUser-actions";
 
 
 const data = [
@@ -71,14 +71,15 @@ export const InviteForm = () => {
   const onEmailSubmit = async (event, role) => {
     event.preventDefault();
     console.log(email, role);
-    authCtx
-      .invite(email, role)
-      .then((r) => {
-        alert(r);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    dispatch(inviteUser(email, role));
+    // authCtx
+    //   .invite(email, role)
+    //   .then((r) => {
+    //     alert(r);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 
   const onDeleteSubmit = async (event, role) => {

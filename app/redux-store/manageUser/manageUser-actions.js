@@ -151,7 +151,7 @@ export const fetchAllStudents = async(email) => {
                 return st;
               });
 
-              console.log(mappedBIComp);
+            //   console.log(mappedBIComp);
 
             await dispatch(manageUserSlice.actions.setSetudents({students: testAll, allComp: mapAllComp, pbStudents: mappedPBComp, ctStudents: mappedCTComp, ddStudents: mappedDDComp, biStudents: mappedBIComp}));
             // dispatch(manageUserSlice.actions.setStudents({students: data}));
@@ -208,4 +208,41 @@ export const deleteUser = (email, role) => {
             alert(err);
         }
     }
+}
+
+export const inviteUser = (email, role) => {
+    return async (dispatch) => {
+        console.log(email, role);
+        
+        const url = `${BASEURL.AUTH}:${URLPORT.AUTH}/${AUTH_ENDPOINTS.BASE_ENDPOINT}/${AUTH_ENDPOINTS.INVITEUSER}`;
+        console.log(url);
+
+        const user = {
+            email: email,
+            role: role
+        };
+
+        let message = "";
+        try {
+            const res = await fetch(url, {
+                method: "POST",
+                body: JSON.stringify(user),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            if(res.ok) {
+                const data = await res.text();
+                message = data;
+                // message = `An invitation link is sent to the ${role} at ${email} via email.`;
+            }
+            // const data = await res.json();
+            // console.log(res);
+        } catch (err) {
+            console.log(err);
+            message = err;
+        }
+
+        alert(message);
+    }   
 }

@@ -22,6 +22,7 @@ export const BASEURL = {
     CONFIRMLOGINTOKEN: "login/confirmtoken",
     GETFACULTIES: "login/getfaculty",
     GETSTUDENTS: "login/getcomplete",
+    INVITEUSER: "login/invite"
   }
 
 
