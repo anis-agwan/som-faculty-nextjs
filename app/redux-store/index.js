@@ -1,3 +1,4 @@
+import authSlice from "./authRdxStore/auth-slice";
 import biSlice from "./biQuiz/bi-slice";
 import manageUserSlice from "./manageUser/manageUser-slice";
 import reportSlice from "./reports/reports-slice";
@@ -9,7 +10,8 @@ const store = configureStore({
     reducer: {
         bi: biSlice.reducer,
         reports: reportSlice.reducer,
-        manageUser: manageUserSlice.reducer
+        manageUser: manageUserSlice.reducer,
+        auth: authSlice.reducer,
     }
 })
 

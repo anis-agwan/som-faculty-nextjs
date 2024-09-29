@@ -17,10 +17,13 @@ import { AuthContext } from "@/app/store/auth-context";
 
 //Reducers
 import { passwordReducer, userNameReducer } from "./AuthReducers";
+import { useDispatch } from "react-redux";
+import { onRdxLogin } from "@/app/redux-store/authRdxStore/auth-actions";
 
 export const Login = ({ handleState }) => {
   const authCtx = useContext(AuthContext);
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const [formIsValid, setFormIsValid] = useState(false);
 
@@ -83,18 +86,31 @@ export const Login = ({ handleState }) => {
     let success = false;
     console.log("CLICK");
     if (formIsValid) {
-      await authCtx
-        .onLogin(userNameState.value, passwordState.value)
-        .then((res) => {
-          // console.log(res);
-          if (res) {
+
+      dispatch(onRdxLogin(userNameState.value, passwordState.value)).then((res) => {
+        console.log(res);
+        if(res) {
             authCtx.onSetLogin();
             console.log(authCtx.isLoggedIn);
             router.push("/Dashboard");
-          } else {
-            console.log("SOME ISSUE");
-          }
-        });
+        } else {
+          console.log("Authentication failed, try again.")
+        }
+      });
+
+
+      // await authCtx
+      //   .onLogin(userNameState.value, passwordState.value)
+      //   .then((res) => {
+      //     // console.log(res);
+      //     if (res) {
+      //       authCtx.onSetLogin();
+      //       console.log(authCtx.isLoggedIn);
+      //       router.push("/Dashboard");
+      //     } else {
+      //       console.log("SOME ISSUE");
+      //     }
+      //   });
     } else {
       alert(
         "Please check your email and password.\n(Email should only be BU email)"

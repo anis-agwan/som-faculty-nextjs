@@ -20,14 +20,16 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <AuthContextProvider>
           <div className="flex flex-col">
+          <Providers>
             <Navbar />
             <DashboardContextProvider>
               <ReportContextProvider>
                 <BIQuestionContextProvider>
-                  <Providers>{children}</Providers>
+                  {children}
                 </BIQuestionContextProvider>
               </ReportContextProvider>
             </DashboardContextProvider>
+            </Providers>
           </div>
         </AuthContextProvider>
       </body>

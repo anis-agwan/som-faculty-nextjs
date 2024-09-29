@@ -13,6 +13,8 @@ import Avatar from "./UserLogo.png";
 //Styles
 import "./Menu.css";
 import { AuthContext } from "@/app/store/auth-context";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "@/app/redux-store/authRdxStore/auth-slice";
 
 // let useClickOutside = (handler) => {
 //   let domNode = useRef();
@@ -48,26 +50,43 @@ export const Navbar = () => {
   const [user, setUser] = useState({});
   const authCtx = useContext(AuthContext);
   const router = useRouter();
+  const dispatch = useDispatch();
+  const rdxUser = useSelector((state) => state.auth.user)
+  const rdxIsLoggedIn = useSelector((state) => state.auth.isLoggedIn)
 
   // let domNode = useClickOutside(() => {
   //   setMenuActive(false);
   // });
 
   useEffect(() => {
-    if (authCtx.isLoggedIn && authCtx.user) {
-      setUser(authCtx.user);
+    console.log(rdxUser);
+
+    // console.log(authCtx.isLoggedIn);
+    if(rdxIsLoggedIn) {
       setIsLoggedIn(true);
+      setUser(rdxUser);
     }
+
+    // if (authCtx.isLoggedIn && authCtx.user) {
+    //   setUser(authCtx.user);
+    //   setIsLoggedIn(true);
+    // }
   });
 
   const dashboardRoute = () => {
     // let path = `/SelectionScreen`;
     setMenuActive(false);
-    if (authCtx.isLoggedIn) {
-      router.push("Dashboard");
+    if(rdxIsLoggedIn) {
+      router.replace("/Dashboard");
     } else {
-      router.push("/");
+      window.location.href = "/";
     }
+    
+    // if (authCtx.isLoggedIn) {
+    //   router.push("Dashboard");
+    // } else {
+    //   router.push("/");
+    // }
   };
   // const reportRoute = () => {
   //   setMenuActive(false);
@@ -80,19 +99,25 @@ export const Navbar = () => {
   // };
 
   const logginOut = () => {
-    authCtx.onLogout();
-    setIsLoggedIn(false);
-    setMenuActive(false);
+    dispatch(authActions.rdxLogoutUser())
+    // authCtx.onLogout();
+    // setIsLoggedIn(false);
+    // setMenuActive(false);
     router.push("/");
   };
 
   const imgClick = () => {
-    console.log(authCtx.isLoggedIn);
-    if (authCtx.isLoggedIn) {
+    // console.log(authCtx.isLoggedIn);
+    if(rdxIsLoggedIn) {
       router.push("/Dashboard");
     } else {
-      router.push("/");
+      window.location.href = "/";
     }
+    // if (authCtx.isLoggedIn) {
+    //   router.push("/Dashboard");
+    // } else {
+    //   router.push("/");
+    // }
   };
 
   return (
@@ -106,7 +131,7 @@ export const Navbar = () => {
             onClick={imgClick}
           />
         </div>
-        {isLoggedIn && (
+        {rdxIsLoggedIn && (
           <div
             className="flex"
             // ref={(el) => {
@@ -115,14 +140,14 @@ export const Navbar = () => {
           >
             <div className={`dropDown ${isMenuActive ? "active" : "inactive"}`}>
               <div className="menuStyle">
-                {user && (
+                {rdxIsLoggedIn && (
                   <div className="Dropdownlabel">
-                    {user.firstName + " " + user.lastName}
+                    {/* {user.firstName + " " + user.lastName} */}
                   </div>
                 )}
-                {/* <div className="Dropdownlabel">
-                  {user.firstName + " " + user.lastName}
-                </div> */}
+                <div className="Dropdownlabel">
+                  {rdxUser.firstName + " " + rdxUser.lastName}
+                </div>
                 {/* <button onClick={profileRoute} className="ProfileBtn">
                 Profile
               </button> */}
