@@ -8,11 +8,15 @@ import { SearchStudent } from "../components/SearchStudent/SearchStudent";
 import { DashboardContext } from "../store/dashboard-context";
 import { AuthContext } from "../store/auth-context";
 import { redirect } from "next/navigation";
+import { useSelector } from "react-redux";
 
 export default function Dashboard() {
   const dashCtx = useContext(DashboardContext);
   const [bNum, setBNum] = useState("");
   const [isBNumValid, setBNumValid] = useState(false);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
+  !isLoggedIn && redirect("/");
 
   const bNumChangeHandler = (event) => {
     event.preventDefault();

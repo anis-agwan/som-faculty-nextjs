@@ -5,11 +5,14 @@ import { AuthButton } from "../../Buttons/AuthButton/AuthButton";
 import { passwordReducer } from "./AuthReducers";
 import { AuthContext } from "@/app/store/auth-context";
 import { AUTHSTATE } from "@/app/enums/auth_state";
+import { useDispatch, useSelector } from "react-redux";
+import { changePassword } from "@/app/redux-store/authRdxStore/auth-actions";
 
 export const NewPassForm = ({ handleState }) => {
   const authCtx = useContext(AuthContext);
-
-  console.log(authCtx.signUpStudentData);
+  const dispatch = useDispatch();
+  const forgotUser = useSelector((state) => state.auth.forgotUser);
+  // console.log(authCtx.signUpStudentData);
 
   const [newpassFormIsValid, setNewPassFormIsValid] = useState(false);
 
@@ -56,19 +59,36 @@ export const NewPassForm = ({ handleState }) => {
 
   const onNewPassSubmit = async (event) => {
     event.preventDefault();
-    await authCtx
-      .onRegisterNewPassword(authCtx.signUpStudentData.emailId, enteredPassword)
-      .then((r) => {
-        if (r === true) {
-          handleState(AUTHSTATE.LOGIN);
-        } else {
-          throw new Error("Password did not change");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const user = {
+      email: forgotUser.emailId,
+      newPassword: passwordState.value
+    }
+   
+    dispatch(changePassword(user)).then((res) => {
+      if(res) {
+        console.log("CHANGED");
+        handleState(AUTHSTATE.LOGIN);
+      } else {
+        throw new Error("Password did not change");
+      }
+    }).catch((err) => {
+      console.log(err);
+      // alert(err);
+    });
+    // await authCtx
+    //   .onRegisterNewPassword(authCtx.signUpStudentData.emailId, enteredPassword)
+    //   .then((r) => {
+    //     if (r === true) {
+    //       handleState(AUTHSTATE.LOGIN);
+    //     } else {
+    //       throw new Error("Password did not change");
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
+  
 
   return (
     <div className="w-full h-1/2">

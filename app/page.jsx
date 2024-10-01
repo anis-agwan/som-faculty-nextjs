@@ -5,12 +5,13 @@ import { AuthForm } from "./components/Authtentication/AuthForms/AuthForm";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "./store/auth-context";
 import { redirect } from "next/navigation";
+import { useSelector } from "react-redux";
 
 export default function Home() {
-  const authCtx = useContext(AuthContext);
-
+  // const authCtx = useContext(AuthContext);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   useEffect(() => {
-    if (authCtx.isLoggedIn) {
+    if (isLoggedIn) {
       redirect("/Dashboard");
     }
   });

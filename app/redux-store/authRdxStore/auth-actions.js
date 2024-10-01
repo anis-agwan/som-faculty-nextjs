@@ -30,9 +30,9 @@ export const onRdxLogin = (email, password) => {
             if (data["validationIndicator"] === "Invalid") {
                 throw new Error("Invalid Login, Please check your email and password");
             } else if (data["validationIndicator"] === "Valid") {
-                if (data["role"] === "faculty") {
+                if (data["role"] === "student") {
                     throw new Error(
-                      "Faculties need permission to access the student portals."
+                      "Students need permission to access the faculty portals."
                     );
                 }
                 localStorage.setItem("userDetails", JSON.stringify(data));
@@ -238,5 +238,34 @@ export const onRdxConfirmToken = (tokenRequest) => {
 
     return tokenAuthValid;
 
+  }
+}
+
+export const changePassword = (user) => {
+  return async (dispatch) => {
+    const url = `${BASEURL.AUTH}:${URLPORT.AUTH}/${AUTH_ENDPOINTS.BASE_ENDPOINT}/${AUTH_ENDPOINTS.CHANGEPASSWORD}`;
+    console.log(url);
+    let registeredValid = false;
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(user),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(res);
+      const data = res.json();
+      await data.then((r) => {
+        alert(r.message);
+      });
+      registeredValid = true;
+      // console.log(data);
+    } catch (err) {
+      registeredValid = false;
+      console.log(err);
+      alert(err);
+    } 
+    return registeredValid;
   }
 }

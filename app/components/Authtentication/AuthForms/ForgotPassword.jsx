@@ -6,10 +6,14 @@ import { AUTHSTATE } from "@/app/enums/auth_state";
 import { AuthContext } from "@/app/store/auth-context";
 import { tokenReducer, userNameReducer } from "./AuthReducers";
 import { TOKEN_ENUMS } from "@/app/enums/token_enums";
+import { useDispatch } from "react-redux";
+import { onRdxConfirmToken, onRdxGenToken } from "@/app/redux-store/authRdxStore/auth-actions";
+import authSlice from "@/app/redux-store/authRdxStore/auth-slice";
 
 export const ForgotPassword = ({ handleState }) => {
   const authCtx = useContext(AuthContext);
   const [formIsValid, setFormIsValid] = useState(false);
+  const dispatch = useDispatch();
 
   const [userNameState, dispatchUserName] = useReducer(userNameReducer, {
     value: "",
@@ -67,29 +71,60 @@ export const ForgotPassword = ({ handleState }) => {
     };
   }, [userNameIsValid, tokenIsValid, formIsValid]);
 
-  const onEmailSubmit = (event) => {
+  const onEmailSubmit = async (event) => {
     event.preventDefault();
     console.log(userNameIsValid);
     if (userNameIsValid) {
-      authCtx.onGenerateToken(userNameState.value, TOKEN_ENUMS.FORGOT);
+      await dispatch(onRdxGenToken({
+        email: userNameState.value,
+        requestType: "Forgot"
+      })).then((res) => {
+        if(res) {
+          alert("A temporary Token has been sent to your BU email address.");
+        }
+      }).catch((err) => {
+        console.log(err);
+      })
+      // authCtx.onGenerateToken(userNameState.value, TOKEN_ENUMS.FORGOT);
     }
   };
 
-  const onTokenSubmit = (event) => {
+  const onTokenSubmit = async (event) => {
     event.preventDefault();
     if (formIsValid) {
-      authCtx
-        .onTokenSubmit(
-          userNameState.value,
-          tokenState.value,
-          TOKEN_ENUMS.FORGOT
-        )
-        .then((res) => {
-          if (res) {
-            authCtx.passStudentData({ emailId: userNameState.value });
-            handleState(AUTHSTATE.NEWPASS);
-          }
-        });
+
+      const user = {
+        emailId: userNameState.value,
+      };
+
+      await dispatch(onRdxConfirmToken({
+        emailId: userNameState.value,
+        token: tokenState.value,
+        requestType: "Forgot"
+      })).then(async (res) => {
+        if(res) { 
+          console.log("CAN SiGNUP");
+          dispatch(authSlice.actions.rdxForgotPassword({
+            forgotUser: user
+          }))
+          handleState(AUTHSTATE.NEWPASS);
+        }
+      }).catch((err) => {
+        console.log(err);
+      })
+
+      // authCtx
+      //   .onTokenSubmit(
+      //     userNameState.value,
+      //     tokenState.value,
+      //     TOKEN_ENUMS.FORGOT
+      //   )
+      //   .then((res) => {
+      //     if (res) {
+      //       authCtx.passStudentData({ emailId: userNameState.value });
+      //       handleState(AUTHSTATE.NEWPASS);
+      //     }
+      //   });
     }
   };
 
